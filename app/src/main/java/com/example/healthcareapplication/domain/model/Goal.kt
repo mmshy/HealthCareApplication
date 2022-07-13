@@ -13,7 +13,6 @@ class Goal(
     var status      : String = "",
     var description : String = "",
     var healthData  : HealthData
-) {
-
+    ) {
 
 }

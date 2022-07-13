@@ -1,11 +1,12 @@
 package com.example.healthcareapplication.domain.model
 
 class TrackingDetail (
-    var sleepList           : List<Sleep>,
-    var mealList            : List<Meal>,
-    var waterDrinkingList   : List<WaterDrinking>,
-    var weightList          : List<Weight>,
-    var periodList          : List<Period>
+    var trackingID          : String = "",
+    var sleepList           : MutableList<Sleep> = mutableListOf(),
+    var mealList            : MutableList<Meal> = mutableListOf(),
+    var waterDrinkingList   : MutableList<WaterDrinking> = mutableListOf(),
+    var weightList          : MutableList<Weight> = mutableListOf(),
+    var periodList          : MutableList<Period> = mutableListOf()
 
     ){
 
