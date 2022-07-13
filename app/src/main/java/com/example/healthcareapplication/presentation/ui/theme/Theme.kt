@@ -8,23 +8,26 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
+import androidx.compose.material.Colors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = Blue,
+    secondary = LightBlue,
+    tertiary = Smoke,
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = Blue,
+    secondary = LightBlue,
+    tertiary = Smoke,
+    background = Color.White,
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -35,6 +38,22 @@ private val LightColorScheme = lightColorScheme(
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
     */
+)
+
+private val Colors = Colors(
+    primary = Blue,
+    secondary = LightBlue,
+    background = Smoke,
+    surface = Smoke,
+    error = Color.White,
+    onPrimary = Color.White,
+    onSecondary = Color.White,
+    onBackground = Color.White,
+    onSurface = Color.White,
+    onError = Color.White,
+    isLight = true,
+    primaryVariant = Color.White,
+    secondaryVariant = Color.White
 )
 
 @Composable
@@ -64,5 +83,10 @@ fun HealthCareApplicationTheme(
       colorScheme = colorScheme,
       typography = Typography,
       content = content
+    )
+
+    androidx.compose.material.MaterialTheme(
+        colors = Colors,
+        content = content
     )
 }
