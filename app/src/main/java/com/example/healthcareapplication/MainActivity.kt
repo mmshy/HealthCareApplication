@@ -22,6 +22,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.healthcareapplication.presentation.components.LoginScreen
 import com.example.healthcareapplication.presentation.components.MainScreen
 import com.example.healthcareapplication.presentation.ui.theme.HealthCareApplicationTheme
 
@@ -32,7 +33,7 @@ class MainActivity : ComponentActivity() {
             HealthCareApplicationTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    MainScreen()
+                    LoginScreen()
                 }
             }
         }
