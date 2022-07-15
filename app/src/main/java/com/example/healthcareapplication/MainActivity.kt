@@ -20,11 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.healthcareapplication.presentation.components.LoginScreen
 import com.example.healthcareapplication.presentation.components.MainScreen
 import com.example.healthcareapplication.presentation.ui.theme.HealthCareApplicationTheme
+import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +34,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             HealthCareApplicationTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
                     LoginScreen()
                 }
             }

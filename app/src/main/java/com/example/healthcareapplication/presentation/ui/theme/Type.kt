@@ -27,39 +27,39 @@ val myTypography = Typography(
     ),
     headlineLarge = TextStyle(
         fontFamily = Lato,
-        fontWeight = FontWeight.W500,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 64.sp,
         lineHeight = 77.sp
     ),
     headlineMedium = TextStyle(
         fontFamily = Lato,
-        fontWeight = FontWeight.W500,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 32.sp,
         lineHeight = 38.sp
     ),
     headlineSmall = TextStyle(
         fontFamily = Lato,
-        fontWeight = FontWeight.W500,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 27.sp,
         lineHeight = 32.sp
     ),
     titleLarge = TextStyle(
         fontFamily = Lato,
-        fontWeight = FontWeight.W500,
+        fontWeight = FontWeight.ExtraBold,
         fontSize = 20.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.sp
     ),
     titleMedium = TextStyle(
         fontFamily = Lato,
-        fontWeight = FontWeight.W500,
-        fontSize = 19.sp,
-        lineHeight = 23.sp,
+        fontWeight = FontWeight.ExtraBold,
+        fontSize = 15.sp,
+        lineHeight = 19.sp,
         letterSpacing = 0.sp
     ),
     labelSmall = TextStyle(
         fontFamily = Lato,
-        fontWeight = FontWeight.W300,
+        fontWeight = FontWeight.Normal,
         fontSize = 13.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp,
@@ -67,7 +67,7 @@ val myTypography = Typography(
     ),
     labelMedium = TextStyle(
         fontFamily = Lato,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Light,
         fontSize = 16.sp,
         lineHeight = 19.sp
     )

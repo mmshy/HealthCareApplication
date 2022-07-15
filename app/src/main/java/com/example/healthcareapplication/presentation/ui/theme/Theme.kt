@@ -24,7 +24,7 @@ private val DarkColorScheme = darkColorScheme(
     tertiary = Smoke,
 )
 
-private val LightColorScheme = lightColorScheme(
+public val LightColorScheme = lightColorScheme(
     primary = Blue,
     onPrimary = Blue,
     secondary = LightBlue,
@@ -88,9 +88,9 @@ fun HealthCareApplicationTheme(
       content = content
     )
 
-    androidx.compose.material.MaterialTheme(
-        colors = Colors,
-        myTypography1,
-        content = content
-    )
+//    androidx.compose.material.MaterialTheme(
+//        colors = Colors,
+//        myTypography1,
+//        content = content
+//    )
 }
