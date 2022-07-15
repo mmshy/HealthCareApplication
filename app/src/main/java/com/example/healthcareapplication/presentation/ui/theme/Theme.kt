@@ -9,6 +9,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material.Colors
+import androidx.compose.material.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
@@ -25,6 +26,7 @@ private val DarkColorScheme = darkColorScheme(
 
 private val LightColorScheme = lightColorScheme(
     primary = Blue,
+    onPrimary = Blue,
     secondary = LightBlue,
     tertiary = Smoke,
     background = Color.White,
@@ -76,17 +78,19 @@ fun HealthCareApplicationTheme(
         SideEffect {
           (view.context as Activity).window.statusBarColor = colorScheme.primary.toArgb()
 //            (view.context as Activity).window.statusBarColor = Color.White.toArgb()
+            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = darkTheme
         }
     }
 
     MaterialTheme(
       colorScheme = colorScheme,
-      typography = Typography,
+      typography = myTypography,
       content = content
     )
 
     androidx.compose.material.MaterialTheme(
         colors = Colors,
+        myTypography1,
         content = content
     )
 }

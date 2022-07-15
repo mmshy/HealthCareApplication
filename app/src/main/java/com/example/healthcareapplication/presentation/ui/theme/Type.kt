@@ -10,14 +10,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.healthcareapplication.R
 
-private val Lato = FontFamily(
-    Font(R.font.lato_light, FontWeight.W300),
-    Font(R.font.lato_regular, FontWeight.W400),
-    Font(R.font.lato_bold, FontWeight.W500),
+public val Lato = FontFamily(
+    Font(R.font.lato_regular, FontWeight.Normal),
+    Font(R.font.lato_light, FontWeight.Light),
+    Font(R.font.lato_bold, FontWeight.Bold),
 )
 
 // Set of Material typography styles to start with
-val Typography = Typography(
+val myTypography = Typography(
     bodyMedium = TextStyle(
         fontFamily = Lato,
         fontWeight = FontWeight.Normal,
@@ -71,4 +71,9 @@ val Typography = Typography(
         fontSize = 16.sp,
         lineHeight = 19.sp
     )
+)
+
+val myTypography1 = androidx.compose.material.Typography(
+    h1 = TextStyle(fontFamily = Lato),
+    button = TextStyle(fontFamily = Lato)
 )

@@ -100,6 +100,6 @@ fun ScrollBoxes() {
 @Composable
 fun DefaultPreview() {
     HealthCareApplicationTheme {
-        MainScreen()
+        LoginScreen()
     }
 }
