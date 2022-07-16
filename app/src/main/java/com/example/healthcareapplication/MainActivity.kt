@@ -27,6 +27,7 @@ import com.example.healthcareapplication.presentation.components.ForgotPasswordS
 import com.example.healthcareapplication.presentation.components.LoginScreen
 import com.example.healthcareapplication.presentation.components.MainScreen
 import com.example.healthcareapplication.presentation.components.RegisterScreen
+import com.example.healthcareapplication.presentation.components.screens.DashboardScreen
 import com.example.healthcareapplication.presentation.ui.theme.HealthCareApplicationTheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    RegisterScreen()
+                    DashboardScreen()
                 }
             }
         }
@@ -107,6 +108,6 @@ fun ScrollBoxes() {
 @Composable
 fun DefaultPreview() {
     HealthCareApplicationTheme {
-        ForgotPasswordScreen()
+        DashboardScreen()
     }
 }

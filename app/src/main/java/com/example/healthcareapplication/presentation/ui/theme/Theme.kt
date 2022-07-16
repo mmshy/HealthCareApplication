@@ -97,3 +97,7 @@ fun HealthCareApplicationTheme(
 //        content = content
 //    )
 }
+
+val myTypo = Typography(
+    defaultFontFamily = Lato
+)
