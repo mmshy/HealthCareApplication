@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.healthcareapplication.presentation.components.ForgotPasswordScreen
 import com.example.healthcareapplication.presentation.components.LoginScreen
 import com.example.healthcareapplication.presentation.components.MainScreen
 import com.example.healthcareapplication.presentation.components.RegisterScreen
@@ -106,6 +107,6 @@ fun ScrollBoxes() {
 @Composable
 fun DefaultPreview() {
     HealthCareApplicationTheme {
-        LoginScreen()
+        ForgotPasswordScreen()
     }
 }
