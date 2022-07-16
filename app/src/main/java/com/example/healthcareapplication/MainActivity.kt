@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.healthcareapplication.presentation.components.LoginScreen
 import com.example.healthcareapplication.presentation.components.MainScreen
+import com.example.healthcareapplication.presentation.components.RegisterScreen
 import com.example.healthcareapplication.presentation.ui.theme.HealthCareApplicationTheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
@@ -38,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    LoginScreen()
+                    RegisterScreen()
                 }
             }
         }

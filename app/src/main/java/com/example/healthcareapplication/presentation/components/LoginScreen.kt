@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.healthcareapplication.R
+import com.example.healthcareapplication.presentation.components.custom.primaryBtn
+import com.example.healthcareapplication.presentation.components.custom.secondBtn
 import com.example.healthcareapplication.presentation.ui.theme.HealthCareApplicationTheme
 import com.example.healthcareapplication.presentation.ui.theme.Lato
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
@@ -103,21 +105,15 @@ fun LoginScreen() {
                         .fillMaxWidth()
                         .padding(0.dp, 16.dp, 0.dp, 0.dp)
                 )
-                Button(
+                primaryBtn(
                     onClick = { /*TODO*/ },
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(0.dp, 20.dp, 0.dp, 0.dp)
                         .height(49.dp),
-                    shape = RoundedCornerShape(8.dp),
-                    contentPadding = PaddingValues(48.dp, 0.dp)
-                ) {
-                    Text(
-                        text = "Go to App",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = Color.White
-                    )
-                }
+                    text = "Go to App",
+                    null
+                )
             }
 
             Column(
