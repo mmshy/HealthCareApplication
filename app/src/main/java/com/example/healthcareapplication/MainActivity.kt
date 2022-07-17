@@ -30,7 +30,9 @@ import com.example.healthcareapplication.presentation.components.RegisterScreen
 import com.example.healthcareapplication.presentation.components.screens.DashboardScreen
 import com.example.healthcareapplication.presentation.ui.theme.HealthCareApplicationTheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
