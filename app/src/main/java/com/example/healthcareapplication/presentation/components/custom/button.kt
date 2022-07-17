@@ -2,17 +2,18 @@ package com.example.healthcareapplication.presentation.components.custom
 
 import android.graphics.drawable.Icon
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.healthcareapplication.R
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
@@ -58,4 +59,41 @@ fun secondBtn(
         )
     }
 
+}
+
+@Composable
+fun DashboardBtn(
+    onClick: () -> Unit,
+    title: String,
+    icon: Int,
+) {
+    Column(
+        modifier = Modifier
+            .width(150.dp)
+            .height(138.dp)
+            .background(Color.White, RoundedCornerShape(8.dp))
+            .clickable {
+                onClick
+            },
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyMedium
+        )
+        Text(
+            text = "Click!",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.tertiary,
+            modifier = Modifier.padding(bottom = 15.dp)
+        )
+        Icon(
+            painterResource(id = icon),
+            contentDescription = title,
+            modifier = Modifier
+                .size(30.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+    }
 }

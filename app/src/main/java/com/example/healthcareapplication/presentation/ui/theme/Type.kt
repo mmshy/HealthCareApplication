@@ -60,14 +60,14 @@ val myTypography = Typography(
     labelSmall = TextStyle(
         fontFamily = Lato,
         fontWeight = FontWeight.Normal,
-        fontSize = 13.sp,
+        fontSize = 10.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.5.sp,
         color = Gray
     ),
     labelMedium = TextStyle(
         fontFamily = Lato,
-        fontWeight = FontWeight.Light,
+        fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 19.sp
     )

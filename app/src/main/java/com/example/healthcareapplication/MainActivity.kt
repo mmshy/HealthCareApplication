@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    DashboardScreen()
+                    MainScreen()
                 }
             }
         }
@@ -108,6 +108,6 @@ fun ScrollBoxes() {
 @Composable
 fun DefaultPreview() {
     HealthCareApplicationTheme {
-        DashboardScreen()
+        MainScreen()
     }
 }
