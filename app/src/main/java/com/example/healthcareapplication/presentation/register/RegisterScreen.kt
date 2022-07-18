@@ -14,6 +14,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.healthcareapplication.R
 import com.example.healthcareapplication.presentation.components.custom.primaryBtn
 import com.example.healthcareapplication.presentation.components.custom.secondBtn
@@ -21,7 +23,9 @@ import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
 @Composable
-fun RegisterScreen() {
+fun RegisterScreen(
+    onBackToLoginClick: () -> Unit
+) {
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
@@ -131,7 +135,7 @@ fun RegisterScreen() {
             )
 
             secondBtn(
-                onClick = { /*TODO*/ },
+                onClick = { onBackToLoginClick() },
                 modifier = Modifier
                     .height(49.dp)
                     .constrainAs(backToSignInBtn) {
@@ -148,5 +152,5 @@ fun RegisterScreen() {
 @Composable
 @Preview(showBackground = true)
 fun RegisterScreenPreview() {
-    RegisterScreen()
+    RegisterScreen({})
 }

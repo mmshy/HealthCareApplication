@@ -1,7 +1,6 @@
 package com.example.healthcareapplication.presentation.components
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,22 +8,30 @@ import com.example.healthcareapplication.presentation.components.screens.Dashboa
 import com.example.healthcareapplication.presentation.components.screens.GoalScreen
 import com.example.healthcareapplication.presentation.components.screens.MeScreen
 import com.example.healthcareapplication.presentation.components.screens.ReportScreen
+import com.example.healthcareapplication.presentation.screen.MainScreens
 
 @Composable
-fun BottomNavGraph(navController: NavHostController) {
+fun BottomNavGraph(
+    navController: NavHostController
+) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Dashboard.route) {
-        composable(route = Screen.Dashboard.route) {
+        startDestination = MainScreens.Dashboard.route,
+        route = "home_graph"
+    ) {
+        composable(route = MainScreens.Dashboard.route) {
             DashboardScreen()
         }
-        composable(route = Screen.Goal.route) {
+        composable(route = MainScreens.Goal.route) {
+            navController.popBackStack()
             GoalScreen()
         }
-        composable(route = Screen.Report.route) {
+        composable(route = MainScreens.Report.route) {
+            navController.popBackStack()
             ReportScreen()
         }
-        composable(route = Screen.Me.route) {
+        composable(route = MainScreens.Me.route) {
+            navController.popBackStack()
             MeScreen()
         }
     }

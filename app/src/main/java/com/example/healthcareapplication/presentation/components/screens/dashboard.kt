@@ -24,6 +24,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.healthcareapplication.R
 import com.example.healthcareapplication.presentation.components.custom.DashboardBtn
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme

@@ -1,37 +1,36 @@
 package com.example.healthcareapplication.presentation.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.healthcareapplication.R
 import com.example.healthcareapplication.presentation.components.custom.primaryBtn
-import com.example.healthcareapplication.presentation.components.custom.secondBtn
-import com.example.healthcareapplication.presentation.ui.theme.HealthCareApplicationTheme
-import com.example.healthcareapplication.presentation.ui.theme.Lato
+import com.example.healthcareapplication.presentation.login.LoginViewModel
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
 @Composable
-fun LoginScreen() {
-
+fun LoginScreen(
+    onRegisterClick: () -> Unit,
+    onSubmitClick: () -> Unit,
+    viewModel: LoginViewModel = viewModel()
+) {
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
@@ -106,14 +105,16 @@ fun LoginScreen() {
                         .padding(0.dp, 16.dp, 0.dp, 0.dp)
                 )
                 primaryBtn(
-                    onClick = { /*TODO*/ },
+                    onClick = onSubmitClick,
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(0.dp, 20.dp, 0.dp, 0.dp)
-                        .height(49.dp),
+                        .height(49.dp)
+                    ,
                     text = "Go to App",
                     null
                 )
+
             }
 
             Column(
@@ -164,6 +165,7 @@ fun LoginScreen() {
                     style = MaterialTheme.typography.labelMedium
                 )
                 Text(
+                    modifier = Modifier.clickable { onRegisterClick() },
                     text = "Create a HCA Account",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
@@ -176,5 +178,5 @@ fun LoginScreen() {
 @Composable
 @Preview(showBackground = true)
 fun LoginScreenPreview() {
-    LoginScreen()
+    LoginScreen(onRegisterClick = {}, {})
 }

@@ -1,31 +1,31 @@
-package com.example.healthcareapplication.presentation.components
+package com.example.healthcareapplication.presentation.screen
 
 import com.example.healthcareapplication.R
 
-sealed class Screen(
+sealed class MainScreens(
     val route: String,
     val title: String,
     val icon: Int
 ){
-    object Dashboard : Screen(
+    object Dashboard : MainScreens(
         route = "dashboard",
         title = "Dashboard",
         icon = R.drawable.ic_round_dashboard_24
     )
 
-    object Goal : Screen(
+    object Goal : MainScreens(
         route = "goal",
         title = "Goal",
         icon =R.drawable.ic_round_emoji_events_24
     )
 
-    object Report : Screen(
+    object Report : MainScreens(
         route = "report",
         title = "Report",
         icon =R.drawable.ic_round_leaderboard_24
     )
 
-    object Me : Screen(
+    object Me : MainScreens(
         route = "me",
         title = "Me",
         icon =R.drawable.ic_round_person_24
