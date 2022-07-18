@@ -23,11 +23,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.example.healthcareapplication.presentation.components.ForgotPasswordScreen
 import com.example.healthcareapplication.presentation.components.LoginScreen
 import com.example.healthcareapplication.presentation.components.MainScreen
 import com.example.healthcareapplication.presentation.components.RegisterScreen
 import com.example.healthcareapplication.presentation.components.screens.DashboardScreen
+import com.example.healthcareapplication.presentation.nav_graph.MainNavGraph
 import com.example.healthcareapplication.presentation.ui.theme.HealthCareApplicationTheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,7 +45,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen()
+                    MainNavGraph(navController = rememberNavController())
                 }
             }
         }

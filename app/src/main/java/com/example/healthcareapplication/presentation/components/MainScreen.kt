@@ -8,21 +8,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.healthcareapplication.presentation.nav_graph.MainNavGraph
+import com.example.healthcareapplication.presentation.screen.MainScreens
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
-    val navController = rememberNavController()
-
+fun MainScreen(
+    navController: NavHostController = rememberNavController()
+) {
     Scaffold(
         bottomBar = { BottomBar(navController = navController) }
     ) {
@@ -32,20 +34,20 @@ fun MainScreen() {
 
 @Composable
 fun BottomBar(navController: NavHostController) {
-    val screens = listOf(
-        Screen.Dashboard,
-        Screen.Goal,
-        Screen.Report,
-        Screen.Me
+    val mainScreens = listOf(
+        MainScreens.Dashboard,
+        MainScreens.Goal,
+        MainScreens.Report,
+        MainScreens.Me
     )
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
     NavigationBar() {
-        screens.forEach { screen ->
+        mainScreens.forEach { screen ->
             AddItem(
-                screen = screen,
+                mainScreens = screen,
                 currentDestination = currentDestination,
                 navController = navController
             )
@@ -55,7 +57,7 @@ fun BottomBar(navController: NavHostController) {
 
 @Composable
 fun RowScope.AddItem(
-    screen: Screen,
+    mainScreens: MainScreens,
     currentDestination: NavDestination?,
     navController: NavHostController
 ) {
@@ -66,7 +68,7 @@ fun RowScope.AddItem(
         NavigationBarItem(
             label = {
                 Text(
-                    text = screen.title,
+                    text = mainScreens.title,
                     style = MaterialTheme.typography.labelSmall,
                     fontWeight = FontWeight.ExtraBold,
                     color = Color.Black
@@ -74,15 +76,18 @@ fun RowScope.AddItem(
             },
             icon = {
                 Icon(
-                    painterResource(id = screen.icon),
+                    painterResource(id = mainScreens.icon),
                     contentDescription = "Navigation Icon"
                 )
             },
             selected = currentDestination?.hierarchy?.any {
-                it.route == screen.route
+                it.route == mainScreens.route
             } == true,
             onClick = {
-                navController.navigate(screen.route)
+                navController.navigate(mainScreens.route) {
+//                    popUpTo(navController.graph.findStartDestination().id)
+//                    launchSingleTop = true
+                }
             }
         )
     }
