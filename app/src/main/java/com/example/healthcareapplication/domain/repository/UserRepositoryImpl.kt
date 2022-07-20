@@ -14,8 +14,7 @@ import javax.inject.Inject
 
 
 class UserRepositoryImpl @Inject constructor(
-    private var auth: FirebaseAuth = Firebase.auth
-
+    private val auth: FirebaseAuth
 ) : UserRepository{
     // firebase attributes initialising
 

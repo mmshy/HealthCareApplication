@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,7 +34,9 @@ import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
 @Composable
-fun DashboardScreen() {
+fun DashboardScreen(
+    navController: NavHostController
+) {
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
@@ -141,12 +144,16 @@ fun DashboardScreen() {
                             .padding(top = 32.dp)
                     ) {
                         DashboardBtn(
-                            onClick = { /*TODO*/ },
-                            title = "Food",
+                            onClick = {
+                                navController.navigate(route = "meal")
+                            },
+                            title = "Meal",
                             icon = R.drawable.ic_round_person_24
                         )
                         DashboardBtn(
-                            onClick = { /*TODO*/ },
+                            onClick = {
+                                navController.navigate(route = "sleep")
+                            },
                             title = "Sleep",
                             icon = R.drawable.ic_round_person_24
                         )
@@ -161,5 +168,5 @@ fun DashboardScreen() {
 @Composable
 @Preview(showBackground = true)
 fun DashboardScreenPreview() {
-    DashboardScreen()
+    DashboardScreen(rememberNavController())
 }

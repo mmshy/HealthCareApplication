@@ -74,7 +74,7 @@ fun DashboardBtn(
             .height(138.dp)
             .background(Color.White, RoundedCornerShape(8.dp))
             .clickable {
-                onClick
+                onClick()
             },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,

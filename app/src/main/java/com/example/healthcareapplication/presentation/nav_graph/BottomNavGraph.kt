@@ -8,6 +8,7 @@ import com.example.healthcareapplication.presentation.components.screens.Dashboa
 import com.example.healthcareapplication.presentation.components.screens.GoalScreen
 import com.example.healthcareapplication.presentation.components.screens.MeScreen
 import com.example.healthcareapplication.presentation.components.screens.ReportScreen
+import com.example.healthcareapplication.presentation.screen.HealthDetailScreens
 import com.example.healthcareapplication.presentation.screen.MainScreens
 
 @Composable
@@ -20,7 +21,9 @@ fun BottomNavGraph(
         route = "home_graph"
     ) {
         composable(route = MainScreens.Dashboard.route) {
-            DashboardScreen()
+            DashboardScreen(
+                navController = navController
+            )
         }
         composable(route = MainScreens.Goal.route) {
             navController.popBackStack()
@@ -33,6 +36,12 @@ fun BottomNavGraph(
         composable(route = MainScreens.Me.route) {
             navController.popBackStack()
             MeScreen()
+        }
+        composable(route = "sleep") {
+            SleepScreen()
+        }
+        composable(route = "meal") {
+            MealScreen()
         }
     }
 }

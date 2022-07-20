@@ -24,38 +24,44 @@ val myTypography = Typography(
         fontSize = 21.sp,
         lineHeight = 25.sp,
         letterSpacing = 0.5.sp,
+        color = Color.Black
     ),
     headlineLarge = TextStyle(
         fontFamily = Lato,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 64.sp,
-        lineHeight = 77.sp
+        lineHeight = 77.sp,
+        color = Color.Black
     ),
     headlineMedium = TextStyle(
         fontFamily = Lato,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 32.sp,
-        lineHeight = 38.sp
+        lineHeight = 38.sp,
+        color = Color.Black
     ),
     headlineSmall = TextStyle(
         fontFamily = Lato,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 27.sp,
-        lineHeight = 32.sp
+        lineHeight = 32.sp,
+        color = Color.Black
     ),
     titleLarge = TextStyle(
         fontFamily = Lato,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 20.sp,
         lineHeight = 24.sp,
-        letterSpacing = 0.sp
+        letterSpacing = 0.sp,
+        color = Color.Black
     ),
     titleMedium = TextStyle(
         fontFamily = Lato,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 15.sp,
         lineHeight = 19.sp,
-        letterSpacing = 0.sp
+        letterSpacing = 0.sp,
+        color = Color.Black
     ),
     labelSmall = TextStyle(
         fontFamily = Lato,

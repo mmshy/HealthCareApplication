@@ -24,7 +24,7 @@ import com.example.healthcareapplication.presentation.ui.theme.myTypography
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(
+fun  MainScreen(
     navController: NavHostController = rememberNavController()
 ) {
     Scaffold(
@@ -46,13 +46,17 @@ fun BottomBar(navController: NavHostController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    NavigationBar() {
-        mainScreens.forEach { screen ->
-            AddItem(
-                mainScreens = screen,
-                currentDestination = currentDestination,
-                navController = navController
-            )
+    val bottomBarDestination = mainScreens.any { it.route == currentDestination?.route }
+
+    if (bottomBarDestination) {
+        NavigationBar() {
+            mainScreens.forEach { screen ->
+                AddItem(
+                    mainScreens = screen,
+                    currentDestination = currentDestination,
+                    navController = navController
+                )
+            }
         }
     }
 }
@@ -87,8 +91,8 @@ fun RowScope.AddItem(
             } == true,
             onClick = {
                 navController.navigate(mainScreens.route) {
-//                    popUpTo(navController.graph.findStartDestination().id)
-//                    launchSingleTop = true
+                    popUpTo(navController.graph.findStartDestination().id)
+                    launchSingleTop = true
                 }
             }
         )
