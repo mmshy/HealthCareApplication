@@ -84,7 +84,7 @@ fun SleepScreen() {
                         modifier = Modifier
                             .constrainAs(body) {
                                 centerHorizontallyTo(parent)
-                                top.linkTo(greeting.bottom, 28.dp)
+                                top.linkTo(greeting.bottom, 20.dp)
                             },
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -132,13 +132,13 @@ fun SleepScreen() {
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()
-
+                            .padding(bottom = 30.dp)
                             .constrainAs(list) {
-                                top.linkTo(body.bottom, 39.dp)
+                                top.linkTo(body.bottom, 30.dp)
                             },
                         verticalArrangement = Arrangement.spacedBy(1.dp)
                     ) {
-                        items(3) {
+                        items(10) {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
@@ -154,7 +154,7 @@ fun SleepScreen() {
                                 Spacer(modifier = Modifier.width(24.dp))
                                 Text(
                                     text = "...Sleeping",
-                                    style = MaterialTheme.typography.labelMedium,
+                                    style = MaterialTheme.typography.bodySmall,
                                     modifier = Modifier.weight(1f),
                                     color = Color.Black
                                 )
@@ -170,6 +170,9 @@ fun SleepScreen() {
                                 }
                             }
                         }
+//                        item() {
+//                            Box(modifier = Modifier.size(40.dp))
+//                        }
                     }
 
                 }

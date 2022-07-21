@@ -26,7 +26,8 @@ fun BriefData (
         Icon(
             painter = painterResource(id = icon),
             contentDescription = "icon",
-            tint = MaterialTheme.colorScheme.secondary
+            tint = MaterialTheme.colorScheme.secondary,
+            modifier = Modifier.size(40.dp)
         )
         Spacer(modifier = Modifier.size(2.dp))
         Text(
@@ -34,7 +35,7 @@ fun BriefData (
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.primary
         )
-        Spacer(modifier = Modifier.size(2.dp))
+        Spacer(modifier = Modifier.size(4.dp))
         if (title != null) {
             Text(
                 text = title,

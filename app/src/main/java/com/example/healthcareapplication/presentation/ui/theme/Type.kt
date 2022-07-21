@@ -26,6 +26,14 @@ val myTypography = Typography(
         letterSpacing = 0.5.sp,
         color = Color.Black
     ),
+    bodySmall = TextStyle(
+        fontFamily = Lato,
+        fontWeight = FontWeight.Normal,
+        fontSize = 19.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.5.sp,
+        color = Color.Black
+    ),
     headlineLarge = TextStyle(
         fontFamily = Lato,
         fontWeight = FontWeight.ExtraBold,
@@ -51,7 +59,7 @@ val myTypography = Typography(
         fontFamily = Lato,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 20.sp,
-        lineHeight = 24.sp,
+        lineHeight = 25.sp,
         letterSpacing = 0.sp,
         color = Color.Black
     ),
@@ -74,8 +82,8 @@ val myTypography = Typography(
     labelMedium = TextStyle(
         fontFamily = Lato,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 19.sp
+        fontSize = 14.sp,
+        lineHeight = 17.sp
     )
 )
 
