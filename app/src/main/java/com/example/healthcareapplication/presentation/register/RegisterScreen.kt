@@ -24,14 +24,16 @@ import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
 @Composable
 fun RegisterScreen(
-    onBackToLoginClick: () -> Unit
+    onBackToLoginClick: () -> Unit,
 ) {
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
     ) {
         ConstraintLayout(
-            modifier = Modifier.padding(16.dp, 0.dp)
+            modifier = Modifier
+                .padding(16.dp, 0.dp)
+                .fillMaxSize()
         ) {
 
             val (title, column, signUpBtn, backToSignInBtn) = createRefs()

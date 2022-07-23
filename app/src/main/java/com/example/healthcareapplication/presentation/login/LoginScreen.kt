@@ -29,6 +29,7 @@ import com.example.healthcareapplication.presentation.ui.theme.myTypography
 fun LoginScreen(
     onRegisterClick: () -> Unit,
     onSubmitClick: () -> Unit,
+    onForgetPasswordClick: () -> Unit,
     viewModel: LoginViewModel = viewModel()
 ) {
     MaterialTheme(
@@ -36,7 +37,9 @@ fun LoginScreen(
         colorScheme = LightColorScheme
     ) {
         ConstraintLayout (
-            modifier = Modifier.padding(16.dp, 0.dp)
+            modifier = Modifier
+                .padding(16.dp, 0.dp)
+                .fillMaxSize()
         ) {
 
             val (column, anotherLogin, register) = createRefs()
@@ -103,6 +106,9 @@ fun LoginScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(0.dp, 16.dp, 0.dp, 0.dp)
+                        .clickable {
+                            onForgetPasswordClick()
+                        }
                 )
                 primaryBtn(
                     onClick = onSubmitClick,
@@ -178,5 +184,5 @@ fun LoginScreen(
 @Composable
 @Preview(showBackground = true)
 fun LoginScreenPreview() {
-    LoginScreen(onRegisterClick = {}, {})
+    LoginScreen(onRegisterClick = {}, {}, {})
 }
