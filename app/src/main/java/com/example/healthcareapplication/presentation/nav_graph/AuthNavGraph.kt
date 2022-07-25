@@ -29,7 +29,8 @@ fun NavGraphBuilder.authNavGraph(
                 },
                 onForgetPasswordClick = {
                     navController.navigate(AuthScreens.ForgotPassword.route)
-                }
+                },
+                navController = navController
             )
         }
         composable(route = AuthScreens.Register.route) {

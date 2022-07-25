@@ -4,7 +4,8 @@ import com.example.healthcareapplication.domain.model.User
 import com.google.firebase.auth.FirebaseAuth
 
 interface UserRepository {
-    suspend fun getUser(currentUser: User)
 
-    suspend fun updateUser( newUser: User)
+    suspend fun authenticate(email: String, password: String, onResult: (Throwable?)-> Unit)
+
+    suspend fun createAccount(newUser: User)
 }

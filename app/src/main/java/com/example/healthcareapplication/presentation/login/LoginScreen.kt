@@ -3,6 +3,7 @@ package com.example.healthcareapplication.presentation.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -10,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -18,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.healthcareapplication.R
@@ -31,8 +34,13 @@ fun LoginScreen(
     onRegisterClick: () -> Unit,
     onSubmitClick: () -> Unit,
     onForgetPasswordClick: () -> Unit,
+    navController: NavHostController,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
+    viewModel.navController = navController
+
+    val uiState by viewModel.uiState
+
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
@@ -50,12 +58,9 @@ fun LoginScreen(
                     top.linkTo(parent.top, margin = 20.dp)
                 }
             ) {
-                var email by remember {
-                    mutableStateOf("")
-                }
-                var password by remember {
-                    mutableStateOf("")
-                }
+                var email = uiState.email
+                var password = uiState.password
+
                 var passwordVisibility: Boolean by remember { mutableStateOf(false) }
                 Image(
                     painterResource(id = R.drawable.shark_sleep),
@@ -75,11 +80,12 @@ fun LoginScreen(
                 )
                 OutlinedTextField(
                     value = email,
-                    onValueChange = { email = it },
+                    onValueChange = { viewModel.onEmailChange(it) },
                     label = { Text(text = "Email") },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(0.dp, 22.dp, 0.dp, 0.dp)
+                        .padding(0.dp, 22.dp, 0.dp, 0.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
                 )
                 OutlinedTextField(
                     value = password,
@@ -94,11 +100,12 @@ fun LoginScreen(
                             )
                         }
                     },
-                    onValueChange = { password = it },
+                    onValueChange = { viewModel.onPasswordChange(it) },
                     label = { Text(text = "Password") },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(0.dp, 16.dp, 0.dp, 0.dp)
+                        .padding(0.dp, 16.dp, 0.dp, 0.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
                 )
                 Text(
                     text = "Forgot Password?",
@@ -112,7 +119,7 @@ fun LoginScreen(
                         }
                 )
                 primaryBtn(
-                    onClick = onSubmitClick,
+                    onClick = {viewModel.onLoginEvent()},
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(0.dp, 20.dp, 0.dp, 0.dp)
@@ -185,5 +192,5 @@ fun LoginScreen(
 @Composable
 @Preview(showBackground = true)
 fun LoginScreenPreview() {
-    LoginScreen(onRegisterClick = {}, {}, {})
+    LoginScreen(onRegisterClick = {}, {}, {}, rememberNavController())
 }

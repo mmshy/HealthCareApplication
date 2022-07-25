@@ -13,6 +13,27 @@ class UserDAO (
 ) {
     // firebase attributes initialising
 
+    suspend fun authenticate(email: String, password: String, onResult: (Throwable?)-> Unit) {
+        Firebase.auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { onResult(it.exception) }
+    }
+
+    suspend fun createAccount(newUser: User) {
+        Firebase.auth.createUserWithEmailAndPassword(newUser.email, newUser.password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "createUserWithEmail:success")
+                    val user = Firebase.auth.currentUser
+                    //updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    //updateUI(null)
+                }
+            }
+    }
+
     suspend fun getUser(currentUser: User) {
         Firebase.auth.signInWithEmailAndPassword(currentUser.email, currentUser.password)
             .addOnCompleteListener { task ->
@@ -24,23 +45,6 @@ class UserDAO (
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
-
-                    //updateUI(null)
-                }
-            }
-    }
-
-    suspend fun updateUser(newUser: User) {
-        Firebase.auth.createUserWithEmailAndPassword(newUser.email, newUser.password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success")
-                    val user = Firebase.auth.currentUser
-                    //updateUI(user)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
                     //updateUI(null)
                 }
             }

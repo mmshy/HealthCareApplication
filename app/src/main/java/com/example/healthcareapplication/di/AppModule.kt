@@ -1,11 +1,13 @@
 package com.example.healthcareapplication.di
 
+import androidx.navigation.NavHostController
 import com.example.healthcareapplication.data.dao.UserDAO
 import com.example.healthcareapplication.domain.repository.UserRepository
 import com.example.healthcareapplication.domain.repository.UserRepositoryImpl
-import com.example.healthcareapplication.domain.usecase.GetUser
-import com.example.healthcareapplication.domain.usecase.UserAcessUseCases
-import com.example.healthcareapplication.domain.usecase.UpdateUser
+import com.example.healthcareapplication.domain.usecase.Authenticate
+import com.example.healthcareapplication.domain.usecase.UserAccessUseCases
+import com.example.healthcareapplication.domain.usecase.CreateAccount
+import com.example.healthcareapplication.presentation.screen.AuthScreens
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,12 +32,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRegisterUseCase(repository: UserRepository) : UserAcessUseCases{
-        return UserAcessUseCases(
-            getUser = GetUser(repository),
-            updateUser = UpdateUser(repository)
+    fun provideUserAccessUseCases(repository: UserRepository) : UserAccessUseCases{
+        return UserAccessUseCases(
+            authenticate = Authenticate(repository),
+            createAccount = CreateAccount(repository)
         );
     }
-
-
 }
