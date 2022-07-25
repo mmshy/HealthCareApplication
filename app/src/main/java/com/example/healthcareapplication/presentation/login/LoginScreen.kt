@@ -29,7 +29,7 @@ import com.example.healthcareapplication.presentation.ui.theme.myTypography
 fun LoginScreen(
     onRegisterClick: () -> Unit,
     onSubmitClick: () -> Unit,
-    viewModel: LoginViewModel = viewModel()
+    //viewModel: LoginViewModel = viewModel()
 ) {
     MaterialTheme(
         typography = myTypography,
