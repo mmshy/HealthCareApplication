@@ -3,6 +3,7 @@ package com.example.healthcareapplication.di
 import com.example.healthcareapplication.data.dao.UserDAO
 import com.example.healthcareapplication.domain.repository.UserRepository
 import com.example.healthcareapplication.domain.repository.UserRepositoryImpl
+import com.example.healthcareapplication.domain.usecase.CreateUser
 import com.example.healthcareapplication.domain.usecase.GetUser
 import com.example.healthcareapplication.domain.usecase.UserAcessUseCases
 import com.example.healthcareapplication.domain.usecase.UpdateUser
@@ -32,6 +33,7 @@ object AppModule {
     @Singleton
     fun provideRegisterUseCase(repository: UserRepository) : UserAcessUseCases{
         return UserAcessUseCases(
+            createUser = CreateUser(repository),
             getUser = GetUser(repository),
             updateUser = UpdateUser(repository)
         );

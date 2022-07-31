@@ -18,3 +18,7 @@ class User (
 ){
 
 }
+
+class InvalidUserException(message: String):Exception(message){
+
+}
