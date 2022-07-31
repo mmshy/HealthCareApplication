@@ -1,8 +1,13 @@
 package com.example.healthcareapplication.di
 
+import androidx.navigation.NavHostController
 import com.example.healthcareapplication.data.dao.UserDAO
 import com.example.healthcareapplication.domain.repository.UserRepository
 import com.example.healthcareapplication.domain.repository.UserRepositoryImpl
+import com.example.healthcareapplication.domain.usecase.Authenticate
+import com.example.healthcareapplication.domain.usecase.UserAccessUseCases
+import com.example.healthcareapplication.domain.usecase.CreateAccount
+import com.example.healthcareapplication.presentation.screen.AuthScreens
 import com.example.healthcareapplication.domain.usecase.CreateUser
 import com.example.healthcareapplication.domain.usecase.GetUser
 import com.example.healthcareapplication.domain.usecase.UserAcessUseCases
@@ -31,11 +36,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRegisterUseCase(repository: UserRepository) : UserAcessUseCases{
-        return UserAcessUseCases(
-            createUser = CreateUser(repository),
-            getUser = GetUser(repository),
-            updateUser = UpdateUser(repository)
+    fun provideUserAccessUseCases(repository: UserRepository) : UserAccessUseCases{
+        return UserAccessUseCases(
+            authenticate = Authenticate(repository),
+            createAccount = CreateAccount(repository)
         );
     }
 

@@ -2,6 +2,7 @@ package com.example.healthcareapplication.presentation.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,6 +28,8 @@ import com.example.healthcareapplication.presentation.ui.theme.myTypography
 fun  MainScreen(
     navController: NavHostController = rememberNavController()
 ) {
+    val manState = rememberScaffoldState()
+
     Scaffold(
         bottomBar = { BottomBar(navController = navController) }
     ) {

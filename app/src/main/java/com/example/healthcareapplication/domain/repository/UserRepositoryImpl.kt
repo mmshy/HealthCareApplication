@@ -12,12 +12,12 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository{
     // firebase attributes initialising
 
-    override suspend fun getUser(currrentUser: User) {
-       return dao.getUser(currrentUser);
+    override suspend fun authenticate(email: String, password: String, onResult: (Throwable?)-> Unit) {
+        dao.authenticate(email, password, onResult);
     }
 
-    override suspend fun updateUser(newUser: User) {
-        dao.updateUser(newUser);
+    override suspend fun createAccount(newUser: User) {
+        dao.createAccount(newUser);
     }
 
 }

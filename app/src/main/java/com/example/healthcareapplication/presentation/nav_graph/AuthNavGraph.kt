@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.healthcareapplication.presentation.components.ForgotPasswordScreen
 import com.example.healthcareapplication.presentation.components.LoginScreen
 import com.example.healthcareapplication.presentation.components.MainScreen
 import com.example.healthcareapplication.presentation.components.RegisterScreen
@@ -25,11 +26,26 @@ fun NavGraphBuilder.authNavGraph(
                 onSubmitClick = {
                     navController.popBackStack()
                     navController.navigate(route = "home_graph")
-                }
+                },
+                onForgetPasswordClick = {
+                    navController.navigate(AuthScreens.ForgotPassword.route)
+                },
+                navController = navController
             )
         }
         composable(route = AuthScreens.Register.route) {
             RegisterScreen(
+                onBackToLoginClick = {
+                    navController.popBackStack()
+                    navController.navigate(AuthScreens.Login.route)
+                }
+            )
+        }
+        composable(route = AuthScreens.ForgotPassword.route) {
+            ForgotPasswordScreen(
+                onSubmitClick = {
+                    /*TODO*/
+                },
                 onBackToLoginClick = {
                     navController.popBackStack()
                     navController.navigate(AuthScreens.Login.route)

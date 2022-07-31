@@ -1,10 +1,7 @@
 package com.example.healthcareapplication.presentation.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -23,13 +20,18 @@ import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
 @Composable
-fun ForgotPasswordScreen() {
+fun ForgotPasswordScreen(
+    onSubmitClick: () -> Unit,
+    onBackToLoginClick: () -> Unit,
+) {
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
     ) {
         ConstraintLayout(
-            modifier = Modifier.padding(16.dp, 0.dp)
+            modifier = Modifier
+                .padding(16.dp, 0.dp)
+                .fillMaxSize()
         ) {
 
             val (title, input, submitBtn, image, backToLoginBtn) = createRefs()
@@ -61,7 +63,7 @@ fun ForgotPasswordScreen() {
             )
 
             primaryBtn(
-                onClick = { /*TODO*/ },
+                onClick = { onSubmitClick },
                 modifier = Modifier
                     .constrainAs(submitBtn) {
                         top.linkTo(input.bottom, 34.dp)
@@ -83,7 +85,7 @@ fun ForgotPasswordScreen() {
             )
 
             secondBtn(
-                onClick = { /*TODO*/ },
+                onClick = { onBackToLoginClick },
                 modifier = Modifier
                     .height(49.dp)
                     .constrainAs(backToLoginBtn) {
@@ -100,5 +102,5 @@ fun ForgotPasswordScreen() {
 @Composable
 @Preview (showBackground = true)
 fun ForgotPasswordScreenPreview() {
-    ForgotPasswordScreen()
+    ForgotPasswordScreen({}, {})
 }
