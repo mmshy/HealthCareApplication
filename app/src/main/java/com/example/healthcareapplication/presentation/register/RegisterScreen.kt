@@ -3,6 +3,7 @@ package com.example.healthcareapplication.presentation.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -14,11 +15,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.healthcareapplication.R
 import com.example.healthcareapplication.presentation.components.custom.primaryBtn
 import com.example.healthcareapplication.presentation.components.custom.secondBtn
+import com.example.healthcareapplication.presentation.register.RegisterEvent
+import com.example.healthcareapplication.presentation.register.RegisterState
+import com.example.healthcareapplication.presentation.register.RegisterViewModel
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
@@ -28,7 +33,7 @@ fun RegisterScreen(
     viewModel: RegisterViewModel = hiltViewModel()
 ) {
 
-    val state = viewModel.state.value
+    val uiState = viewModel.uiState.value
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
@@ -78,22 +83,26 @@ fun RegisterScreen(
                     }
             ) {
                 OutlinedTextField(
-                    value = email,
-                    onValueChange = { email = it },
+                    value = uiState.email,
+                    onValueChange = {
+                        viewModel.onEvent(RegisterEvent.EnterEmail(it))
+                                    },
                     label = { Text(text = "Email") },
                     modifier = Modifier
                         .fillMaxWidth()
                 )
                 OutlinedTextField(
-                    value = name,
-                    onValueChange = { name = it },
+                    value = uiState.name,
+                    onValueChange = {
+                        viewModel.onEvent(RegisterEvent.EnterName(it))
+                                    },
                     label = { Text(text = "Name") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(0.dp, 16.dp, 0.dp, 0.dp)
                 )
                 OutlinedTextField(
-                    value = password,
+                    value = uiState.password,
                     visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
                         IconButton(
@@ -105,14 +114,16 @@ fun RegisterScreen(
                             )
                         }
                     },
-                    onValueChange = { password = it },
+                    onValueChange = {
+                        viewModel.onEvent(RegisterEvent.EnterPassword(it))
+                                    },
                     label = { Text(text = "Password") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(0.dp, 16.dp, 0.dp, 0.dp)
                 )
                 OutlinedTextField(
-                    value = confirmPassword,
+                    value = uiState.confirmPassword,
                     visualTransformation = if (passwordVisibility1) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
                         IconButton(
@@ -124,7 +135,9 @@ fun RegisterScreen(
                             )
                         }
                     },
-                    onValueChange = { confirmPassword = it },
+                    onValueChange = {
+                        viewModel.onEvent(RegisterEvent.EnterConfirmPassword(it))
+                                    },
                     label = { Text(text = "Confirm Password") },
                     modifier = Modifier
                         .fillMaxWidth()

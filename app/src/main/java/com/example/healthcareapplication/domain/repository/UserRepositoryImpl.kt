@@ -2,7 +2,6 @@ package com.example.healthcareapplication.domain.repository
 
 
 import com.example.healthcareapplication.data.dao.UserDAO
-import com.example.healthcareapplication.data.dao.UserDao1
 import com.example.healthcareapplication.domain.model.User
 import javax.inject.Inject
 

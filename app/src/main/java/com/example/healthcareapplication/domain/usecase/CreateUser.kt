@@ -17,7 +17,15 @@ class CreateUser(
         else if (!isValidEmail(currentUser.email))
             throw InvalidUserException("Wrong email!")
         else
-            repository.getUser(currentUser)
+            repository.authenticate(currentUser.email,currentUser.password){ error ->
+                if (error == null) {
+                    //TODO: open main screen
+
+                }
+                else {
+                    //TODO: show error
+                }
+            }
     }
 
     fun isValidEmail(target: CharSequence?): Boolean {

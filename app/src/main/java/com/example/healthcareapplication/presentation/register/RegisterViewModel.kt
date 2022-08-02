@@ -5,39 +5,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthcareapplication.domain.model.User
-import com.example.healthcareapplication.domain.usecase.UserAcessUseCases
+import com.example.healthcareapplication.domain.usecase.UserAccessUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val useCases: UserAcessUseCases
+    private val useCases: UserAccessUseCases
 ) : ViewModel() {
 
-
-
-
-    private val _email = mutableStateOf(RegisterState(
-        email = "Enter email..."
-    ))
-    val email: State<RegisterState> = _email
-
-    private val _name = mutableStateOf(RegisterState(
-        name = "Enter name..."
-    ))
-    val name: State<RegisterState> = _name
-
-    private val _password = mutableStateOf(RegisterState(
-        password = "Enter password..."
-    ))
-    val password: State<RegisterState> = _password
-
-    private val _confirmPassword = mutableStateOf(RegisterState(
-        confirmPassword = "Enter confirmPassword..."
-    ))
-    val confirmPassword: State<RegisterState> = _confirmPassword
-
+    private val _uiState = mutableStateOf(RegisterState())
+    val uiState: State<RegisterState> = _uiState
 
     private var newUser = User()
 
@@ -49,14 +28,42 @@ class RegisterViewModel @Inject constructor(
         when (event) {
             is RegisterEvent.CreateUser -> {
                 viewModelScope.launch {
-                    //newUser = User(email = _email, name = _name, password = _password)
-                    //useCases.createUser(newUser)
+
+                    useCases.createAccount(
+                        //check have we had enough info_s?
+                        User(
+                            email = _uiState.value.email,
+                            name = _uiState.value.name,
+                            password = _uiState.value.password
+                        )
+                    )
                 }
 
-                /*if (!state.value.correctEmailFormat) {
-                    return
-                }*/
             }
+
+            is RegisterEvent.EnterEmail -> {
+                _uiState.value = uiState.value.copy(
+                    email = event.newEmail
+                )
+            }
+            is RegisterEvent.EnterName -> {
+                _uiState.value = uiState.value.copy(
+                    name = event.newName
+                )
+            }
+
+            is RegisterEvent.EnterPassword -> {
+                _uiState.value = uiState.value.copy(
+                    password = event.newPassword
+                )
+            }
+
+            is RegisterEvent.EnterConfirmPassword -> {
+                _uiState.value = uiState.value.copy(
+                    confirmPassword = event.newConfirmPassword
+                )
+            }
+
 
             else -> {
 
