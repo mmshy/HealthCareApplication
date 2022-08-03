@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val useCases: UserAccessUseCases
-): ViewModel() {
+) : ViewModel() {
 
     var navController: NavHostController? = null
 
@@ -42,30 +42,29 @@ class LoginViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-            navController?.navigate(route = "home_graph")
-
-            // check if account exist
-            /*useCases.authenticate(
+            useCases.authenticate(
                 email = uiState.value.email,
                 password = uiState.value.password
             ) { error ->
                 if (error == null) {
-                    *//*TODO: open main screen*//*
-                    navController.navigate(route = "home_graph")
+                    /*TODO: open main screen*/
+                    navController?.navigate(route = "home_graph")
+                } else {
+                    /*TODO: show error*/
                 }
-                else {
-                    *//*TODO: show error*//*
-                }
-            }*/
+
+
+
+
+            }
+        }
+
+        fun openRegisterScreen() {
 
         }
-    }
 
-    fun openRegisterScreen() {
+        fun openForgotPasswordScreen() {
 
-    }
-
-    fun openForgotPasswordScreen() {
-
+        }
     }
 }

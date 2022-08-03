@@ -146,7 +146,9 @@ fun RegisterScreen(
             }
 
             primaryBtn(
-                onClick = { /*TODO*/ },
+                onClick = {
+                          viewModel.onEvent(RegisterEvent.CreateUser)
+                          },
                 modifier = Modifier
                     .constrainAs(signUpBtn) {
                         top.linkTo(column.bottom, 40.dp)

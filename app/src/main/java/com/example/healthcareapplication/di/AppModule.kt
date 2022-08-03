@@ -33,7 +33,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUserAccessUseCases(repository: UserRepository) : UserAccessUseCases{
+    fun provideUserAccessUseCases(repository: UserRepositoryImpl) : UserAccessUseCases{
         return UserAccessUseCases(
             authenticate = Authenticate(repository),
             createAccount = CreateAccount(repository)
