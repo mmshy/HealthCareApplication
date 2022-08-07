@@ -9,6 +9,7 @@ import com.example.healthcareapplication.domain.usecase.UserAccessUseCases
 import com.example.healthcareapplication.domain.usecase.CreateAccount
 import com.example.healthcareapplication.presentation.screen.AuthScreens
 import com.example.healthcareapplication.domain.usecase.CreateUser
+import com.example.healthcareapplication.presentation.login.LoginViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,6 +40,4 @@ object AppModule {
             createAccount = CreateAccount(repository)
         );
     }
-
-
 }

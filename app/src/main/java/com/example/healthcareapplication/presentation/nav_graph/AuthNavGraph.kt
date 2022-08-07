@@ -4,6 +4,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.healthcareapplication.common.AUTHENTICATION_GRAPH
+import com.example.healthcareapplication.common.HOME_GRAPH
 import com.example.healthcareapplication.presentation.components.ForgotPasswordScreen
 import com.example.healthcareapplication.presentation.components.LoginScreen
 import com.example.healthcareapplication.presentation.components.MainScreen
@@ -16,7 +18,7 @@ fun NavGraphBuilder.authNavGraph(
 ) {
     navigation(
         startDestination = AuthScreens.Login.route,
-        route = "auth_graph"
+        route = AUTHENTICATION_GRAPH
     ) {
         composable(route = AuthScreens.Login.route) {
             LoginScreen(
@@ -25,7 +27,7 @@ fun NavGraphBuilder.authNavGraph(
                 },
                 onSubmitClick = {
                     navController.popBackStack()
-                    navController.navigate(route = "home_graph")
+                    navController.navigate(route = HOME_GRAPH)
                 },
                 onForgetPasswordClick = {
                     navController.navigate(AuthScreens.ForgotPassword.route)
@@ -38,7 +40,8 @@ fun NavGraphBuilder.authNavGraph(
                 onBackToLoginClick = {
                     navController.popBackStack()
                     navController.navigate(AuthScreens.Login.route)
-                }
+                },
+                navController = navController
             )
         }
         composable(route = AuthScreens.ForgotPassword.route) {
@@ -49,7 +52,8 @@ fun NavGraphBuilder.authNavGraph(
                 onBackToLoginClick = {
                     navController.popBackStack()
                     navController.navigate(AuthScreens.Login.route)
-                }
+                },
+                navController = navController
             )
         }
     }
