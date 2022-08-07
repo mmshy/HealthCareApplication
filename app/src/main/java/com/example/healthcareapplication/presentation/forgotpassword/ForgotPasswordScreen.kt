@@ -13,9 +13,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.healthcareapplication.R
 import com.example.healthcareapplication.presentation.components.custom.primaryBtn
 import com.example.healthcareapplication.presentation.components.custom.secondBtn
+import com.example.healthcareapplication.presentation.forgotpassword.ForgotPasswordEvent
+import com.example.healthcareapplication.presentation.forgotpassword.ForgotPasswordViewModel
+import com.example.healthcareapplication.presentation.register.RegisterViewModel
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
@@ -23,6 +27,7 @@ import com.example.healthcareapplication.presentation.ui.theme.myTypography
 fun ForgotPasswordScreen(
     onSubmitClick: () -> Unit,
     onBackToLoginClick: () -> Unit,
+    viewModel: ForgotPasswordViewModel = hiltViewModel()
 ) {
     MaterialTheme(
         typography = myTypography,
@@ -53,7 +58,9 @@ fun ForgotPasswordScreen(
 
             OutlinedTextField(
                 value = email,
-                onValueChange = { email = it },
+                onValueChange = {
+                                viewModel.uiState
+                                },
                 label = { Text(text = "Email") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -63,7 +70,9 @@ fun ForgotPasswordScreen(
             )
 
             primaryBtn(
-                onClick = { onSubmitClick },
+                onClick = {
+                          viewModel.onEvent(ForgotPasswordEvent.ResendPassword)
+                          },
                 modifier = Modifier
                     .constrainAs(submitBtn) {
                         top.linkTo(input.bottom, 34.dp)

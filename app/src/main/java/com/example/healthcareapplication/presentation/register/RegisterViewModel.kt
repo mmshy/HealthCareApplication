@@ -24,7 +24,6 @@ class RegisterViewModel @Inject constructor(
     private val _uiState = mutableStateOf(RegisterState())
     val uiState: State<RegisterState> = _uiState
 
-    private var newUser = User()
 
     init {
 

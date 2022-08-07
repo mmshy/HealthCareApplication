@@ -34,6 +34,17 @@ class UserDAO (
             }
     }
 
+    suspend fun forgotPassword(email: String) {
+        Firebase.auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+            if(task.isSuccessful){
+                // make some toast
+            }
+            else{
+                // same
+            }
+        }
+    }
+
     suspend fun getUser(currentUser: User) {
         Firebase.auth.signInWithEmailAndPassword(currentUser.email, currentUser.password)
             .addOnCompleteListener { task ->

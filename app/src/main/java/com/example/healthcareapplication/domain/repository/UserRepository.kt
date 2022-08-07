@@ -8,4 +8,6 @@ interface UserRepository {
     suspend fun authenticate(email: String, password: String, onResult: (Throwable?)-> Unit)
 
     suspend fun createAccount(newUser: User)
+
+    suspend fun forgotPassword(email: String)
 }

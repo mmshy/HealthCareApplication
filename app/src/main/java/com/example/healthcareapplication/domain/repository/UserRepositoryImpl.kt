@@ -19,5 +19,11 @@ class UserRepositoryImpl @Inject constructor(
         dao.createAccount(newUser);
     }
 
+    override suspend fun forgotPassword(email: String) {
+        dao.forgotPassword(email);
+    }
+
+
+
 }
 
