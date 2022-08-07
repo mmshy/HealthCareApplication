@@ -32,7 +32,6 @@ import com.example.healthcareapplication.presentation.ui.theme.myTypography
 @Composable
 fun LoginScreen(
     onRegisterClick: () -> Unit,
-    onSubmitClick: () -> Unit,
     onForgetPasswordClick: () -> Unit,
     navController: NavHostController,
     viewModel: LoginViewModel = hiltViewModel()
@@ -193,5 +192,5 @@ fun LoginScreen(
 @Composable
 @Preview(showBackground = true)
 fun LoginScreenPreview() {
-    LoginScreen(onRegisterClick = {}, {}, {}, rememberNavController())
+    LoginScreen(onRegisterClick = {}, {}, rememberNavController())
 }

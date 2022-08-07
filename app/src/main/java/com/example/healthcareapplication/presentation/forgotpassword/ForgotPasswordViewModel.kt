@@ -18,10 +18,14 @@ import javax.inject.Inject
 class ForgotPasswordViewModel  @Inject constructor(
     private val useCases: UserAccessUseCases
 ) : ViewModel(){
+
     var navController: NavHostController? = null
 
-    private val _uiState = mutableStateOf(ForgotPasswordState())
-    val uiState: State<ForgotPasswordState> = _uiState
+    var uiState = mutableStateOf(ForgotPasswordState())
+
+    fun onEmailChange(newValue: String) {
+        uiState.value = uiState.value.copy(email = newValue)
+    }
 
     fun onEvent(event: ForgotPasswordEvent) {
         when (event) {
@@ -29,7 +33,7 @@ class ForgotPasswordViewModel  @Inject constructor(
                 viewModelScope.launch {
                     if (true) {
                         try {
-                            useCases.forgotPassword(_uiState.value.email)
+                            useCases.forgotPassword(uiState.value.email)
                             // no more home grapgh
                             //navController?.navigate(route = "home_graph")
                         } catch (e: InvalidUserException) {
@@ -40,13 +44,6 @@ class ForgotPasswordViewModel  @Inject constructor(
 
                 }
 
-
-            }
-
-            is ForgotPasswordEvent.EnterEmail -> {
-                _uiState.value = uiState.value.copy(
-                    email = event.newEmail
-                )
             }
 
             else -> {}

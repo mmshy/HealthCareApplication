@@ -28,12 +28,14 @@ import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
 @Composable
 fun ForgotPasswordScreen(
-    onSubmitClick: () -> Unit,
     onBackToLoginClick: () -> Unit,
     navController: NavHostController,
     viewModel: ForgotPasswordViewModel = hiltViewModel()
 ) {
     viewModel.navController = navController
+
+    var uiState by viewModel.uiState
+
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
@@ -46,9 +48,7 @@ fun ForgotPasswordScreen(
 
             val (title, input, submitBtn, image, backToLoginBtn) = createRefs()
 
-            var email by remember {
-                mutableStateOf("")
-            }
+            var email = uiState.email
 
             Text(
                 text = "Forgot Password",
@@ -63,9 +63,7 @@ fun ForgotPasswordScreen(
 
             OutlinedTextField(
                 value = email,
-                onValueChange = {
-                                viewModel.uiState
-                                },
+                onValueChange = {viewModel.onEmailChange(it)},
                 label = { Text(text = "Email") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -116,5 +114,5 @@ fun ForgotPasswordScreen(
 @Composable
 @Preview (showBackground = true)
 fun ForgotPasswordScreenPreview() {
-    ForgotPasswordScreen({}, {}, rememberNavController())
+    ForgotPasswordScreen({}, rememberNavController())
 }

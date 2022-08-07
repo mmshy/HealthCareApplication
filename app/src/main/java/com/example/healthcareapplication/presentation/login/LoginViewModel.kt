@@ -48,6 +48,7 @@ class LoginViewModel @Inject constructor(
             ) { error ->
                 if (error == null) {
                     /*TODO: open main screen*/
+                    navController?.popBackStack()
                     navController?.navigate(route = "home_graph")
                 } else {
                     /*TODO: show error*/

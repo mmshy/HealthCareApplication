@@ -25,10 +25,6 @@ fun NavGraphBuilder.authNavGraph(
                 onRegisterClick = {
                     navController.navigate(AuthScreens.Register.route)
                 },
-                onSubmitClick = {
-                    navController.popBackStack()
-                    navController.navigate(route = HOME_GRAPH)
-                },
                 onForgetPasswordClick = {
                     navController.navigate(AuthScreens.ForgotPassword.route)
                 },
@@ -46,9 +42,6 @@ fun NavGraphBuilder.authNavGraph(
         }
         composable(route = AuthScreens.ForgotPassword.route) {
             ForgotPasswordScreen(
-                onSubmitClick = {
-                    /*TODO*/
-                },
                 onBackToLoginClick = {
                     navController.popBackStack()
                     navController.navigate(AuthScreens.Login.route)
