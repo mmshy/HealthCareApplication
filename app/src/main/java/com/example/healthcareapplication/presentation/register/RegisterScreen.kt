@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.healthcareapplication.R
@@ -30,14 +31,16 @@ import com.example.healthcareapplication.presentation.ui.theme.myTypography
 @Composable
 fun RegisterScreen(
     onBackToLoginClick: () -> Unit,
+    navController: NavHostController,
     viewModel: RegisterViewModel = hiltViewModel()
 ) {
+
+    // add navController into viewModel
+    viewModel.navController = navController
 
     val uiState = viewModel.uiState.value
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
-
-
 
     MaterialTheme(
         typography = myTypography,
@@ -50,18 +53,12 @@ fun RegisterScreen(
         ) {
 
             val (title, column, signUpBtn, backToSignInBtn) = createRefs()
-            var email by remember {
-                mutableStateOf("")
-            }
-            var name by remember {
-                mutableStateOf("")
-            }
-            var password by remember {
-                mutableStateOf("")
-            }
-            var confirmPassword by remember {
-                mutableStateOf("")
-            }
+
+            var email = uiState.email
+            var name = uiState.name
+            var password = uiState.password
+            var confirmPassword = uiState.confirmPassword
+
             var passwordVisibility: Boolean by remember { mutableStateOf(false) }
             var passwordVisibility1: Boolean by remember { mutableStateOf(false) }
 
@@ -83,7 +80,7 @@ fun RegisterScreen(
                     }
             ) {
                 OutlinedTextField(
-                    value = uiState.email,
+                    value = email,
                     onValueChange = {
                         viewModel.onEvent(RegisterEvent.EnterEmail(it))
                                     },
@@ -92,7 +89,7 @@ fun RegisterScreen(
                         .fillMaxWidth()
                 )
                 OutlinedTextField(
-                    value = uiState.name,
+                    value = name,
                     onValueChange = {
                         viewModel.onEvent(RegisterEvent.EnterName(it))
                                     },
@@ -102,7 +99,7 @@ fun RegisterScreen(
                         .padding(0.dp, 16.dp, 0.dp, 0.dp)
                 )
                 OutlinedTextField(
-                    value = uiState.password,
+                    value = password,
                     visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
                         IconButton(
@@ -123,7 +120,7 @@ fun RegisterScreen(
                         .padding(0.dp, 16.dp, 0.dp, 0.dp)
                 )
                 OutlinedTextField(
-                    value = uiState.confirmPassword,
+                    value = confirmPassword,
                     visualTransformation = if (passwordVisibility1) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
                         IconButton(
@@ -177,5 +174,5 @@ fun RegisterScreen(
 @Composable
 @Preview(showBackground = true)
 fun RegisterScreenPreview() {
-    RegisterScreen({})
+    RegisterScreen({},rememberNavController())
 }

@@ -37,6 +37,7 @@ fun LoginScreen(
     navController: NavHostController,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
+
     viewModel.navController = navController
 
     val uiState by viewModel.uiState
@@ -60,8 +61,8 @@ fun LoginScreen(
             ) {
                 var email = uiState.email
                 var password = uiState.password
-
                 var passwordVisibility: Boolean by remember { mutableStateOf(false) }
+
                 Image(
                     painterResource(id = R.drawable.shark_sleep),
                     contentDescription = "",

@@ -4,6 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.healthcareapplication.common.HOME_GRAPH
+import com.example.healthcareapplication.common.MEAL_NAVIGATION
+import com.example.healthcareapplication.common.SLEEP_NAVIGATION
 import com.example.healthcareapplication.presentation.components.screens.DashboardScreen
 import com.example.healthcareapplication.presentation.components.screens.GoalScreen
 import com.example.healthcareapplication.presentation.components.screens.MeScreen
@@ -18,7 +21,7 @@ fun BottomNavGraph(
     NavHost(
         navController = navController,
         startDestination = MainScreens.Dashboard.route,
-        route = "home_graph"
+        route = HOME_GRAPH
     ) {
         composable(route = MainScreens.Dashboard.route) {
             DashboardScreen(
@@ -37,10 +40,10 @@ fun BottomNavGraph(
             navController.popBackStack()
             MeScreen()
         }
-        composable(route = "sleep") {
+        composable(route = SLEEP_NAVIGATION) {
             SleepScreen()
         }
-        composable(route = "meal") {
+        composable(route = MEAL_NAVIGATION) {
             MealScreen()
         }
     }
