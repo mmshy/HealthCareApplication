@@ -29,6 +29,8 @@ class RegisterViewModel @Inject constructor(
 
     }
 
+
+
     fun onEvent(event: RegisterEvent) {
         when (event) {
             is RegisterEvent.CreateUser -> {

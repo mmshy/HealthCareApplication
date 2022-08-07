@@ -14,6 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.healthcareapplication.R
 import com.example.healthcareapplication.presentation.components.custom.primaryBtn
 import com.example.healthcareapplication.presentation.components.custom.secondBtn
@@ -27,8 +30,10 @@ import com.example.healthcareapplication.presentation.ui.theme.myTypography
 fun ForgotPasswordScreen(
     onSubmitClick: () -> Unit,
     onBackToLoginClick: () -> Unit,
+    navController: NavHostController,
     viewModel: ForgotPasswordViewModel = hiltViewModel()
 ) {
+    viewModel.navController = navController
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
@@ -111,5 +116,5 @@ fun ForgotPasswordScreen(
 @Composable
 @Preview (showBackground = true)
 fun ForgotPasswordScreenPreview() {
-    ForgotPasswordScreen({}, {})
+    ForgotPasswordScreen({}, {}, rememberNavController())
 }
