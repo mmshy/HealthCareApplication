@@ -29,6 +29,30 @@ class RegisterViewModel @Inject constructor(
 
     }
 
+    fun  onEmailChange(newValue: String) {
+        _uiState.value = uiState.value.copy(
+            email = newValue
+        )
+    }
+
+    fun onNameChange (newValue: String) {
+        _uiState.value = uiState.value.copy(
+            name = newValue
+        )
+    }
+
+    fun onPasswordChange(newValue: String) {
+        _uiState.value = uiState.value.copy(
+            password = newValue
+        )
+    }
+
+    fun onConfirmPasswordhange(newValue: String) {
+        _uiState.value = uiState.value.copy(
+            confirmPassword = newValue
+        )
+    }
+
 
 
     fun onEvent(event: RegisterEvent) {
@@ -58,28 +82,7 @@ class RegisterViewModel @Inject constructor(
 
             }
 
-            is RegisterEvent.EnterEmail -> {
-                _uiState.value = uiState.value.copy(
-                    email = event.newEmail
-                )
-            }
-            is RegisterEvent.EnterName -> {
-                _uiState.value = uiState.value.copy(
-                    name = event.newName
-                )
-            }
 
-            is RegisterEvent.EnterPassword -> {
-                _uiState.value = uiState.value.copy(
-                    password = event.newPassword
-                )
-            }
-
-            is RegisterEvent.EnterConfirmPassword -> {
-                _uiState.value = uiState.value.copy(
-                    confirmPassword = event.newConfirmPassword
-                )
-            }
 
 
             else -> {

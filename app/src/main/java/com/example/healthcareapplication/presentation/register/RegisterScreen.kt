@@ -82,17 +82,18 @@ fun RegisterScreen(
                 OutlinedTextField(
                     value = email,
                     onValueChange = {
-                        viewModel.onEvent(RegisterEvent.EnterEmail(it))
-                                    },
+                        viewModel.onEmailChange(it)
+                    },
                     label = { Text(text = "Email") },
                     modifier = Modifier
                         .fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = name,
-                    onValueChange = {
-                        viewModel.onEvent(RegisterEvent.EnterName(it))
-                                    },
+                    onValueChange =
+                    {
+                        viewModel.onNameChange(it)
+                    },
                     label = { Text(text = "Name") },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -111,9 +112,10 @@ fun RegisterScreen(
                             )
                         }
                     },
-                    onValueChange = {
-                        viewModel.onEvent(RegisterEvent.EnterPassword(it))
-                                    },
+                    onValueChange =
+                    {
+                        viewModel.onPasswordChange(it)
+                    },
                     label = { Text(text = "Password") },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -132,9 +134,10 @@ fun RegisterScreen(
                             )
                         }
                     },
-                    onValueChange = {
-                        viewModel.onEvent(RegisterEvent.EnterConfirmPassword(it))
-                                    },
+                    onValueChange =
+                    {
+                        viewModel.onConfirmPasswordhange(it)
+                    },
                     label = { Text(text = "Confirm Password") },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -144,8 +147,8 @@ fun RegisterScreen(
 
             primaryBtn(
                 onClick = {
-                          viewModel.onEvent(RegisterEvent.CreateUser)
-                          },
+                    viewModel.onEvent(RegisterEvent.CreateUser)
+                },
                 modifier = Modifier
                     .constrainAs(signUpBtn) {
                         top.linkTo(column.bottom, 40.dp)
@@ -174,5 +177,5 @@ fun RegisterScreen(
 @Composable
 @Preview(showBackground = true)
 fun RegisterScreenPreview() {
-    RegisterScreen({},rememberNavController())
+    RegisterScreen({}, rememberNavController())
 }
