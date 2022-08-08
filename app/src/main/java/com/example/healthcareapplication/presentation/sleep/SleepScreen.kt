@@ -23,7 +23,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
 import com.example.healthcareapplication.presentation.components.custom.primaryBtn
+import com.example.healthcareapplication.presentation.sleep.SleepViewModel
 import com.example.healthcareapplication.presentation.ui.theme.Gray
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.Smoke
@@ -32,13 +35,15 @@ import com.example.healthcareapplication.presentation.ui.theme.myTypography
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SleepScreen() {
+fun SleepScreen(
+    viewModel: SleepViewModel = hiltViewModel()
+) {
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
     ) {
         // params
-//        val state
+        val uiState = viewModel.uiState.value
 
         Scaffold(
             floatingActionButton = {
@@ -111,13 +116,13 @@ fun SleepScreen() {
                         ) {
                             BriefData(
                                 title = null,
-                                value = "5h30'",
+                                value = uiState.data1,
                                 icon = R.drawable.ic_round_nights_stay_24
                             )
                             Spacer(modifier = Modifier.width(19.dp))
                             BriefData(
                                 title = "total",
-                                value = "5h30'",
+                                value = uiState.data2,
                                 icon = R.drawable.ic_round_nights_stay_24
                             )
                             Spacer(modifier = Modifier.width(19.dp))

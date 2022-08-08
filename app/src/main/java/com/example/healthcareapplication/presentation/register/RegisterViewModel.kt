@@ -1,7 +1,5 @@
 package com.example.healthcareapplication.presentation.register
 
-import android.view.Gravity
-import android.widget.Toast
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -9,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.healthcareapplication.domain.model.InvalidUserException
 import com.example.healthcareapplication.domain.model.User
-import com.example.healthcareapplication.domain.usecase.UserAccessUseCases
+import com.example.healthcareapplication.domain.usecase.user.UserAccessUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

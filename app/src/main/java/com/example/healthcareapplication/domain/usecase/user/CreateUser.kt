@@ -1,4 +1,4 @@
-package com.example.healthcareapplication.domain.usecase
+package com.example.healthcareapplication.domain.usecase.user
 
 import android.text.TextUtils
 import android.util.Patterns

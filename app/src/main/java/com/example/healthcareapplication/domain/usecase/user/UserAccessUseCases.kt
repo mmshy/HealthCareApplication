@@ -1,4 +1,4 @@
-package com.example.healthcareapplication.domain.usecase
+package com.example.healthcareapplication.domain.usecase.user
 
 
 data class UserAccessUseCases(

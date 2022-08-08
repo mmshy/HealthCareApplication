@@ -3,10 +3,8 @@ package com.example.healthcareapplication.presentation.login
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import com.example.healthcareapplication.domain.usecase.UserAccessUseCases
-import com.google.firebase.auth.EmailAuthProvider
+import com.example.healthcareapplication.domain.usecase.user.UserAccessUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

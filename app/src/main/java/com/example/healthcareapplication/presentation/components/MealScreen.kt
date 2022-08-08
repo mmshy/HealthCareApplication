@@ -55,7 +55,7 @@ fun MealScreen() {
                     val (title, greeting, body, list) = createRefs()
 
                     Text(
-                        text = "Sleep",
+                        text = "Meal",
                         style = MaterialTheme.typography.headlineSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier

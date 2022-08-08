@@ -23,7 +23,5 @@ class UserRepositoryImpl @Inject constructor(
         dao.forgotPassword(email);
     }
 
-
-
 }
 

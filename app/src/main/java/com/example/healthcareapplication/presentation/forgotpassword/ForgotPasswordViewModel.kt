@@ -1,15 +1,11 @@
 package com.example.healthcareapplication.presentation.forgotpassword
 
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.healthcareapplication.domain.model.InvalidUserException
-import com.example.healthcareapplication.domain.model.User
-import com.example.healthcareapplication.domain.usecase.UserAccessUseCases
-import com.example.healthcareapplication.presentation.register.RegisterEvent
-import com.example.healthcareapplication.presentation.register.RegisterState
+import com.example.healthcareapplication.domain.usecase.user.UserAccessUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
