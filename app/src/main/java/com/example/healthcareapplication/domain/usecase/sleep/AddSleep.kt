@@ -1,6 +1,6 @@
 package com.example.healthcareapplication.domain.usecase.sleep
 
-import com.example.healthcareapplication.domain.repository.SleepRepositoryImpl
+import com.example.healthcareapplication.domain.service.StorageServiceImpl
 
-class AddSleep(repository: SleepRepositoryImpl) {
+class AddSleep(repository: StorageServiceImpl) {
 }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,6 +39,12 @@ import com.example.healthcareapplication.presentation.ui.theme.myTypography
 fun SleepScreen(
     viewModel: SleepViewModel = hiltViewModel()
 ) {
+
+//    DisposableEffect(viewModel) {
+//        viewModel.addListener()
+//        onDispose { viewModel.removeListener() }
+//    }
+
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
