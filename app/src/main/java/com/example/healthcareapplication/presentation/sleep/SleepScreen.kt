@@ -2,6 +2,7 @@ package com.example.healthcareapplication.presentation.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,6 +12,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,12 +52,13 @@ fun SleepScreen(
         colorScheme = LightColorScheme
     ) {
         // params
-        val uiState = viewModel.uiState.value
+        val uiState by viewModel.uiState
+        var test = uiState.greeting
 
         Scaffold(
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { viewModel.addSleep() },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White,
                     shape = CircleShape,
@@ -78,11 +81,12 @@ fun SleepScreen(
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
+                            .clickable { viewModel.getList() }
                             .constrainAs(title) {}
                     )
 
                     Text(
-                        text = "something",
+                        text = test,
                         style = MaterialTheme.typography.labelMedium,
                         textAlign = TextAlign.Left,
                         modifier = Modifier

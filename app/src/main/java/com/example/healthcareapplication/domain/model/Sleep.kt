@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.time.LocalDate.now
 
 class Sleep(
-    var totalTime       : Float = 0f,
+    var totalTime       : Int = 0,
     var sleepList       : MutableList<SleepDetail> = mutableListOf()
 ) : HealthData() {
 
