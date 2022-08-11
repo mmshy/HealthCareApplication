@@ -13,11 +13,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import java.io.Console
 import javax.inject.Inject
 
@@ -48,19 +45,13 @@ class SleepViewModel @Inject constructor(
 
     fun getList() {
 
-//        var list: List<Sleep> = emptyList()
-
         var sb = StringBuilder()
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
-                val a = Firebase.firestore
-                    .collection("users")
-                    .get().await()
 
-                for (item in a.documents) {
-                    val sleep = item.toObject<Sleep>()
-                    sb.append("${sleep?.totalTime}\n")
+                for (item in useCases.getSleeps()) {
+                    sb.append("${item?.totalTime}\n")
                 }
 
                 uiState.value = uiState.value.copy(greeting = sb.toString())
