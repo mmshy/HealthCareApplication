@@ -7,6 +7,7 @@ import com.example.healthcareapplication.domain.model.Sleep
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.google.protobuf.NullValue
 import kotlinx.coroutines.*
 import javax.inject.Inject
 import kotlinx.coroutines.tasks.await
@@ -25,8 +26,14 @@ class StorageServiceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun getSleepById(id: String) {
-        TODO("Not yet implemented")
+    override suspend fun getSleepById(id: String) : Sleep? {
+        var value : Sleep? = null
+            try{
+                value =  db.collection(Constants.KEY_SLEEP_COLLECTION).document(id).get().await().toObject<Sleep>()
+            }catch (e: Exception) {
+                Log.d(e.toString(), e.toString())
+            }
+        return value
     }
 
     override fun addSleep(sleep: Sleep) {
@@ -83,12 +90,14 @@ class StorageServiceImpl @Inject constructor(
         }
     }
 
-    override fun getMealById(id: String) {
+    override suspend fun getMealById(id: String): Meal? {
+        var value : Meal? = null
         try{
-            db.collection(Constants.KEY_MEAL_COLLECTION).document(id).get()
+           value =  db.collection(Constants.KEY_MEAL_COLLECTION).document(id).get().await().toObject<Meal>()
         }catch (e: Exception) {
             Log.d(e.toString(), e.toString())
         }
+        return value
     }
 
 

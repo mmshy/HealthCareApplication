@@ -12,13 +12,13 @@ interface StorageService {
     fun removeListener()
 
 //    Sleep
-    fun getSleepById(id: String)
+suspend fun getSleepById(id: String) : Sleep?
     fun addSleep(sleep: Sleep)
     suspend fun getSleeps(): List<Sleep>
 
 //    Meal
 
-    fun getMealById(id: String)
+    suspend fun getMealById(id: String) : Meal?
     fun addMeal(meal: Meal)
     fun getMeals(): List<Meal>
 
