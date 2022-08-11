@@ -7,7 +7,9 @@ import com.example.healthcareapplication.domain.model.Sleep
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.*
 import javax.inject.Inject
+import kotlinx.coroutines.tasks.await
 
 class StorageServiceImpl @Inject constructor(
     //
@@ -27,8 +29,6 @@ class StorageServiceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    //Sleep
-
     override fun addSleep(sleep: Sleep) {
         try {
             db.collection(Constants.KEY_SLEEP_COLLECTION).add(sleep)
@@ -37,20 +37,42 @@ class StorageServiceImpl @Inject constructor(
         }
     }
 
-    override fun getSleeps(): List<Sleep> {
+    override suspend fun getSleeps(): List<Sleep> {
 
-        var list : List<Sleep> = mutableListOf()
+        var list = mutableListOf<Sleep>()
 
-        try {
-            for (item in db.document(Constants.KEY_SLEEP_COLLECTION).get().result.documents) {
-                val sleep = item.toObject<Sleep>()
-                list.plus(sleep)
+        return withContext(Dispatchers.IO) {
+
+            //connect
+            try {
+                var querySnapshot = db.collection(Constants.KEY_SLEEP_COLLECTION)
+                    .get().await()
+
+//                Log.d("a: ", "${a.documents}")
+
+                if (querySnapshot != null) {
+
+                    var string = StringBuilder()
+
+                    for (item in querySnapshot.documents) {
+                        val sleep = item.toObject<Sleep>()
+                        Log.d("item: ", "$sleep")
+                        if (sleep != null) {
+                            list.add(sleep)
+                        }
+//                        Log.d("list...: ", "$list")
+                    }
+                }
+                else {
+                    Log.d("get list: ", "empty")
+                }
+
+            } catch (e: Exception) {
+                Log.d("get list: ", e.message.toString())
             }
-        } catch (e: Exception) {
 
+            return@withContext list
         }
-
-        return list
     }
 
     override fun addMeal(meal: Meal) {

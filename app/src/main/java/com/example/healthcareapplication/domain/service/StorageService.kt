@@ -14,7 +14,7 @@ interface StorageService {
 //    Sleep
     fun getSleepById(id: String)
     fun addSleep(sleep: Sleep)
-    fun getSleeps(): List<Sleep>
+    suspend fun getSleeps(): List<Sleep>
 
 //    Meal
 
