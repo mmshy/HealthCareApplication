@@ -2,6 +2,7 @@ package com.example.healthcareapplication.data.dao
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.example.healthcareapplication.di.AppModule
 import com.example.healthcareapplication.domain.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -15,7 +16,10 @@ class UserDAO (
 
     suspend fun authenticate(email: String, password: String, onResult: (Throwable?)-> Unit) {
         Firebase.auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { onResult(it.exception) }
+            .addOnCompleteListener {
+                onResult(it.exception)
+            }
+
     }
 
     suspend fun createAccount(newUser: User) {

@@ -19,8 +19,8 @@ class RegisterViewModel @Inject constructor(
 
     var navController: NavHostController? = null
 
-    private val _uiState = mutableStateOf(RegisterState())
-    val uiState: State<RegisterState> = _uiState
+    private val _uiState = mutableStateOf(RegisterUiState())
+    val uiState: State<RegisterUiState> = _uiState
 
 
     init {
@@ -72,17 +72,9 @@ class RegisterViewModel @Inject constructor(
                         } catch (e: InvalidUserException) {
 
                         }
-
                     }
-
                 }
-
-
             }
-
-
-
-
             else -> {
 
             }

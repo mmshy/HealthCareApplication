@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.graphics.Paint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -19,25 +21,35 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.healthcareapplication.R
+import com.example.healthcareapplication.presentation.meal.MealEvent
+import com.example.healthcareapplication.presentation.meal.MealViewModel
+import com.example.healthcareapplication.presentation.sleep.SleepViewModel
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MealScreen() {
+fun MealScreen(
+    viewModel: MealViewModel = hiltViewModel()
+) {
+
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
     ) {
         // params
-//        val state
+        val uiState by viewModel.uiState
 
+        var test = uiState.greeting
         Scaffold(
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                              viewModel.addMeal()
+                              },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White,
                     shape = CircleShape,
@@ -50,6 +62,8 @@ fun MealScreen() {
                 }
             }
         ) {
+
+
             Surface() {
                 ConstraintLayout {
                     val (title, greeting, body, list) = createRefs()
@@ -59,12 +73,13 @@ fun MealScreen() {
                         style = MaterialTheme.typography.headlineSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .constrainAs(title) {}
+                            .fillMaxWidth().clickable { viewModel.getList() }
+                            .constrainAs(title)
+                            {}
                     )
 
                     Text(
-                        text = "something",
+                        text = test,
                         style = MaterialTheme.typography.labelMedium,
                         textAlign = TextAlign.Left,
                         modifier = Modifier
