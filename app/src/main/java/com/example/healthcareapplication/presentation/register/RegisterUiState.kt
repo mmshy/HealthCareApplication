@@ -1,6 +1,6 @@
 package com.example.healthcareapplication.presentation.register
 
-data class RegisterState(
+data class RegisterUiState(
     val isLoading: Boolean = false,
     val correctEmailFormat : Boolean = false,
     val email: String = "",

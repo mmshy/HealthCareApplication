@@ -5,6 +5,7 @@ import com.example.healthcareapplication.common.Constants
 import com.example.healthcareapplication.domain.model.Meal
 import com.example.healthcareapplication.domain.model.Sleep
 import com.example.healthcareapplication.domain.model.SleepDetail
+import com.example.healthcareapplication.domain.model.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -196,5 +197,47 @@ class StorageServiceImpl @Inject constructor(
 
         return list
     }
+
+    override suspend fun getMealDetailById(id: String): MealDetail? {
+        TODO("Not yet implemented")
+    }
+
+    override fun addMealDetail(sleepDetail: MealDetail) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getMealDetails(): List<MealDetail> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun GetWaterDrinkingById(id: String): WaterDrinking? {
+        TODO("Not yet implemented")
+    }
+
+    override fun addWaterDrinking(waterDrinking: WaterDrinking) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getWaterDrinkings(): List<WaterDrinking> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getWaterDrinkingDetailById(id: String): WaterDrinking? {
+        TODO("Not yet implemented")
+    }
+
+    override fun addWaterDrinkingDetail(sleepDetail: WaterDrinking) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getWaterDrinkingDetails(): List<WaterDrinking> {
+        TODO("Not yet implemented")
+    }
+
+    // Meal Detail
+
+
+
+
 
 }
