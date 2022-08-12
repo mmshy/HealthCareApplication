@@ -5,9 +5,7 @@ import com.example.healthcareapplication.domain.repository.UserRepository
 import com.example.healthcareapplication.domain.repository.UserRepositoryImpl
 import com.example.healthcareapplication.domain.service.StorageService
 import com.example.healthcareapplication.domain.service.StorageServiceImpl
-import com.example.healthcareapplication.domain.usecase.sleep.AddSleep
-import com.example.healthcareapplication.domain.usecase.sleep.GetSleeps
-import com.example.healthcareapplication.domain.usecase.sleep.SleepUseCases
+import com.example.healthcareapplication.domain.usecase.sleep.*
 import com.example.healthcareapplication.domain.usecase.user.Authenticate
 import com.example.healthcareapplication.domain.usecase.user.CreateAccount
 import com.example.healthcareapplication.domain.usecase.user.ForgotPassword
@@ -50,7 +48,11 @@ object AppModule {
     fun provideSleepUseCases(repository: StorageServiceImpl) : SleepUseCases {
         return SleepUseCases(
             getSleeps = GetSleeps(repository),
-            addSleep = AddSleep(repository)
+            getSleepDetails = GetSleepDetails(repository),
+            getSleepById = GetSleepById(repository),
+            addSleep = AddSleep(repository),
+            addSleepDetail = AddSleepDetail(repository),
+            updateSleep = UpdateSleep(repository)
         )
     }
 }

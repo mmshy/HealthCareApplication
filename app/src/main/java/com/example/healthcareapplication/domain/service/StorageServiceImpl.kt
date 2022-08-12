@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.healthcareapplication.common.Constants
 import com.example.healthcareapplication.domain.model.Meal
 import com.example.healthcareapplication.domain.model.Sleep
+import com.example.healthcareapplication.domain.model.SleepDetail
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -11,6 +12,10 @@ import com.google.protobuf.NullValue
 import kotlinx.coroutines.*
 import javax.inject.Inject
 import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.time.ExperimentalTime
+import kotlin.time.hours
 
 class StorageServiceImpl @Inject constructor(
     //
@@ -36,13 +41,55 @@ class StorageServiceImpl @Inject constructor(
         return value
     }
 
-    override fun addSleep(sleep: Sleep) {
+    override suspend fun addSleep(sleep: Sleep) {
         try {
-            db.collection(Constants.KEY_SLEEP_COLLECTION).add(sleep)
+            db.collection(Constants.KEY_SLEEP_COLLECTION)
+                .add(sleep)
+                .addOnCompleteListener { value ->
+                    sleep.id = value.result.id
+                    runBlocking {
+                        db.collection(Constants.KEY_SLEEP_COLLECTION)
+                            .document(sleep.id)
+                            .update("id", sleep.id)
+                            .await()
+                    }
+                    Log.d("add sleep: ", sleep.id)
+                }
+                .await()
+            Log.d("await add sleep: ", "run")
         } catch (e: Exception) {
-            Log.d(e.toString(), e.toString())
+            Log.d("add sleep: ", e.toString())
         }
     }
+
+    override suspend fun updateSleep(sleep: Sleep) {
+        try {
+            db.collection(Constants.KEY_SLEEP_COLLECTION)
+                .document(sleep.id)
+                .update("sleepList", sleep.sleepList)
+                .await()
+            Log.d("update sleep: ", "OK")
+        } catch (e: Exception) {
+            Log.d("update sleep: ", e.toString())
+        }
+    }
+
+    override suspend fun addSleepDetail(sleepDetail: SleepDetail) {
+        try {
+
+            db.collection(Constants.KEY_SLEEP_DETAIL_COLLECTION)
+                .add(sleepDetail)
+                .addOnCompleteListener { value ->
+//                    sleepDetail.id = value.result.id
+//                    Log.d("add sleep detail: ", sleepDetail.id)
+                }
+                .await()
+
+        } catch (e: Exception) {
+            Log.d("add sleep detail: ", e.toString())
+        }
+    }
+
 
     override suspend fun getSleeps(): List<Sleep> {
 
@@ -82,6 +129,40 @@ class StorageServiceImpl @Inject constructor(
         }
     }
 
+    override suspend fun getSleepDetails(sleepId: String): List<SleepDetail> {
+
+        var list = mutableListOf<SleepDetail>()
+
+        return withContext(Dispatchers.IO) {
+
+            //connect
+            try {
+                var sleep = db.collection(Constants.KEY_SLEEP_COLLECTION)
+                    .document(sleepId)
+                    .get().await().toObject<Sleep>()
+
+                var sleepList = sleep?.sleepList
+
+                if ( sleepList != null) {
+                    for (item in sleepList) {
+                        list.add(item)
+                    }
+                }
+
+                Log.d("hihi:", sleep?.sleepList?.get(0)?.startTime.toString())
+
+                Log.d("get list:", "running...")
+
+            } catch (e: Exception) {
+                Log.d("get list: ", e.message.toString())
+            }
+
+            return@withContext list
+        }
+    }
+
+    //Meal
+
     override fun addMeal(meal: Meal) {
         try{
             db.collection(Constants.KEY_MEAL_COLLECTION).add(meal)
@@ -115,7 +196,5 @@ class StorageServiceImpl @Inject constructor(
 
         return list
     }
-
-    //Meal
 
 }

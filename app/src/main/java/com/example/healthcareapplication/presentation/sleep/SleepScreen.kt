@@ -29,6 +29,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import com.example.healthcareapplication.presentation.components.custom.primaryBtn
+import com.example.healthcareapplication.presentation.sleep.SleepEvent
+import com.example.healthcareapplication.presentation.sleep.SleepItem
 import com.example.healthcareapplication.presentation.sleep.SleepViewModel
 import com.example.healthcareapplication.presentation.ui.theme.Gray
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
@@ -47,13 +49,15 @@ fun SleepScreen(
 //        onDispose { viewModel.removeListener() }
 //    }
 
+    val uiState by viewModel.state
+
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
     ) {
         // params
-        val uiState by viewModel.uiState
-        var test = uiState.greeting
+
+        var something = uiState.greeting
 
         Scaffold(
             floatingActionButton = {
@@ -81,12 +85,11 @@ fun SleepScreen(
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { viewModel.getList() }
                             .constrainAs(title) {}
                     )
 
                     Text(
-                        text = test,
+                        text = something,
                         style = MaterialTheme.typography.labelMedium,
                         textAlign = TextAlign.Left,
                         modifier = Modifier
@@ -139,7 +142,7 @@ fun SleepScreen(
                             Spacer(modifier = Modifier.width(19.dp))
                             BriefData(
                                 title = null,
-                                value = "5h30'",
+                                value = uiState.data3,
                                 icon = R.drawable.ic_round_nights_stay_24
                             )
                         }
@@ -154,38 +157,15 @@ fun SleepScreen(
                             },
                         verticalArrangement = Arrangement.spacedBy(1.dp)
                     ) {
-                        items(10) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(86.dp)
-                                    .background(Smoke)
-                                    .padding(24.dp, 0.dp)
-                            ) {
-                                Text(
-                                    text = "06:00AM",
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                                Spacer(modifier = Modifier.width(24.dp))
-                                Text(
-                                    text = "...Sleeping",
-                                    style = MaterialTheme.typography.bodySmall,
-                                    modifier = Modifier.weight(1f),
-                                    color = Color.Black
-                                )
-                                IconButton(
-                                    onClick = { /*TODO*/ },
-                                ) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.ic_round_done_24),
-                                        contentDescription = "icon",
-                                        tint = MaterialTheme.colorScheme.primary,
-                                        modifier = Modifier.size(32.dp)
-                                    )
-                                }
-                            }
+                        items(uiState.items) { item ->
+                            SleepItem(
+                                sleep = item,
+                                onCheckOutItem = { viewModel.onEvent(SleepEvent.CheckOutItem(id = "")) }
+                            )
                         }
+//                        items(10) {
+//
+//                        }
 //                        item() {
 //                            Box(modifier = Modifier.size(40.dp))
 //                        }

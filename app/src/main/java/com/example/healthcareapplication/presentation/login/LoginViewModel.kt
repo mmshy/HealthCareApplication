@@ -38,25 +38,25 @@ class LoginViewModel @Inject constructor(
         //check valid password
         /*TODO*/
 
-        viewModelScope.launch {
+        navController?.popBackStack()
+        navController?.navigate(route = "home_graph")
 
-            useCases.authenticate(
-                email = uiState.value.email,
-                password = uiState.value.password
-            ) { error ->
-                if (error == null) {
-                    /*TODO: open main screen*/
-                    navController?.popBackStack()
-                    navController?.navigate(route = "home_graph")
-                } else {
-                    /*TODO: show error*/
-                }
-
-
-
-
-            }
-        }
+//        viewModelScope.launch {
+//
+//            useCases.authenticate(
+//                email = uiState.value.email,
+//                password = uiState.value.password
+//            ) { error ->
+//                if (error == null) {
+//                    /*TODO: open main screen*/
+//                    navController?.popBackStack()
+//                    navController?.navigate(route = "home_graph")
+//                } else {
+//                    /*TODO: show error*/
+//                }
+//
+//            }
+//        }
 
         fun openRegisterScreen() {
 

@@ -2,11 +2,11 @@ package com.example.healthcareapplication.data.dao
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.example.healthcareapplication.common.Constants
 import com.example.healthcareapplication.domain.model.User
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import javax.inject.Inject
 
 class UserDAO (
 
@@ -24,8 +24,13 @@ class UserDAO (
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success")
-                    val user = Firebase.auth.currentUser
-                    //updateUI(user)
+                    val userId = Firebase.auth.currentUser?.uid.toString()
+                    Firebase.firestore
+                        .collection(Constants.KEY_USER_COLLECTION)
+                        .document(userId)
+                        .set(User(userID = userId)).addOnCompleteListener {
+                            Log.d("ok", "ok")
+                        }
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)

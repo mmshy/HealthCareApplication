@@ -6,19 +6,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthcareapplication.domain.model.Sleep
+import com.example.healthcareapplication.domain.model.SleepDetail
 import com.example.healthcareapplication.domain.service.StorageService
 import com.example.healthcareapplication.domain.usecase.sleep.SleepUseCases
 import com.example.healthcareapplication.presentation.login.LoginUiState
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import java.io.Console
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,10 +27,44 @@ class SleepViewModel @Inject constructor(
     private val useCases: SleepUseCases
 ) : ViewModel() {
 
-    var uiState = mutableStateOf(SleepUiState())
+    private val uiState = mutableStateOf(SleepUiState())
+    val state: State<SleepUiState> = uiState
+
+    private var currentSleep: Sleep? = null
 
     init {
-//         getList()
+
+        GlobalScope.launch (Dispatchers.IO) {
+
+            try {
+                Firebase.firestore.collection("sleeps")
+                    .whereEqualTo(
+                        "updateDate",
+//                        "14:14",
+                        SimpleDateFormat("dd/MM/yyyy").format(
+                            Timestamp.now().toDate()
+                        )
+                    )
+                    .get()
+                    .addOnCompleteListener {
+                        it ->
+                        if (!it.result.isEmpty) {
+                            currentSleep = it.result.documents[0].toObject<Sleep>()
+                            Log.d("current:" , currentSleep?.id.toString())
+                        }
+
+                        if (currentSleep != null) {
+                            getList()
+                        }
+
+                    }
+                    .await()
+
+            } catch (e: Exception) {
+                Log.d("get today sleep: ", e.toString())
+            }
+        }
+
     }
 
     fun onEvent(event: SleepEvent) {
@@ -41,29 +76,50 @@ class SleepViewModel @Inject constructor(
     }
 
     fun addSleep() {
-        viewModelScope.launch {
-            useCases.addSleep(Sleep(2))
+        viewModelScope.launch(Dispatchers.IO) {
+
+            // check if sleep of that day is exited??
+            if (currentSleep != null) {
+                // if yes, add sleep detail into sleepList of sleep
+                Log.d("state: ", "update")
+                var sleepDetail = SleepDetail(
+                    startTime = Timestamp.now(),
+                    sleepId = currentSleep!!.id
+                )
+                currentSleep?.sleepList?.add(sleepDetail)
+                useCases.updateSleep(currentSleep!!)
+            } else {
+                Log.d("state: ", "add new")
+                // if no, create a new sleep and sleep detail add into a sleepList of new sleep
+                var sleep = Sleep()
+                sleep.updateDate = SimpleDateFormat("dd/MM/yyyy").format(Timestamp.now().toDate())
+                useCases.addSleep(sleep)
+
+                var sleepDetail = SleepDetail(
+                    startTime = Timestamp.now(),
+                    sleepId = sleep.id
+                )
+
+                // update sleepList of sleep
+                sleep.sleepList.add(sleepDetail)
+                useCases.updateSleep(sleep)
+
+                // update state of sleep
+                currentSleep = sleep
+            }
+
         }
     }
 
-    fun getList() {
+    private fun getList() {
 
-//        var list: List<Sleep> = emptyList()
+        viewModelScope.launch(Dispatchers.Main) {
 
-        var sb = StringBuilder()
-
-        viewModelScope.launch {
             try {
-                val a = Firebase.firestore
-                    .collection("users")
-                    .get().await()
 
-                for (item in a.documents) {
-                    val sleep = item.toObject<Sleep>()
-                    sb.append("${sleep?.totalTime}\n")
-                }
-
-                uiState.value = uiState.value.copy(greeting = sb.toString())
+//                if (currentSleep != null) {
+                    uiState.value = state.value.copy(items = useCases.getSleepDetails(currentSleep!!.id))
+//                }
 
             } catch (e: Exception) {
                 Log.d(e.message, e.message.toString())
