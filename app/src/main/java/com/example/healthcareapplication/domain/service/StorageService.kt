@@ -1,8 +1,6 @@
 package com.example.healthcareapplication.domain.service
 
-import com.example.healthcareapplication.domain.model.Meal
-import com.example.healthcareapplication.domain.model.Sleep
-import com.example.healthcareapplication.domain.model.SleepDetail
+import com.example.healthcareapplication.domain.model.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

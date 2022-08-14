@@ -11,8 +11,7 @@ import com.example.healthcareapplication.presentation.components.screens.Dashboa
 import com.example.healthcareapplication.presentation.components.screens.GoalScreen
 import com.example.healthcareapplication.presentation.components.screens.MeScreen
 import com.example.healthcareapplication.presentation.components.screens.ReportScreen
-import com.example.healthcareapplication.presentation.screen.HealthDetailScreens
-import com.example.healthcareapplication.presentation.screen.MainScreens
+import com.example.healthcareapplication.presentation.screens_and_implementtion.screen.MainScreens
 
 @Composable
 fun BottomNavGraph(

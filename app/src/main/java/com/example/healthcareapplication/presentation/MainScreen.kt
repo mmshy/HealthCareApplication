@@ -9,16 +9,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.healthcareapplication.presentation.nav_graph.MainNavGraph
-import com.example.healthcareapplication.presentation.screen.MainScreens
+import com.example.healthcareapplication.presentation.screens_and_implementtion.screen.MainScreens
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
