@@ -51,8 +51,8 @@ val myTypography = Typography(
     headlineSmall = TextStyle(
         fontFamily = Lato,
         fontWeight = FontWeight.ExtraBold,
-        fontSize = 27.sp,
-        lineHeight = 32.sp,
+        fontSize = 24.sp,
+        lineHeight = 27.sp,
         color = Color.Black
     ),
     titleLarge = TextStyle(

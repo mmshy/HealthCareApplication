@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,8 +23,8 @@ import com.example.healthcareapplication.presentation.ui.theme.myTypography
 fun primaryBtn(
     onClick: () -> Unit,
     modifier: Modifier,
-    text: String,
-    icon: Icon?,
+    text: String?,
+    icon: Int?,
 ) {
     Button(
         onClick = onClick,
@@ -31,11 +32,22 @@ fun primaryBtn(
         contentPadding = PaddingValues(48.dp, 0.dp),
         shape = MaterialTheme.shapes.small,
     ) {
-        Text(
-            text = text,
-            color = Color.White,
-            style = MaterialTheme.typography.titleMedium,
-        )
+        if (text != null) {
+            Text(
+                text = text,
+                color = Color.White,
+                style = MaterialTheme.typography.titleMedium,
+            )
+        }
+
+        if (icon != null) {
+            Icon(
+                painter = painterResource(id = icon),
+                contentDescription = "icon",
+                tint = Color.White,
+                modifier = Modifier.size(24.dp)
+            )
+        }
     }
 
 }

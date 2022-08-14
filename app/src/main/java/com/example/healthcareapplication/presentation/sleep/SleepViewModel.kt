@@ -5,6 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.healthcareapplication.common.Constants
 import com.example.healthcareapplication.domain.model.Sleep
 import com.example.healthcareapplication.domain.model.SleepDetail
 import com.example.healthcareapplication.domain.service.StorageService
@@ -30,7 +31,7 @@ class SleepViewModel @Inject constructor(
     private val uiState = mutableStateOf(SleepUiState())
     val state: State<SleepUiState> = uiState
 
-    private var currentSleep: Sleep? = null
+    var currentSleep: Sleep? = Constants.currentSleep
 
     init {
 
@@ -50,7 +51,11 @@ class SleepViewModel @Inject constructor(
                         it ->
                         if (!it.result.isEmpty) {
                             currentSleep = it.result.documents[0].toObject<Sleep>()
+                            Constants.currentSleep = currentSleep
                             Log.d("current:" , currentSleep?.id.toString())
+                        } else {
+                            currentSleep = null
+                            Constants.currentSleep = null
                         }
 
                         if (currentSleep != null) {
@@ -75,40 +80,16 @@ class SleepViewModel @Inject constructor(
         }
     }
 
-    fun addSleep() {
-        viewModelScope.launch(Dispatchers.IO) {
-
-            // check if sleep of that day is exited??
-            if (currentSleep != null) {
-                // if yes, add sleep detail into sleepList of sleep
-                Log.d("state: ", "update")
-                var sleepDetail = SleepDetail(
-                    startTime = Timestamp.now(),
-                    sleepId = currentSleep!!.id
-                )
-                currentSleep?.sleepList?.add(sleepDetail)
-                useCases.updateSleep(currentSleep!!)
-            } else {
-                Log.d("state: ", "add new")
-                // if no, create a new sleep and sleep detail add into a sleepList of new sleep
-                var sleep = Sleep()
-                sleep.updateDate = SimpleDateFormat("dd/MM/yyyy").format(Timestamp.now().toDate())
-                useCases.addSleep(sleep)
-
-                var sleepDetail = SleepDetail(
-                    startTime = Timestamp.now(),
-                    sleepId = sleep.id
-                )
-
-                // update sleepList of sleep
-                sleep.sleepList.add(sleepDetail)
-                useCases.updateSleep(sleep)
-
-                // update state of sleep
-                currentSleep = sleep
-            }
-
+    fun showAddSleepCard() {
+        if (!state.value.showAddCard) {
+            uiState.value = state.value.copy(showAddCard = true)
         }
+    }
+
+    fun unShowAddSleepCard() {
+//        if (state.value.showAddCard) {
+            uiState.value = state.value.copy(showAddCard = false)
+//        }
     }
 
     private fun getList() {
@@ -118,6 +99,7 @@ class SleepViewModel @Inject constructor(
             try {
 
 //                if (currentSleep != null) {
+                Log.d("curr: ", Constants.currentSleep?.id.toString())
                     uiState.value = state.value.copy(items = useCases.getSleepDetails(currentSleep!!.id))
 //                }
 

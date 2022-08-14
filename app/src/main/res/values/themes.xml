@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.HealthCareApplication" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.HealthCareApplication" parent="Theme.AppCompat.Light.NoActionBar">
+<!--        <item name="materialTimePickerTheme">@style/Theme.HealthCareApplication.MaterialTimePickerTheme</item>-->
+    </style>
 </resources>

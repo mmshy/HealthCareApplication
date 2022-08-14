@@ -25,6 +25,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
@@ -32,6 +34,7 @@ import com.example.healthcareapplication.presentation.components.custom.primaryB
 import com.example.healthcareapplication.presentation.sleep.SleepEvent
 import com.example.healthcareapplication.presentation.sleep.SleepItem
 import com.example.healthcareapplication.presentation.sleep.SleepViewModel
+import com.example.healthcareapplication.presentation.sleep.add_sleep.SleepCard
 import com.example.healthcareapplication.presentation.ui.theme.Gray
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.Smoke
@@ -59,10 +62,28 @@ fun SleepScreen(
 
         var something = uiState.greeting
 
+        if (uiState.showAddCard) {
+            Dialog(
+                onDismissRequest = { viewModel.unShowAddSleepCard() },
+                properties = DialogProperties(
+                    dismissOnBackPress = true,
+                    dismissOnClickOutside = true
+                )
+            ) {
+                SleepCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                )
+            }
+        } else {
+
+        }
+
         Scaffold(
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { viewModel.addSleep() },
+                    onClick = { viewModel.showAddSleepCard() },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White,
                     shape = CircleShape,

@@ -1,8 +1,6 @@
 package com.example.healthcareapplication.domain.service
 
-import com.example.healthcareapplication.domain.model.Meal
-import com.example.healthcareapplication.domain.model.Sleep
-import com.example.healthcareapplication.domain.model.SleepDetail
+import com.example.healthcareapplication.domain.model.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,10 +11,10 @@ interface StorageService {
     fun removeListener()
 
 //    Sleep
-    suspend fun getSleepById(id: String) : Sleep?
     suspend fun addSleep(sleep: Sleep)
-    suspend fun updateSleep(sleep: Sleep)
     suspend fun addSleepDetail(sleepDetail: SleepDetail)
+    suspend fun updateSleep(sleepId: String, sleepDetail: SleepDetail)
+    suspend fun getSleepById(id: String) : Sleep?
     suspend fun getSleeps(): List<Sleep>
     suspend fun getSleepDetails(sleepId: String): List<SleepDetail>
 

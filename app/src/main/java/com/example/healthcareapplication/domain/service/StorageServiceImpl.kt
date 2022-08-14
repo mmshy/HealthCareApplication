@@ -6,6 +6,7 @@ import com.example.healthcareapplication.domain.model.Meal
 import com.example.healthcareapplication.domain.model.Sleep
 import com.example.healthcareapplication.domain.model.SleepDetail
 import com.example.healthcareapplication.domain.model.*
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -63,11 +64,11 @@ class StorageServiceImpl @Inject constructor(
         }
     }
 
-    override suspend fun updateSleep(sleep: Sleep) {
+    override suspend fun updateSleep(sleepId: String, sleepDetail: SleepDetail) {
         try {
             db.collection(Constants.KEY_SLEEP_COLLECTION)
-                .document(sleep.id)
-                .update("sleepList", sleep.sleepList)
+                .document(sleepId)
+                .update("sleepList", FieldValue.arrayUnion(sleepDetail))
                 .await()
             Log.d("update sleep: ", "OK")
         } catch (e: Exception) {

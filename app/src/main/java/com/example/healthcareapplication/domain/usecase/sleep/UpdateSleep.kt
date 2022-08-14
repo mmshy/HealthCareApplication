@@ -7,7 +7,7 @@ import com.example.healthcareapplication.domain.service.StorageServiceImpl
 class UpdateSleep(
     private val repository: StorageServiceImpl
 ) {
-    suspend operator fun invoke(sleep: Sleep) {
-        return repository.updateSleep(sleep)
+    suspend operator fun invoke(sleepId: String, sleepDetail: SleepDetail) {
+        return repository.updateSleep(sleepId, sleepDetail)
     }
 }
