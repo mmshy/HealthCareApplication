@@ -1,5 +1,6 @@
 package com.example.healthcareapplication.presentation.sleep
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
@@ -22,8 +23,10 @@ import kotlin.time.Duration.Companion.hours
 @Composable
 fun SleepItem(
     sleep: SleepDetail,
-    onCheckOutItem: () -> Unit
+    onCheckOutItem: (sleepDetail: SleepDetail) -> Unit
 ) {
+    Log.d("sleep id: ", sleep.sleepId)
+    Log.d("item id: ", sleep.id.toString())
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -38,20 +41,24 @@ fun SleepItem(
         )
         Spacer(modifier = Modifier.width(24.dp))
         Text(
-            text = "...Sleeping",
+            text = sleep.status,
             style = MaterialTheme.typography.bodySmall,
             modifier = Modifier.weight(1f),
             color = Color.Black
         )
-        IconButton(
-            onClick = { onCheckOutItem },
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_round_done_24),
-                contentDescription = "icon",
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(32.dp)
-            )
+
+        if (sleep.status == "Sleeping") {
+            IconButton(
+                onClick = { onCheckOutItem(sleep) },
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_round_done_24),
+                    contentDescription = "icon",
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
         }
+
     }
 }

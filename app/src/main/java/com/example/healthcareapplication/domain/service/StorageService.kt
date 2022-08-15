@@ -13,7 +13,8 @@ interface StorageService {
 //    Sleep
     suspend fun addSleep(sleep: Sleep)
     suspend fun addSleepDetail(sleepDetail: SleepDetail)
-    suspend fun updateSleep(sleepId: String, sleepDetail: SleepDetail)
+    suspend fun updateSleep(sleepDetail: SleepDetail)
+    suspend fun updateSleepDetailState(oldValue: SleepDetail, newValue: SleepDetail)
     suspend fun getSleepById(id: String) : Sleep?
     suspend fun getSleeps(): List<Sleep>
     suspend fun getSleepDetails(sleepId: String): List<SleepDetail>

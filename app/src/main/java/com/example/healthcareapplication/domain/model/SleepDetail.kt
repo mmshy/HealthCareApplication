@@ -4,7 +4,7 @@ import com.google.firebase.Timestamp
 import java.util.Date
 
 class SleepDetail(
-//    var id: String = "",
+    var id: String = "",
     var sleepId: String = "",
     var startTime: Timestamp = Timestamp.now(),
     var finishTime: Timestamp = Timestamp.now(),

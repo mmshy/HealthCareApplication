@@ -81,8 +81,12 @@ class SleepCardViewModel @Inject constructor (
                     startTime = uiState.value.startTime,
                     sleepId = currentSleep!!.id
                 )
+                Log.d("state: ", currentSleep!!.sleepList.size.toString())
 //                currentSleep?.sleepList?.add(sleepDetail)
-                useCases.updateSleep(currentSleep!!.id, sleepDetail)
+                useCases.updateSleep(sleepDetail)
+
+                currentSleep!!.sleepList.add(sleepDetail)
+                Constants.currentSleep = currentSleep
             } else {
                 Log.d("state: ", "add new")
                 // if no, create a new sleep and sleep detail add into a sleepList of new sleep
@@ -97,21 +101,15 @@ class SleepCardViewModel @Inject constructor (
 
                 // update sleepList of sleep
 //                sleep.sleepList.add(sleepDetail)
-                useCases.updateSleep(sleep.id, sleepDetail)
+                useCases.updateSleep(sleepDetail)
 
                 // update state of sleep
                 currentSleep = sleep
                 Constants.currentSleep = sleep
+                currentSleep!!.sleepList.add(sleepDetail)
+                Constants.currentSleep = currentSleep
                 Log.d("current: ", Constants.currentSleep?.id.toString())
             }
         }
     }
-}
-
-private fun unwrap(context: Context): Activity? {
-    var context: Context = context
-    while (context !is Activity && context is ContextWrapper) {
-        context = context.baseContext
-    }
-    return context as Activity
 }

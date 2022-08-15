@@ -75,7 +75,23 @@ class SleepViewModel @Inject constructor(
     fun onEvent(event: SleepEvent) {
         when (event) {
             is SleepEvent.CheckOutItem -> {
-                /*TODO*/
+                val old = event.sleepDetail
+                val new = SleepDetail(
+                    sleepId = old.sleepId,
+                    startTime = old.startTime,
+                    status = "Done"
+                )
+
+                Log.d("old: ", old.finishTime.toDate().toString())
+                Log.d("new: ", new.finishTime.toDate().toString())
+
+                viewModelScope.launch {
+                    useCases.updateSleepDetail(old, new)
+//                    currentSleep?.sleepList?.remove(old)
+//                    currentSleep?.sleepList?.add(new)
+//                    Constants.currentSleep?.sleepList?.remove(old)
+//                    Constants.currentSleep?.sleepList?.add(new)
+                }
             }
         }
     }

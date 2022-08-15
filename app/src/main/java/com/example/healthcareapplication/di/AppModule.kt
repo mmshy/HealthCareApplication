@@ -60,7 +60,8 @@ object AppModule {
             getSleepById = GetSleepById(repository),
             addSleep = AddSleep(repository),
             addSleepDetail = AddSleepDetail(repository),
-            updateSleep = UpdateSleep(repository)
+            updateSleep = UpdateSleep(repository),
+            updateSleepDetail = UpdateSleepDetail(repository)
         )
     }
 

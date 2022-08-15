@@ -181,7 +181,7 @@ fun SleepScreen(
                         items(uiState.items) { item ->
                             SleepItem(
                                 sleep = item,
-                                onCheckOutItem = { viewModel.onEvent(SleepEvent.CheckOutItem(id = "")) }
+                                onCheckOutItem = { viewModel.onEvent(SleepEvent.CheckOutItem(item)) }
                             )
                         }
 //                        items(10) {
