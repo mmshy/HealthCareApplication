@@ -6,5 +6,6 @@ data class SleepUseCases(
     val getSleepDetails: GetSleepDetails,
     val addSleep: AddSleep,
     val addSleepDetail: AddSleepDetail,
-    val updateSleep: UpdateSleep
+    val updateSleep: UpdateSleep,
+    val updateSleepDetail: UpdateSleepDetail
 )

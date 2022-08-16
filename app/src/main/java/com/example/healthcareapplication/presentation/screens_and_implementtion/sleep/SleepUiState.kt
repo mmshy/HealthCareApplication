@@ -10,4 +10,5 @@ data class SleepUiState (
     val data1: String = "1",
     val data2: String = "2",
     val data3: String = "3",
+    val showAddCard: Boolean = false
 ) {}

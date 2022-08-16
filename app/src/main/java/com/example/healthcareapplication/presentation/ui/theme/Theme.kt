@@ -29,7 +29,8 @@ public val LightColorScheme = lightColorScheme(
     surface = Color.White,
     tertiary = Gray,
     background = Color.White,
-    onBackground = Smoke
+    onBackground = Smoke,
+    onSurface = ExtraSmoke
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
