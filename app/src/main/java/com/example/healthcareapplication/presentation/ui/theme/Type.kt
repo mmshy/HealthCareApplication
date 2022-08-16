@@ -71,6 +71,13 @@ val myTypography = Typography(
         letterSpacing = 0.sp,
         color = Color.Black
     ),
+    titleSmall = TextStyle(
+        fontFamily = Lato,
+        fontWeight = FontWeight.ExtraBold,
+        fontSize = 13.sp,
+        lineHeight = 16.sp,
+        color = Color.Black
+    ),
     labelSmall = TextStyle(
         fontFamily = Lato,
         fontWeight = FontWeight.Normal,

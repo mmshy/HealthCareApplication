@@ -111,3 +111,37 @@ fun DashboardBtn(
         )
     }
 }
+
+@Composable
+//@Preview
+fun MeButton(
+    onClick: () -> Unit,
+    title: String,
+    icon: Int,
+) {
+    Column(
+        modifier = Modifier
+            .width(150.dp)
+            .height(150.dp)
+            .background(MaterialTheme.colorScheme.onSurface, RoundedCornerShape(8.dp))
+            .clickable {
+                onClick()
+            },
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Icon(
+            painterResource(id = icon),
+            contentDescription = title,
+            modifier = Modifier
+                .size(40.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+        Text(
+            text = title,
+            style = MaterialTheme.typography.labelMedium,
+            color = Color.Black,
+            modifier = Modifier.padding(top = 4.dp)
+        )
+    }
+}
