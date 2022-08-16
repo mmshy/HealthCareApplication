@@ -107,9 +107,7 @@ class SleepViewModel @Inject constructor(
     private fun getList() {
 
         viewModelScope.launch(Dispatchers.Main) {
-
             try {
-
 //                if (currentSleep != null) {
                 Log.d("curr: ", Constants.currentSleep?.id.toString())
                     uiState.value = state.value.copy(items = useCases.getSleepDetails(currentSleep!!.id))

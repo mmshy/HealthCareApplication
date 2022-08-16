@@ -3,10 +3,10 @@ package com.example.healthcareapplication.domain.usecase.waterdrinking
 import com.example.healthcareapplication.domain.model.WaterDrinking
 import com.example.healthcareapplication.domain.service.StorageServiceImpl
 
-class UpdateWaterDrinking (
+class GetWaterDrinkingById (
     private val repository: StorageServiceImpl
 ) {
-    suspend operator fun invoke(waterDrinking: WaterDrinking) {
-        return repository.updateWaterDrinking(waterDrinking)
+    suspend operator fun invoke(id: String): WaterDrinking? {
+        return repository.getWaterDrinkingById(id)
     }
 }

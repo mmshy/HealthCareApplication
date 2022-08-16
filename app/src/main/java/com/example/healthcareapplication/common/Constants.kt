@@ -1,5 +1,7 @@
 package com.example.healthcareapplication.common
 
+import com.example.healthcareapplication.domain.model.Sleep
+
 class Constants {
     companion object {
         val KEY_USER_COLLECTION = "users"

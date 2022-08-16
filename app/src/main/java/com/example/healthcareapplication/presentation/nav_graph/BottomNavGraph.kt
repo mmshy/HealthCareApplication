@@ -12,6 +12,7 @@ import com.example.healthcareapplication.presentation.components.screens.GoalScr
 import com.example.healthcareapplication.presentation.components.screens.MeScreen
 import com.example.healthcareapplication.presentation.components.screens.ReportScreen
 import com.example.healthcareapplication.presentation.screens_and_implementtion.screen.MainScreens
+import com.example.healthcareapplication.presentation.screens_and_implementtion.sleep.SleepScreen
 
 @Composable
 fun BottomNavGraph(
