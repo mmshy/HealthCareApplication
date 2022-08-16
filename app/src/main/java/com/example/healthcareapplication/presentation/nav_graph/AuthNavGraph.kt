@@ -5,13 +5,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.healthcareapplication.common.AUTHENTICATION_GRAPH
-import com.example.healthcareapplication.common.HOME_GRAPH
 import com.example.healthcareapplication.presentation.components.ForgotPasswordScreen
 import com.example.healthcareapplication.presentation.components.LoginScreen
-import com.example.healthcareapplication.presentation.components.MainScreen
 import com.example.healthcareapplication.presentation.components.RegisterScreen
-import com.example.healthcareapplication.presentation.screen.AuthScreens
-import com.example.healthcareapplication.presentation.screen.MainScreens
+import com.example.healthcareapplication.presentation.screens_and_implementtion.screen.AuthScreens
 
 fun NavGraphBuilder.authNavGraph(
     navController: NavHostController

@@ -7,11 +7,11 @@
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\Admin\.android\avd\trenGara_API_30.avd" />
+            <value value="C:\Users\Admin\.android\avd\trenGara_API_30_2.avd" />
           </Key>
         </deviceKey>
       </Target>
     </targetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2022-07-31T09:46:40.746630200Z" />
+    <timeTargetWasSelectedWithDropDown value="2022-08-13T10:52:14.192742900Z" />
   </component>
 </project>

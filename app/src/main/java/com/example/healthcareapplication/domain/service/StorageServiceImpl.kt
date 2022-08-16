@@ -10,14 +10,9 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import com.google.protobuf.NullValue
 import kotlinx.coroutines.*
 import javax.inject.Inject
 import kotlinx.coroutines.tasks.await
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.time.ExperimentalTime
-import kotlin.time.hours
 
 class StorageServiceImpl @Inject constructor(
     //
@@ -224,7 +219,6 @@ class StorageServiceImpl @Inject constructor(
         return value
     }
 
-
     override fun getMeals(): List<Meal> {
         var list: List<Meal> = mutableListOf()
 
@@ -243,6 +237,7 @@ class StorageServiceImpl @Inject constructor(
     override suspend fun getMealDetailById(id: String): MealDetail? {
         TODO("Not yet implemented")
     }
+    // Meal Detail
 
     override fun addMealDetail(sleepDetail: MealDetail) {
         TODO("Not yet implemented")
@@ -252,16 +247,84 @@ class StorageServiceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun GetWaterDrinkingById(id: String): WaterDrinking? {
-        TODO("Not yet implemented")
+    override suspend fun getWaterDrinkingById(id: String): WaterDrinking? {
+        var value : WaterDrinking? = null
+        try{
+            value =  db.collection(Constants.KEY_WATERDRINKING_COLLECTION).document(id).get().await().toObject<WaterDrinking>()
+        }catch (e: Exception) {
+            Log.d(e.toString(), e.toString())
+        }
+        return value
     }
 
-    override fun addWaterDrinking(waterDrinking: WaterDrinking) {
-        TODO("Not yet implemented")
+    //WaterDrinking
+    override suspend fun addWaterDrinking(waterDrinking: WaterDrinking) {
+        try {
+            db.collection(Constants.KEY_WATERDRINKING_COLLECTION)
+                .add(waterDrinking)
+                .addOnCompleteListener { value ->
+                    waterDrinking.id = value.result.id
+                    runBlocking {
+                        db.collection(Constants.KEY_SLEEP_COLLECTION)
+                            .document(waterDrinking.id)
+                            .update("id", waterDrinking.id)
+                            .await()
+                    }
+                    Log.d("add water drinking: ", waterDrinking.id)
+                }
+                .await()
+            Log.d("await water drinking: ", "run")
+        } catch (e: Exception) {
+            Log.d("add water drinking: ", e.toString())
+        }    }
+
+    override suspend fun getWaterDrinkings(): MutableList<WaterDrinking> {
+        var list = mutableListOf<WaterDrinking>()
+
+        return withContext(Dispatchers.IO) {
+
+            //connect
+            try {
+                var querySnapshot = db.collection(Constants.KEY_WATERDRINKING_COLLECTION)
+                    .get().await()
+
+//                Log.d("a: ", "${a.documents}")
+
+                if (querySnapshot != null) {
+
+                    var string = StringBuilder()
+
+                    for (item in querySnapshot.documents) {
+                        val water = item.toObject<WaterDrinking>()
+                        Log.d("item: ", "$water")
+                        if (water != null) {
+                            list.add(water)
+                        }
+//                        Log.d("list...: ", "$list")
+                    }
+                }
+                else {
+                    Log.d("get list: ", "empty")
+                }
+
+            } catch (e: Exception) {
+                Log.d("get list: ", e.message.toString())
+            }
+
+            return@withContext list
+        }
     }
 
-    override fun getWaterDrinkings(): List<WaterDrinking> {
-        TODO("Not yet implemented")
+    override suspend fun updateWaterDrinking(waterDrinking: WaterDrinking) {
+        try {
+            db.collection(Constants.KEY_WATERDRINKING_COLLECTION)
+                .document(waterDrinking.id)
+                .update("waterDrinkingList", waterDrinking.waterDrinkingList)
+                .await()
+            Log.d("update water drinking: ", "OK")
+        } catch (e: Exception) {
+            Log.d("update water drinking: ", e.toString())
+        }
     }
 
     override suspend fun getWaterDrinkingDetailById(id: String): WaterDrinking? {
@@ -276,7 +339,6 @@ class StorageServiceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    // Meal Detail
 
 
 }

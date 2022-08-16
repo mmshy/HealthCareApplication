@@ -4,7 +4,6 @@ import com.example.healthcareapplication.data.dao.UserDAO
 import com.example.healthcareapplication.domain.model.User
 import com.example.healthcareapplication.domain.repository.UserRepository
 import com.example.healthcareapplication.domain.repository.UserRepositoryImpl
-import com.example.healthcareapplication.domain.service.StorageService
 import com.example.healthcareapplication.domain.service.StorageServiceImpl
 import com.example.healthcareapplication.domain.usecase.meal.AddMeal
 import com.example.healthcareapplication.domain.usecase.meal.GetMeal
@@ -18,7 +17,6 @@ import com.example.healthcareapplication.domain.usecase.user.UserAccessUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
