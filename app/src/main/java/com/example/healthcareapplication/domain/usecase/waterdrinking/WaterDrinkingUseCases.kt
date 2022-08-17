@@ -1,8 +1,8 @@
 package com.example.healthcareapplication.domain.usecase.waterdrinking
 
-class WaterDrinkingUseCases(
+data class WaterDrinkingUseCases(
     val addWaterDrinking: AddWaterDrinking,
-    val getWaterDrinnkingById: GetWaterDrinnkingById,
-    val updateWaterDrinking: UpdateWaterDrinking
-) {
-}
+    val getWaterDrinkingById: GetWaterDrinkingById,
+    val updateWaterDrinking: UpdateWaterDrinking,
+    val getWaterDrinkings: GetWaterDrinkings
+)

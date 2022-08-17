@@ -1,8 +1,5 @@
-package com.example.healthcareapplication.presentation.sleep.add_sleep
+package com.example.healthcareapplication.presentation.screens_and_implementtion.sleep.add_sleep
 
-import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.State
@@ -22,7 +19,6 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.time.Duration.Companion.hours
 
 @HiltViewModel
 class SleepCardViewModel @Inject constructor (
