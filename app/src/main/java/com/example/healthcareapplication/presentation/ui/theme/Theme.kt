@@ -28,6 +28,7 @@ public val LightColorScheme = lightColorScheme(
     secondary = LightBlue,
     surface = Color.White,
     tertiary = Gray,
+    onTertiary = Dark,
     background = Color.White,
     onBackground = Smoke,
     onSurface = ExtraSmoke

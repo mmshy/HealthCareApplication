@@ -29,18 +29,36 @@ fun ProfileScreen() {
         colorScheme = LightColorScheme
     ) {
         ConstraintLayout(
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp)
         ) {
             val (title, image, name, info, button) = createRefs()
 
-            Text(
-                text = "Personal",
-                style = MaterialTheme.typography.headlineMedium,
-                textAlign = TextAlign.Center,
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .constrainAs(title) {}
-            )
+            ) {
+                Text(
+                    text = "Personal",
+                    style = MaterialTheme.typography.headlineSmall,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+                IconButton(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier.align(Alignment.TopEnd)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_round_person_24),
+                        contentDescription = "icon",
+                        modifier = Modifier.size(32.dp),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
 
             Image(
                 painterResource(id = R.drawable.shark_sleep),
@@ -83,7 +101,8 @@ fun ProfileScreen() {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_round_email_24),
                             contentDescription = "icon",
-                            modifier = Modifier.size(32.dp)
+                            modifier = Modifier.size(32.dp),
+                            tint = MaterialTheme.colorScheme.onTertiary
                         )
                     }
                     Text(
@@ -93,6 +112,7 @@ fun ProfileScreen() {
                             .fillMaxWidth(),
                     )
                 }
+                Spacer(modifier = Modifier.height(4.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -104,7 +124,8 @@ fun ProfileScreen() {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_round_birthday_24),
                             contentDescription = "icon",
-                            modifier = Modifier.size(32.dp)
+                            modifier = Modifier.size(32.dp),
+                            tint = MaterialTheme.colorScheme.onTertiary
                         )
                     }
                     Text(
@@ -114,6 +135,7 @@ fun ProfileScreen() {
                             .fillMaxWidth()
                     )
                 }
+                Spacer(modifier = Modifier.height(4.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
@@ -125,7 +147,8 @@ fun ProfileScreen() {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_round_person_24),
                             contentDescription = "icon",
-                            modifier = Modifier.size(32.dp)
+                            modifier = Modifier.size(32.dp),
+                            tint = MaterialTheme.colorScheme.onTertiary
                         )
                     }
                     Text(
@@ -139,10 +162,11 @@ fun ProfileScreen() {
 
             primaryBtn(
                 onClick = { /*TODO*/ },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .height(49.dp)
                     .constrainAs(button) {
-                         bottom.linkTo(parent.bottom, 36.dp)
+                        bottom.linkTo(parent.bottom, 36.dp)
                     },
                 text = "Update",
                 icon = null

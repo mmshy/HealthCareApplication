@@ -1,4 +1,4 @@
-package com.example.healthcareapplication.presentation.components.screens
+package com.example.healthcareapplication.presentation.screens_and_implementtion
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -6,7 +6,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -14,15 +13,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.healthcareapplication.R
+import com.example.healthcareapplication.common.ME_HEALTH_DATA_NAVIGATION
+import com.example.healthcareapplication.common.ME_PERSONAL_NAVIGATION
+import com.example.healthcareapplication.common.ME_SETTING_NAVIGATION
 import com.example.healthcareapplication.presentation.components.custom.MeButton
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
 @Composable
-fun MeScreen() {
+fun MeScreen(
+    navController: NavHostController
+) {
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
@@ -77,13 +82,13 @@ fun MeScreen() {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     MeButton(
-                        onClick = { /*TODO*/ },
+                        onClick = { navController.navigate(route = ME_PERSONAL_NAVIGATION) },
                         title = "Personal",
                         icon = R.drawable.ic_round_person_24
                     )
 
                     MeButton(
-                        onClick = { /*TODO*/ },
+                        onClick = { navController.navigate(route = ME_HEALTH_DATA_NAVIGATION) },
                         title = "Health Data",
                         icon = R.drawable.ic_round_favorite_24
                     )
@@ -91,11 +96,12 @@ fun MeScreen() {
 
                 Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(top = 28.dp)
                 ) {
                     MeButton(
-                        onClick = { /*TODO*/ },
+                        onClick = { navController.navigate(route = ME_SETTING_NAVIGATION) },
                         title = "Setting",
                         icon = R.drawable.ic_round_settings_24
                     )
@@ -115,5 +121,5 @@ fun MeScreen() {
 @Composable
 @Preview(showBackground = true)
 fun MeScreenPreview() {
-    MeScreen()
+    MeScreen(rememberNavController())
 }
