@@ -81,7 +81,12 @@ object AppModule {
             getWaterDrinkingById = GetWaterDrinkingById(repository),
             addWaterDrinking = AddWaterDrinking(repository),
             updateWaterDrinking = UpdateWaterDrinking(repository),
-            getWaterDrinkings = GetWaterDrinkings(repository)
+            getWaterDrinkings = GetWaterDrinkings(repository),
+
+            addWaterDrinkingDetail = AddWaterDrinkingDetail(repository),
+            getWaterDrinkingDetailById = GetWaterDrinkingDetailById(repository),
+            getWaterDrinkingDetails = GetWaterDrinkingDetails(repository)
+
 
         )
     }

@@ -37,7 +37,6 @@ class SleepViewModel @Inject constructor(
                 Firebase.firestore.collection("sleeps")
                     .whereEqualTo(
                         "updateDate",
-//                        "14:14",
                         SimpleDateFormat("dd/MM/yyyy").format(
                             Timestamp.now().toDate()
                         )

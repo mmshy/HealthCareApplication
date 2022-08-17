@@ -1,6 +1,7 @@
 package com.example.healthcareapplication.common
 
 import com.example.healthcareapplication.domain.model.Sleep
+import com.example.healthcareapplication.domain.model.WaterDrinking
 
 class Constants {
     companion object {
@@ -13,5 +14,6 @@ class Constants {
         val KEY_WATERDRINKING_DETAIL_COLLECTION: String = "water_drinking_details"
 
         var currentSleep: Sleep? = null
+        var currentWaterDrinking: WaterDrinking? = null
     }
 }

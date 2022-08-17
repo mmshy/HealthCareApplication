@@ -38,7 +38,7 @@ fun WaterDrinking(
         Scaffold(
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = {  },
+                    onClick = { },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White,
                     shape = CircleShape,
@@ -80,36 +80,24 @@ fun WaterDrinking(
                             .constrainAs(body) {
                                 centerHorizontallyTo(parent)
                                 top.linkTo(greeting.bottom, 20.dp)
-                            },
-
-                    ) {
-                        Spacer(modifier = Modifier.size(20.dp))
-
-                        Column(
+                            }
+                            ,
+                        verticalAlignment = Alignment.CenterVertically
 
                         ) {
-                            BriefData(
-                                title = null,
-                                value = "uiState.data1",
-                                icon = R.drawable.ic_round_nights_stay_24
-                            )
-                            Spacer(modifier = Modifier.width(19.dp))
-                            BriefData(
-                                title = "total",
-                                value = "uiState.data2",
-                                icon = R.drawable.ic_round_nights_stay_24
-                            )
-                            Spacer(modifier = Modifier.width(19.dp))
-                            BriefData(
-                                title = null,
-                                value = "uiState.data3",
-                                icon = R.drawable.ic_round_nights_stay_24
-                            )
-                        }
+                        Spacer(modifier = Modifier.size(20.dp))
 
-                        Spacer(modifier = Modifier
-                            .size(40.dp)
-                            .background(MaterialTheme.colorScheme.primary))
+
+                        BriefData(
+                            title = null,
+                            value = "uiState.data1",
+                            icon = R.drawable.ic_round_nights_stay_24
+                        )
+
+                        Spacer(
+                            modifier = Modifier
+                                .size(40.dp)
+                        )
 
                         Box(
                             modifier = Modifier
@@ -128,10 +116,6 @@ fun WaterDrinking(
                                     .background(Color.White)
                             )
                         }
-
-
-
-
                     }
 
                     LazyColumn(
