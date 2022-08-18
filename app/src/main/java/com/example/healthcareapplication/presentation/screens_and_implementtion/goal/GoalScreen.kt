@@ -5,48 +5,72 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.FabPosition
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.healthcareapplication.R
-import com.example.healthcareapplication.presentation.components.BriefData
 import com.example.healthcareapplication.presentation.components.GoalData
 import com.example.healthcareapplication.presentation.components.custom.primaryBtn
 import com.example.healthcareapplication.presentation.components.custom.secondBtn
-import com.example.healthcareapplication.presentation.screens_and_implementtion.forgotpassword.ForgotPasswordEvent
+import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalViewModel
+import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.add_goal.GoalCard
+import com.example.healthcareapplication.presentation.screens_and_implementtion.sleep.add_sleep.SleepCard
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
-import org.junit.Before
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GoalScreen() {
-    //val uiState by viewModel.state
+fun GoalScreen(
+    viewModel: GoalViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.state
+
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
     ) {
         // params
-        //var something = uiState.greeting
+
+        if (uiState.showAddCard) {
+            Dialog(
+                onDismissRequest = { viewModel.unShowAddGoalCard() },
+                properties = DialogProperties(
+                    dismissOnBackPress = true,
+                    dismissOnClickOutside = true
+                )
+            ) {
+                GoalCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+//                        .wrapContentHeight()
+                )
+            }
+        } else {
+
+        }
 
         Scaffold(
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { },
+                    onClick = { viewModel.showAddGoalCard() },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White,
                     shape = CircleShape,
-                    modifier = Modifier.size(63.dp)
+                    modifier = Modifier.size(63.dp).absoluteOffset(0.dp, (-70).dp)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_round_add_24),
