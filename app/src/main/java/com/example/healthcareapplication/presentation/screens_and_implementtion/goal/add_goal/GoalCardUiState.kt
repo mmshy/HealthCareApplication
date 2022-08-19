@@ -7,7 +7,8 @@ data class GoalCardUiState(
     val endDate: Timestamp = Timestamp.now(),
     val goalType: GoalType = GoalType.LOSE_WEIGHT,
     val goalTypeList: List<GoalType> = emptyList(),
-    val name: String = ""
+    val name: String = "",
+    val content: Int = 0
 )
 
 enum class GoalType(val analyticsName: String) {

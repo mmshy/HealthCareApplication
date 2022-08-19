@@ -10,9 +10,11 @@ class Goal(
     var startDate   : Timestamp = Timestamp.now(),
     var finishDate  : Timestamp = Timestamp.now(),
     var completeDate: Timestamp = Timestamp.now(),
-    var result      : String = "",
+    var result      : Int = 0,
+    var content     : Int = 0,
     var status      : String = "",
     var description : String = "",
+    var type        : String = "",
     var healthData  : HealthData? = null
     ) {
 

@@ -21,16 +21,29 @@ import javax.inject.Inject
 @HiltViewModel
 class GoalCardViewModel @Inject constructor(
     private val useCases: GoalUseCases
-): ViewModel() {
+) : ViewModel() {
 
     private val uiState = mutableStateOf(GoalCardUiState())
     val state: State<GoalCardUiState> = uiState
 
     init {
-        uiState.value = state.value.copy(goalTypeList = listOf(GoalType.LOSE_WEIGHT, GoalType.GAIN_WEIGHT, GoalType.WATER_DRINKING))
+        uiState.value = state.value.copy(
+            goalTypeList = listOf(
+                GoalType.LOSE_WEIGHT,
+                GoalType.GAIN_WEIGHT,
+                GoalType.WATER_DRINKING
+            )
+        )
     }
 
     private val datePicker = MaterialDatePicker
+        .Builder.datePicker()
+        .setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR)
+        .setTitleText("select")
+        .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+        .build()
+
+    private val datePicker2 = MaterialDatePicker
         .Builder.datePicker()
         .setInputMode(MaterialDatePicker.INPUT_MODE_CALENDAR)
         .setTitleText("select")
@@ -42,18 +55,20 @@ class GoalCardViewModel @Inject constructor(
 
         datePicker.addOnPositiveButtonClickListener { it ->
             val date = ofInstant(Instant.ofEpochMilli(it), ZoneId.systemDefault())
-            val timeStamp = Timestamp.valueOf(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+            val timeStamp =
+                Timestamp.valueOf(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
 
             uiState.value = state.value.copy(startDate = com.google.firebase.Timestamp(timeStamp))
         }
     }
 
     fun showEndDatePicker(activity: AppCompatActivity) {
-        datePicker.show(activity.supportFragmentManager, datePicker.tag)
+        datePicker2.show(activity.supportFragmentManager, datePicker2.tag)
 
-        datePicker.addOnPositiveButtonClickListener { it ->
+        datePicker2.addOnPositiveButtonClickListener { it ->
             val date = ofInstant(Instant.ofEpochMilli(it), ZoneId.systemDefault())
-            val timeStamp = Timestamp.valueOf(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+            val timeStamp =
+                Timestamp.valueOf(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
 
             uiState.value = state.value.copy(endDate = com.google.firebase.Timestamp(timeStamp))
         }
@@ -63,9 +78,19 @@ class GoalCardViewModel @Inject constructor(
         uiState.value = state.value.copy(name = newValue)
     }
 
+    fun onContentChange(newValue: Int) {
+        uiState.value = state.value.copy(content = newValue)
+    }
+
+    fun onTypeChange(newValue: GoalType) {
+        uiState.value = state.value.copy(goalType = newValue)
+    }
+
     fun addGoal() {
         val goal = Goal(
             name = uiState.value.name,
+            type = uiState.value.goalType.toString(),
+            content = uiState.value.content,
             status = GoalStatus.DOING.toString(),
             startDate = uiState.value.startDate,
             finishDate = uiState.value.endDate,

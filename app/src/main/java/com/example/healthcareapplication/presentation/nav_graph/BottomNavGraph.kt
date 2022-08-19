@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.healthcareapplication.common.*
 import com.example.healthcareapplication.presentation.components.screens.DashboardScreen
-import com.example.healthcareapplication.presentation.components.screens.GoalScreen
+import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalScreen
 import com.example.healthcareapplication.presentation.screens_and_implementtion.MeScreen
 import com.example.healthcareapplication.presentation.components.screens.ReportScreen
 import com.example.healthcareapplication.presentation.profile.ProfileScreen

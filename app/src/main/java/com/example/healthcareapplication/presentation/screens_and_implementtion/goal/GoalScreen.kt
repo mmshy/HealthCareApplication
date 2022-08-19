@@ -1,9 +1,10 @@
-package com.example.healthcareapplication.presentation.components.screens
+package com.example.healthcareapplication.presentation.screens_and_implementtion.goal
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -21,11 +22,8 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.healthcareapplication.R
-import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalData
 import com.example.healthcareapplication.presentation.components.custom.primaryBtn
 import com.example.healthcareapplication.presentation.components.custom.secondBtn
-import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalStatus
-import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalViewModel
 import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.add_goal.GoalCard
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
@@ -171,26 +169,23 @@ fun GoalScreen(
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 30.dp)
+                            .padding(bottom = 30.dp, end = 10.dp, start = 10.dp)
                             .constrainAs(list) {
                                 top.linkTo(completedAndOnDoing.bottom, 30.dp)
                             },
                         verticalArrangement = Arrangement.spacedBy(1.dp)
                     ) {
 
-                        items(1) {
+                        items(uiState.listGoal) { item ->
                             Row(
                                 modifier = Modifier
-                                    .height(120.dp)
-                                    .padding(horizontal = 10.dp)
-                                    .background(MaterialTheme.colorScheme.onBackground)
+                                    .height(110.dp)
                                     .fillMaxWidth()
-                                    ,
+                                    .background(MaterialTheme.colorScheme.secondary),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-
-                                GoalData(title = "uong 50 lit nuoc", goal = 10, time = 4, timeLeft = 4)
+                                GoalData(goal = item)
                             }
                         }
                     }

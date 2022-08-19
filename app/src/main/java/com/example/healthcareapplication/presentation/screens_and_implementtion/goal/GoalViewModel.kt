@@ -1,11 +1,13 @@
 package com.example.healthcareapplication.presentation.screens_and_implementtion.goal
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthcareapplication.domain.usecase.goal.GoalUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -47,8 +49,9 @@ class GoalViewModel @Inject constructor(
 
     private fun getGoals(goalStatus: GoalStatus = GoalStatus.DOING) {
         // if onDoing show list doing, if complete show list complete
-        viewModelScope.launch {
-            var list = useCase.getGoals(goalStatus)
+        viewModelScope.launch (Dispatchers.Main) {
+            uiState.value = state.value.copy(listGoal = useCase.getGoals(goalStatus))
+            Log.d("get Goal:", uiState.value.listGoal.toString())
         }
     }
 }

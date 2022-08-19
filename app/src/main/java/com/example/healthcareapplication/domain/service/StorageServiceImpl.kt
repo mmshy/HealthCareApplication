@@ -145,8 +145,6 @@ class StorageServiceImpl @Inject constructor(
 
                 if (querySnapshot != null) {
 
-                    var string = StringBuilder()
-
                     for (item in querySnapshot.documents) {
                         val sleep = item.toObject<Sleep>()
                         Log.d("item: ", "$sleep")
@@ -344,14 +342,18 @@ class StorageServiceImpl @Inject constructor(
 
     override suspend fun getGoals(goalStatus: GoalStatus): List<Goal> {
 
-        var list: List<Goal> = mutableListOf()
+        var list = mutableListOf<Goal>()
 
         db.collection(Constants.KEY_GOAL_COLLECTION)
             .whereEqualTo("status", goalStatus)
             .get()
             .addOnCompleteListener {
                 for (item in it.result.documents) {
-                    Log.d("get goals: ", item.id)
+//                    Log.d("get goals: ", item.id)
+                    val goal = item.toObject<Goal>()
+                    if (goal != null) {
+                        list.add(goal)
+                    }
                 }
             }
             .await()

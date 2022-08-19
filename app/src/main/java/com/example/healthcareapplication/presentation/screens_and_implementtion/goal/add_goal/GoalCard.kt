@@ -48,10 +48,10 @@ fun GoalCard(
     var startDate = uiState.startDate
     var endDate = uiState.endDate
     var name = uiState.name
+    var content = uiState.content
+    var type = uiState.goalType
 
     var mExpanded by remember { mutableStateOf(false) }
-
-    var mSelectedText by remember { mutableStateOf("") }
 
     var mTextFieldSize by remember { mutableStateOf(Size.Zero) }
 
@@ -93,8 +93,8 @@ fun GoalCard(
                 // Create an Outlined Text Field
                 // with icon and not expanded
                 OutlinedTextField(
-                    value = mSelectedText,
-                    onValueChange = { mSelectedText = it },
+                    value = type.analyticsName,
+                    onValueChange = {  },
                     modifier = Modifier
                         .fillMaxWidth()
                         .onGloballyPositioned { coordinates ->
@@ -123,7 +123,7 @@ fun GoalCard(
                         DropdownMenuItem(
                             text = { Text(text = label.analyticsName, color = Color.Black) },
                             onClick = {
-                                mSelectedText = label.analyticsName
+                                viewModel.onTypeChange(label)
                                 mExpanded = false
                             }
                         )
@@ -189,8 +189,8 @@ fun GoalCard(
             )
 
             OutlinedTextField(
-                value = "",
-                onValueChange = { },
+                value = content.toString(),
+                onValueChange = { viewModel.onContentChange(it.toInt()) },
                 label = { Text(text = "Weight(gram)") },
                 modifier = Modifier
                     .fillMaxWidth()
