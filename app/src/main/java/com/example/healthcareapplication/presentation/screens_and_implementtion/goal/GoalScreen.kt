@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.FabPosition
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,12 +21,12 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.healthcareapplication.R
-import com.example.healthcareapplication.presentation.components.GoalData
+import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalData
 import com.example.healthcareapplication.presentation.components.custom.primaryBtn
 import com.example.healthcareapplication.presentation.components.custom.secondBtn
+import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalStatus
 import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalViewModel
 import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.add_goal.GoalCard
-import com.example.healthcareapplication.presentation.screens_and_implementtion.sleep.add_sleep.SleepCard
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
@@ -56,7 +55,6 @@ fun GoalScreen(
                 GoalCard(
                     modifier = Modifier
                         .fillMaxWidth()
-//                        .wrapContentHeight()
                 )
             }
         } else {
@@ -116,7 +114,7 @@ fun GoalScreen(
                                 .clip(CircleShape)
                                 .background(Color.Cyan)
                                 .constrainAs(filter) {
-                                    top.linkTo(parent.top, margin = -15.dp)
+                                    top.linkTo(parent.top, margin = (-15).dp)
                                     end.linkTo(parent.end, margin = 10.dp)
                                 }
 
@@ -132,31 +130,43 @@ fun GoalScreen(
                         )
                         {
 
-                            secondBtn(
-                                onClick = { },
-                                modifier = Modifier
-                                    .height(50.dp),
-                                text = "On doing",
+                            if (uiState.status == GoalStatus.DOING) {
+                                primaryBtn(
+                                    onClick = {},
+                                    modifier = Modifier
+                                        .height(50.dp),
+                                    text = "On doing",
+                                    icon = null,
+                                )
+                                secondBtn(
+                                    onClick = { viewModel.onCompleteClick() },
+                                    modifier = Modifier
+                                        .height(50.dp),
+                                    text = "Completed",
+                                    icon = null
 
-                                icon = null,
-                            )
+                                )
+                            } else {
+                                secondBtn(
+                                    onClick = { viewModel.onDoingClick() },
+                                    modifier = Modifier
+                                        .height(50.dp),
+                                    text = "On doing",
+                                    icon = null,
+                                )
+                                primaryBtn(
+                                    onClick = {},
+                                    modifier = Modifier
+                                        .height(50.dp),
+                                    text = "Completed",
+                                    icon = null
 
-                            primaryBtn(
-                                onClick = { },
-                                modifier = Modifier
-                                    .height(50.dp),
-                                text = "Completed",
-                                icon = null
-
-                            )
-
+                                )
+                            }
 
                         }
 
                     }
-
-
-
 
                     LazyColumn(
                         modifier = Modifier

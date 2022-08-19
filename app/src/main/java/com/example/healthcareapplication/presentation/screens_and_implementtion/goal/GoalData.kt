@@ -1,4 +1,4 @@
-package com.example.healthcareapplication.presentation.components
+package com.example.healthcareapplication.presentation.screens_and_implementtion.goal
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

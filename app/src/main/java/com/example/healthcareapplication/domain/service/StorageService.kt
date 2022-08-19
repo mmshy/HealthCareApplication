@@ -1,6 +1,7 @@
 package com.example.healthcareapplication.domain.service
 
 import com.example.healthcareapplication.domain.model.*
+import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -43,5 +44,7 @@ interface StorageService {
     fun addWaterDrinkingDetail(sleepDetail: WaterDrinking)
     suspend fun getWaterDrinkingDetails(): List<WaterDrinking>
 
-
+    //Goal
+    suspend fun getGoals(goalStatus: GoalStatus): List<Goal>
+    suspend fun addGoal(goal: Goal)
 }

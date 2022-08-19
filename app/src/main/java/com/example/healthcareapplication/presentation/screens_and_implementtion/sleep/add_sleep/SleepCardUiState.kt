@@ -3,7 +3,6 @@ package com.example.healthcareapplication.presentation.screens_and_implementtion
 import com.google.firebase.Timestamp
 
 data class SleepCardUiState(
-//    val stateVisible: Boolean = false,
     val startTime: Timestamp = Timestamp.now(),
     val note: String = "Get Up!"
 )

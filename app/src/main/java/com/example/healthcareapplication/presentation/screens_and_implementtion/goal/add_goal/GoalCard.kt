@@ -1,5 +1,6 @@
 package com.example.healthcareapplication.presentation.screens_and_implementtion.goal.add_goal
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
@@ -28,22 +29,27 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.healthcareapplication.R
 import com.example.healthcareapplication.presentation.components.custom.primaryBtn
+import java.text.SimpleDateFormat
 
+@SuppressLint("SimpleDateFormat")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GoalCard(
-    modifier: Modifier
+    modifier: Modifier,
+    viewModel: GoalCardViewModel = hiltViewModel()
 ) {
 
-    val activity = unwrap(
-        LocalContext.current
-    ) as AppCompatActivity
+    val activity = unwrap(LocalContext.current) as AppCompatActivity
+
+    val uiState by viewModel.state
+    var startDate = uiState.startDate
+    var endDate = uiState.endDate
+    var name = uiState.name
 
     var mExpanded by remember { mutableStateOf(false) }
-
-    val list = listOf("Lose Weight", "Gain Weight", "Drink")
 
     var mSelectedText by remember { mutableStateOf("") }
 
@@ -66,8 +72,8 @@ fun GoalCard(
                 .padding(
                     start = 16.dp,
                     end = 16.dp,
-                    top = 45.dp,
-                    bottom = 60.dp
+                    top = 42.dp,
+                    bottom = 45.dp
                 ),
             verticalArrangement = Arrangement.Center
         ) {
@@ -113,11 +119,11 @@ fun GoalCard(
                         .width(with(LocalDensity.current) { mTextFieldSize.width.toDp() })
 
                 ) {
-                    list.forEach { label ->
+                    uiState.goalTypeList.forEach { label ->
                         DropdownMenuItem(
-                            text = { Text(text = label, color = Color.Black) },
+                            text = { Text(text = label.analyticsName, color = Color.Black) },
                             onClick = {
-                                mSelectedText = label
+                                mSelectedText = label.analyticsName
                                 mExpanded = false
                             }
                         )
@@ -137,18 +143,18 @@ fun GoalCard(
 
             Row(
                 modifier = Modifier
-                    .padding(top = 29.dp)
+                    .padding(top = 24.dp)
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 OutlinedTextField(
-                    value = "",
-                    onValueChange = { },
+                    value = SimpleDateFormat("dd/MM/yy").format(startDate.toDate()),
+                    onValueChange = {  },
                     label = { Text(text = "Start") },
                     modifier = Modifier
                         .width(141.dp),
                     trailingIcon = {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = { viewModel.showStartDatePicker(activity) }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_round_calendar_today_24),
                                 contentDescription = "icon"
@@ -157,13 +163,13 @@ fun GoalCard(
                     }
                 )
                 OutlinedTextField(
-                    value = "",
+                    value = SimpleDateFormat("dd/MM/yy").format(endDate.toDate()),
                     onValueChange = { },
                     label = { Text(text = "Finish") },
                     modifier = Modifier
                         .width(141.dp),
                     trailingIcon = {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = { viewModel.showEndDatePicker(activity) }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_round_calendar_today_24),
                                 contentDescription = "icon"
@@ -174,8 +180,8 @@ fun GoalCard(
             }
 
             OutlinedTextField(
-                value = "",
-                onValueChange = { },
+                value = name,
+                onValueChange = { viewModel.onNameChange(it) },
                 label = { Text(text = "Name") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -193,7 +199,7 @@ fun GoalCard(
             )
 
             primaryBtn(
-                onClick = { },
+                onClick = { viewModel.addGoal() },
                 modifier = Modifier
                     .width(155.dp)
                     .height(49.dp)

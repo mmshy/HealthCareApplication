@@ -12,6 +12,8 @@ class Constants {
         val KEY_WATERDRINKING_COLLECTION: String = "water_drinkings"
         val KEY_WATERDRINKING_DETAIL_COLLECTION: String = "water_drinking_details"
 
+        val KEY_GOAL_COLLECTION: String = "goals"
+
         var currentSleep: Sleep? = null
     }
 }

@@ -6,6 +6,7 @@ import com.example.healthcareapplication.domain.model.Meal
 import com.example.healthcareapplication.domain.model.Sleep
 import com.example.healthcareapplication.domain.model.SleepDetail
 import com.example.healthcareapplication.domain.model.*
+import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalStatus
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -339,6 +340,40 @@ class StorageServiceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    // Goal
+
+    override suspend fun getGoals(goalStatus: GoalStatus): List<Goal> {
+
+        var list: List<Goal> = mutableListOf()
+
+        db.collection(Constants.KEY_GOAL_COLLECTION)
+            .whereEqualTo("status", goalStatus)
+            .get()
+            .addOnCompleteListener {
+                for (item in it.result.documents) {
+                    Log.d("get goals: ", item.id)
+                }
+            }
+            .await()
+
+        return list
+    }
+
+    override suspend fun addGoal(goal: Goal) {
+        db.collection(Constants.KEY_GOAL_COLLECTION)
+            .add(goal)
+            .addOnCompleteListener {
+                goal.goalId = it.result.id
+                runBlocking {
+                    db.collection(Constants.KEY_GOAL_COLLECTION)
+                        .document(goal.goalId)
+                        .update("goalId", goal.goalId)
+                        .await()
+                }
+            }
+            .await()
+        Log.d("add goal:", "OK")
+    }
 
 
 }
