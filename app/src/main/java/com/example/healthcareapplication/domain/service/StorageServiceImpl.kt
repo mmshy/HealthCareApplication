@@ -7,6 +7,7 @@ import com.example.healthcareapplication.domain.model.Sleep
 import com.example.healthcareapplication.domain.model.SleepDetail
 import com.example.healthcareapplication.domain.model.*
 import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalStatus
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -351,7 +352,19 @@ class StorageServiceImpl @Inject constructor(
                 for (item in it.result.documents) {
 //                    Log.d("get goals: ", item.id)
                     val goal = item.toObject<Goal>()
+                    Log.d("finish: ", goal?.finishDate?.toDate()?.date.toString())
+                    Log.d("now: ", Timestamp.now().toDate().date.toString())
+
                     if (goal != null) {
+
+                        if (goal.status == GoalStatus.DOING.toString() && goal?.finishDate?.toDate()?.date!! <= Timestamp.now().toDate().date) {
+                            goal.status = GoalStatus.COMPLETE.toString()
+                            runBlocking {
+                                updateGoal(goal)
+                            }
+                            continue
+                        }
+
                         list.add(goal)
                     }
                 }
@@ -377,5 +390,15 @@ class StorageServiceImpl @Inject constructor(
         Log.d("add goal:", "OK")
     }
 
-
+    override suspend fun updateGoal (goal: Goal) {
+        db.collection(Constants.KEY_GOAL_COLLECTION)
+            .document(goal.goalId)
+            .update(mapOf(
+                "status" to goal.status,
+                "result" to goal.result,
+                "completeDate" to goal.completeDate
+            ))
+            .await()
+        Log.d("update goal:", "OK")
+    }
 }

@@ -3,7 +3,6 @@ package com.example.healthcareapplication.presentation.screens_and_implementtion
 import com.example.healthcareapplication.domain.model.Goal
 
 data class GoalUiState(
-    val showAddCard: Boolean = false,
     val listGoal: List<Goal> = emptyList(),
     val status: GoalStatus = GoalStatus.DOING
 )

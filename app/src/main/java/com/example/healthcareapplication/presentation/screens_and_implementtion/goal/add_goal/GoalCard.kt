@@ -39,6 +39,7 @@ import java.text.SimpleDateFormat
 @Composable
 fun GoalCard(
     modifier: Modifier,
+    dialogState: MutableState<Boolean>,
     viewModel: GoalCardViewModel = hiltViewModel()
 ) {
 
@@ -94,7 +95,7 @@ fun GoalCard(
                 // with icon and not expanded
                 OutlinedTextField(
                     value = type.analyticsName,
-                    onValueChange = {  },
+                    onValueChange = { },
                     modifier = Modifier
                         .fillMaxWidth()
                         .onGloballyPositioned { coordinates ->
@@ -149,7 +150,7 @@ fun GoalCard(
             ) {
                 OutlinedTextField(
                     value = SimpleDateFormat("dd/MM/yy").format(startDate.toDate()),
-                    onValueChange = {  },
+                    onValueChange = { },
                     label = { Text(text = "Start") },
                     modifier = Modifier
                         .width(141.dp),
@@ -199,12 +200,14 @@ fun GoalCard(
             )
 
             primaryBtn(
-                onClick = { viewModel.addGoal() },
+                onClick = {
+                    viewModel.addGoal()
+                    dialogState.value = false
+                },
                 modifier = Modifier
                     .width(155.dp)
                     .height(49.dp)
-                    .align(Alignment.CenterHorizontally)
-                ,
+                    .align(Alignment.CenterHorizontally),
                 text = null,
                 icon = R.drawable.ic_round_done_24
             )

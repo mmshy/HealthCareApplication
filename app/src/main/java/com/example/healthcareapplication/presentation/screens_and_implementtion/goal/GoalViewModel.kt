@@ -23,16 +23,6 @@ class GoalViewModel @Inject constructor(
         getGoals()
     }
 
-    fun showAddGoalCard() {
-        if (!state.value.showAddCard) {
-            uiState.value = state.value.copy(showAddCard = true)
-        }
-    }
-
-    fun unShowAddGoalCard() {
-        uiState.value = state.value.copy(showAddCard = false)
-    }
-
     fun onDoingClick() {
         // change from secondary btn to primary btn
             uiState.value = state.value.copy(status = GoalStatus.DOING)

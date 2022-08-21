@@ -7,8 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,15 +35,22 @@ fun GoalScreen(
 ) {
     val uiState by viewModel.state
 
+    val dialogState: MutableState<Boolean> = remember {
+        mutableStateOf(false)
+    }
+
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
     ) {
         // params
 
-        if (uiState.showAddCard) {
+//        if (uiState.showAddCard) {
+        if (dialogState.value) {
             Dialog(
-                onDismissRequest = { viewModel.unShowAddGoalCard() },
+                onDismissRequest = {
+                    dialogState.value = false
+                },
                 properties = DialogProperties(
                     dismissOnBackPress = true,
                     dismissOnClickOutside = true
@@ -52,7 +58,8 @@ fun GoalScreen(
             ) {
                 GoalCard(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
+                    dialogState = dialogState
                 )
             }
         } else {
@@ -62,11 +69,15 @@ fun GoalScreen(
         Scaffold(
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { viewModel.showAddGoalCard() },
+                    onClick = {
+                        dialogState.value = true
+                    },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White,
                     shape = CircleShape,
-                    modifier = Modifier.size(63.dp).absoluteOffset(0.dp, (-70).dp)
+                    modifier = Modifier
+                        .size(63.dp)
+                        .absoluteOffset(0.dp, (-70).dp)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_round_add_24),
@@ -94,7 +105,7 @@ fun GoalScreen(
                             style = MaterialTheme.typography.headlineSmall,
                             textAlign = TextAlign.Center,
 
-                        )
+                            )
                     }
 
                     ConstraintLayout(
@@ -105,7 +116,7 @@ fun GoalScreen(
                                 top.linkTo(title.top, margin = 30.dp)
                             }
                     ) {
-                        val ( filter, completedAndDoing) = createRefs()
+                        val (filter, completedAndDoing) = createRefs()
                         Box(
                             modifier = Modifier
                                 .size(35.dp)

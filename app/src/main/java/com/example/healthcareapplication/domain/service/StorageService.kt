@@ -47,4 +47,5 @@ interface StorageService {
     //Goal
     suspend fun getGoals(goalStatus: GoalStatus): List<Goal>
     suspend fun addGoal(goal: Goal)
+    suspend fun updateGoal(goal: Goal)
 }

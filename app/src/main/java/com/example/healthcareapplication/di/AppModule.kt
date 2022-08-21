@@ -8,6 +8,7 @@ import com.example.healthcareapplication.domain.service.StorageServiceImpl
 import com.example.healthcareapplication.domain.usecase.goal.AddGoal
 import com.example.healthcareapplication.domain.usecase.goal.GetGoals
 import com.example.healthcareapplication.domain.usecase.goal.GoalUseCases
+import com.example.healthcareapplication.domain.usecase.goal.UpdateGoal
 import com.example.healthcareapplication.domain.usecase.sleep.*
 import com.example.healthcareapplication.domain.usecase.meal.AddMeal
 import com.example.healthcareapplication.domain.usecase.meal.GetMeal
@@ -94,7 +95,8 @@ object AppModule {
     fun provideGoalUseCases(repository: StorageServiceImpl) : GoalUseCases {
         return GoalUseCases(
             addGoal = AddGoal(repository),
-            getGoals = GetGoals(repository)
+            getGoals = GetGoals(repository),
+            updateGoal = UpdateGoal(repository)
         )
     }
 }
