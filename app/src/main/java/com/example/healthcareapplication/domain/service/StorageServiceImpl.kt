@@ -29,6 +29,7 @@ class StorageServiceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    //region sleep
     override suspend fun getSleepById(id: String): Sleep? {
         var value: Sleep? = null
         try {
@@ -51,10 +52,6 @@ class StorageServiceImpl @Inject constructor(
                             .document(sleep.id)
                             .update("id", sleep.id)
                             .await()
-
-                        db.collection(Constants.KEY_SLEEP_COLLECTION)
-                            .document(sleep.id)
-                            .collection("sleep_list")
                     }
                     Log.d("add sleep: ", sleep.id)
                 }
@@ -198,6 +195,7 @@ class StorageServiceImpl @Inject constructor(
             return@withContext list
         }
     }
+//endregion
 
     //region Meal
 
@@ -254,10 +252,11 @@ class StorageServiceImpl @Inject constructor(
 
     //region WaterDrinking
     override suspend fun getWaterDrinkingById(id: String): WaterDrinking? {
-        var value : WaterDrinking? = null
-        try{
-            value =  db.collection(Constants.KEY_WATERDRINKING_COLLECTION).document(id).get().await().toObject<WaterDrinking>()
-        }catch (e: Exception) {
+        var value: WaterDrinking? = null
+        try {
+            value = db.collection(Constants.KEY_WATERDRINKING_COLLECTION).document(id).get().await()
+                .toObject<WaterDrinking>()
+        } catch (e: Exception) {
             Log.d(e.toString(), e.toString())
         }
         return value
@@ -287,8 +286,7 @@ class StorageServiceImpl @Inject constructor(
                         }
 //                        Log.d("list...: ", "$list")
                     }
-                }
-                else {
+                } else {
                     Log.d("get list: ", "empty")
                 }
 
@@ -300,6 +298,9 @@ class StorageServiceImpl @Inject constructor(
         }
     }
 
+
+
+
     override suspend fun addWaterDrinking(waterDrinking: WaterDrinking) {
         try {
             db.collection(Constants.KEY_WATERDRINKING_COLLECTION)
@@ -307,28 +308,43 @@ class StorageServiceImpl @Inject constructor(
                 .addOnCompleteListener { value ->
                     waterDrinking.id = value.result.id
                     runBlocking {
-                        db.collection(Constants.KEY_SLEEP_COLLECTION)
+                        db.collection(Constants.KEY_WATERDRINKING_COLLECTION)
                             .document(waterDrinking.id)
                             .update("id", waterDrinking.id)
                             .await()
                     }
-                    Log.d("add water drinking: ", waterDrinking.id)
+                    Log.d("add sleep: ", waterDrinking.id)
                 }
                 .await()
-            Log.d("await water drinking: ", "run")
+            Log.d("await add water: ", "run")
         } catch (e: Exception) {
-            Log.d("add water drinking: ", e.toString())
-        }    }
+            Log.d("add water : ", e.toString())
+        }
+    }
+
+    override suspend fun updateWaterDrinkingWithNewDetail(waterDrinkingDetail: WaterDrinkingDetail) {
+        try {
+            db.collection(Constants.KEY_WATERDRINKING_COLLECTION)
+                .document(waterDrinkingDetail.waterDrinkingId)
+                .update("waterDrinkingList", FieldValue.arrayUnion(waterDrinkingDetail))
+                .await()
+
+            Log.d("update water: ", "OK")
+        } catch (e: Exception) {
+            Log.d("update water: ", e.toString())
+        }
+    }
 
     override suspend fun updateWaterDrinking(waterDrinking: WaterDrinking) {
         try {
             db.collection(Constants.KEY_WATERDRINKING_COLLECTION)
-                .document(waterDrinking.id)
-                .update("waterDrinkingList", waterDrinking.waterDrinkingList)
+                .document(waterDrinking.id).set(waterDrinking)
+                //.update("totalQuantity", waterDrinking.totalQuantity)
                 .await()
-            Log.d("update water drinking: ", "OK")
+
+            Log.d("update water quantities: ", "at ${waterDrinking.id} OK")
         } catch (e: Exception) {
-            Log.d("update water drinking: ", e.toString())
+            Log.d("update water quantities: ", e.toString())
         }
     }
 
@@ -384,7 +400,6 @@ class StorageServiceImpl @Inject constructor(
             return@withContext list
         }
     }
-
 
 
 }

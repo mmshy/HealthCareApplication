@@ -1,8 +1,7 @@
 package com.example.healthcareapplication.domain.model
 
 class WaterDrinking (
-    //var waterDrinkingID : String = "",
-    var totalQuantity        : Float = 0.0f,
+    var totalQuantity        : Int = 0,
     var waterDrinkingList:  MutableList<WaterDrinkingDetail> = mutableListOf()
 ): HealthData(){
 

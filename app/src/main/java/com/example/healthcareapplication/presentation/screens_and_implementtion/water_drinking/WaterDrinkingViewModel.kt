@@ -6,8 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthcareapplication.common.Constants
-import com.example.healthcareapplication.domain.model.Sleep
 import com.example.healthcareapplication.domain.model.WaterDrinking
+import com.example.healthcareapplication.domain.model.WaterDrinkingDetail
 import com.example.healthcareapplication.domain.usecase.waterdrinking.WaterDrinkingUseCases
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
@@ -29,11 +29,10 @@ class WaterDrinkingViewModel @Inject constructor(
 
 
     init {
-
-        GlobalScope.launch (Dispatchers.IO) {
+        GlobalScope.launch(Dispatchers.IO) {
 
             try {
-                Firebase.firestore.collection("sleeps")
+                Firebase.firestore.collection(Constants.KEY_WATERDRINKING_COLLECTION)
                     .whereEqualTo(
                         "updateDate",
                         SimpleDateFormat("dd/MM/yyyy").format(
@@ -41,29 +40,29 @@ class WaterDrinkingViewModel @Inject constructor(
                         )
                     )
                     .get()
-                    .addOnCompleteListener {
-                            it ->
+                    .addOnCompleteListener { it ->
                         if (!it.result.isEmpty) {
-                            Constants.currentWaterDrinking = it.result.documents[0].toObject<WaterDrinking>()
+                            Constants.currentWaterDrinking =
+                                it.result.documents[0].toObject<WaterDrinking>()
 
-                            Log.d("current:" , Constants.currentWaterDrinking ?.id.toString())
+                            Log.d("current:", Constants.currentWaterDrinking?.id.toString())
                         } else {
 
-                            Constants.currentSleep = null
+                            Constants.currentWaterDrinking = null
                         }
 
-                        if (Constants.currentWaterDrinking  != null) {
+                        if (Constants.currentWaterDrinking != null) {
                             getList()
                         }
-
                     }
                     .await()
 
             } catch (e: Exception) {
                 Log.d("get today sleep: ", e.toString())
             }
-        }
 
+
+        }
     }
 
     fun onEvent(event: WaterDrinkingEvent) {
@@ -73,19 +72,119 @@ class WaterDrinkingViewModel @Inject constructor(
         }
     }
 
+    fun addWaterDetail() {
+        Log.d("curr test app: ", Constants.currentWaterDrinking?.id.toString())
+        viewModelScope.launch(Dispatchers.IO) {
+            // new water detail
+            var amount = 0
+            if (Constants.currentWaterDrinking?.totalQuantity!! > uiState.value.waterCupSize) {
+                amount =
+                    Constants.currentWaterDrinking?.totalQuantity?.minus(uiState.value.waterCupSize)!!
+            }
+
+            var waterDetail = WaterDrinkingDetail(
+                time = Timestamp.now(),
+                waterDrinkingId = Constants.currentWaterDrinking!!.id,
+                quantities = amount,
+            )
+
+            // check if waterD of that day is exited??
+            if (Constants.currentWaterDrinking != null) {
+                // if yes, add sleep detail into sleepList of sleep
+                Log.d("state: ", "update")
+                Log.d("state: ", Constants.currentWaterDrinking!!.waterDrinkingList.size.toString())
+//                currentSleep?.sleepList?.add(sleepDetail)
+                Constants.currentWaterDrinking?.waterDrinkingList?.add(waterDetail)
+                useCases.updateWaterDrinkingWithNewDetail(waterDetail)
+
+                Constants.currentWaterDrinking!!.waterDrinkingList.add(waterDetail)
+            } else {
+                Log.d("state: ", "no amount")
+
+            }
+        }
+    }
+
     private fun getList() {
 
         viewModelScope.launch(Dispatchers.Main) {
             try {
-                Log.d("curr: ", Constants.currentSleep?.id.toString())
+                Log.d("curr: ", Constants.currentWaterDrinking?.id.toString())
                 uiState.value =
-                    state.value.copy(items = useCases.getWaterDrinkingDetails(Constants.currentWaterDrinking!!.id))
+                    state.value.copy(
+                        items = useCases.getWaterDrinkingDetails(Constants.currentWaterDrinking!!.id),
+                        amount = Constants.currentWaterDrinking!!.totalQuantity
+                    )
 
             } catch (e: Exception) {
                 Log.d(e.message, e.message.toString())
             }
         }
 
+    }
+
+     fun updateWaterDrinkingWithNewDetail250ml() {
+        viewModelScope.launch(Dispatchers.Main) {
+            if(Constants.currentWaterDrinking == null){
+                return@launch
+            }
+            var incomeValue = 0
+            if( Constants.currentWaterDrinking!!.totalQuantity >= 250){
+                Constants.currentWaterDrinking!!.totalQuantity -= 250
+                incomeValue = 250
+            }
+            else{
+                Constants.currentWaterDrinking!!.totalQuantity = 0
+                incomeValue = Constants.currentWaterDrinking!!.totalQuantity
+
+            }
+            var newDetail = WaterDrinkingDetail(
+                waterDrinkingId = Constants.currentWaterDrinking!!.id,
+                quantities = incomeValue,
+            )
+            Constants.currentWaterDrinking!!.waterDrinkingList.add(newDetail)
+            useCases.updateWaterDrinkingWithNewDetail(newDetail)
+
+
+            getList()
+        }
+    }
+
+    fun updateWaterDrinkingWithNewDetail500ml() {
+        viewModelScope.launch(Dispatchers.Main) {
+            if(Constants.currentWaterDrinking == null){
+                return@launch
+            }
+            var incomeValue = 0
+            if( Constants.currentWaterDrinking!!.totalQuantity >= 500){
+                Constants.currentWaterDrinking!!.totalQuantity -= 500
+                incomeValue = 250
+            }
+            else{
+                Constants.currentWaterDrinking!!.totalQuantity = 0
+                incomeValue = Constants.currentWaterDrinking!!.totalQuantity
+
+            }
+            var newDetail = WaterDrinkingDetail(
+                waterDrinkingId = Constants.currentWaterDrinking!!.id,
+                quantities = incomeValue,
+            )
+            Constants.currentWaterDrinking!!.waterDrinkingList.add(newDetail)
+            useCases.updateWaterDrinkingWithNewDetail(newDetail)
+
+
+            getList()
+        }
+    }
+
+    fun showAddWaterCard() {
+        if (!state.value.showAddCard) {
+            uiState.value = state.value.copy(showAddCard = true)
+        }
+    }
+
+    fun unShowAddWaterCard() {
+        uiState.value = state.value.copy(showAddCard = false)
     }
 
 

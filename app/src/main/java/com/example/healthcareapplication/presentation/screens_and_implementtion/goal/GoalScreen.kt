@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -18,14 +17,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.healthcareapplication.R
-import com.example.healthcareapplication.presentation.components.BriefData
 import com.example.healthcareapplication.presentation.components.GoalData
 import com.example.healthcareapplication.presentation.components.custom.primaryBtn
 import com.example.healthcareapplication.presentation.components.custom.secondBtn
-import com.example.healthcareapplication.presentation.screens_and_implementtion.forgotpassword.ForgotPasswordEvent
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
-import org.junit.Before
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -113,7 +109,6 @@ fun GoalScreen() {
                                 modifier = Modifier
                                     .height(50.dp),
                                 text = "On doing",
-
                                 icon = null,
                             )
 

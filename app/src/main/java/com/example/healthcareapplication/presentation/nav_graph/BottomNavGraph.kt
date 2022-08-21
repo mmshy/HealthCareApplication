@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.example.healthcareapplication.common.HOME_GRAPH
 import com.example.healthcareapplication.common.MEAL_NAVIGATION
 import com.example.healthcareapplication.common.SLEEP_NAVIGATION
+import com.example.healthcareapplication.common.WATER_NAVIGATION
 import com.example.healthcareapplication.presentation.components.screens.DashboardScreen
 import com.example.healthcareapplication.presentation.components.screens.GoalScreen
 import com.example.healthcareapplication.presentation.components.screens.MeScreen
@@ -45,6 +46,9 @@ fun BottomNavGraph(
         }
         composable(route = MEAL_NAVIGATION) {
             MealScreen()
+        }
+        composable(route = WATER_NAVIGATION) {
+            WaterDrinkingScreen()
         }
     }
 }

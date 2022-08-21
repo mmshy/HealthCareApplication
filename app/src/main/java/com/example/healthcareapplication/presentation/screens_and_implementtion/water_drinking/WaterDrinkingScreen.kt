@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -17,28 +18,52 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.healthcareapplication.presentation.components.custom.primaryBtn
+import com.example.healthcareapplication.presentation.components.custom.primaryBtnNoPadding
+import com.example.healthcareapplication.presentation.components.custom.secondBtn
+import com.example.healthcareapplication.presentation.components.custom.secondBtnNoPadding
+import com.example.healthcareapplication.presentation.screens_and_implementtion.water_drinking.WaterDrinkingViewModel
+import com.example.healthcareapplication.presentation.screens_and_implementtion.water_drinking.add_waterdrinking.WaterCard
+import com.example.healthcareapplication.presentation.screens_and_implementtion.water_drinking.water_Item.WaterItem
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WaterDrinking(
-
+fun WaterDrinkingScreen(
+    viewModel: WaterDrinkingViewModel = hiltViewModel()
 ) {
-    //val uiState by viewModel.state
+    val uiState = viewModel.state.value
+
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
     ) {
-        // params
-        //var something = uiState.greeting
+        if (uiState.showAddCard) {
+            Dialog(
+                onDismissRequest = { viewModel.unShowAddWaterCard() },
+                properties = DialogProperties(
+                    dismissOnBackPress = true,
+                    dismissOnClickOutside = true
+                )
+            ) {
+                WaterCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight()
+                )
+            }
+        }
 
         Scaffold(
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { },
+                    onClick = { viewModel.showAddWaterCard() },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White,
                     shape = CircleShape,
@@ -65,7 +90,7 @@ fun WaterDrinking(
                     )
 
                     Text(
-                        text = "something",
+                        text = uiState.greeting,
                         style = MaterialTheme.typography.labelMedium,
                         textAlign = TextAlign.Left,
                         modifier = Modifier
@@ -75,28 +100,65 @@ fun WaterDrinking(
                             }
                     )
 
+
                     Row(
                         modifier = Modifier
                             .constrainAs(body) {
                                 centerHorizontallyTo(parent)
                                 top.linkTo(greeting.bottom, 20.dp)
-                            }
-                            ,
+                            },
                         verticalAlignment = Alignment.CenterVertically
 
-                        ) {
-                        Spacer(modifier = Modifier.size(20.dp))
-
-
-                        BriefData(
-                            title = null,
-                            value = "uiState.data1",
-                            icon = R.drawable.ic_round_nights_stay_24
-                        )
+                    ) {
 
                         Spacer(
                             modifier = Modifier
-                                .size(40.dp)
+                                .size(10.dp)
+                        )
+                        Column(
+                            modifier = Modifier.height(170.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Spacer(
+                                modifier = Modifier
+                                    .size(30.dp)
+                            )
+                            BriefData(
+                                title = null,
+                                value = uiState.amount.toString() + "ml",
+                                icon = R.drawable.ic_round_nights_stay_24
+                            )
+
+                            Row(
+
+                            ) {
+                                secondBtnNoPadding(
+                                    onClick = { viewModel.updateWaterDrinkingWithNewDetail250ml() },
+                                    modifier =
+                                    Modifier
+                                        .height(40.dp)
+                                        .width(100.dp),
+                                    text = "250ml",
+                                    icon = R.drawable.ic_round_wb_sunny_24
+                                )
+                                Spacer(modifier = Modifier.size(10.dp))
+
+                                primaryBtnNoPadding(
+                                    onClick = { viewModel.updateWaterDrinkingWithNewDetail500ml() },
+                                    modifier = Modifier
+                                        .height(40.dp)
+                                        .width(100.dp),
+                                    text = "500ml",
+                                    icon = R.drawable.ic_round_local_fire_department_24
+                                )
+                            }
+
+                        }
+
+
+                        Spacer(
+                            modifier = Modifier
+                                .size(20.dp)
                         )
 
                         Box(
@@ -127,34 +189,12 @@ fun WaterDrinking(
                             },
                         verticalArrangement = Arrangement.spacedBy(1.dp)
                     ) {
-
-                        items(3) {
-                            Row(
-                                modifier = Modifier
-                                    .height(65.dp)
-                                    .background(MaterialTheme.colorScheme.onBackground)
-                                    .fillMaxWidth()
-                                    .padding(20.dp, 0.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                Text(
-                                    text = "Bread",
-                                    style = MaterialTheme.typography.bodySmall,
-                                )
-                                Text(
-                                    text = "100gr",
-                                    style = MaterialTheme.typography.labelMedium,
-                                    color = Color.Black
-                                )
-                                Text(
-                                    text = "100kcal",
-                                    style = MaterialTheme.typography.titleLarge
-                                )
-                            }
+                        items(uiState.items) { item ->
+                            WaterItem(
+                                waterDrinkingDetail = item,
+                            )
                         }
                     }
-
                 }
             }
         }
@@ -164,5 +204,5 @@ fun WaterDrinking(
 @Composable
 @Preview(showBackground = true)
 fun WaterDrinkingPreview() {
-    com.example.healthcareapplication.presentation.components.WaterDrinking()
+    WaterDrinkingScreen()
 }

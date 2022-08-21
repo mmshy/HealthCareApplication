@@ -29,6 +29,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.healthcareapplication.R
+import com.example.healthcareapplication.common.MEAL_NAVIGATION
+import com.example.healthcareapplication.common.SLEEP_NAVIGATION
+import com.example.healthcareapplication.common.WATER_NAVIGATION
 import com.example.healthcareapplication.presentation.components.custom.DashboardBtn
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
@@ -131,7 +134,9 @@ fun DashboardScreen(
                         }
 
                         DashboardBtn(
-                            onClick = { /*TODO*/ },
+                            onClick = {
+                                navController.navigate(route = WATER_NAVIGATION)
+                            },
                             title = "Water",
                             icon = R.drawable.ic_round_person_24
                         )
@@ -145,14 +150,14 @@ fun DashboardScreen(
                     ) {
                         DashboardBtn(
                             onClick = {
-                                navController.navigate(route = "meal")
+                                navController.navigate(route = MEAL_NAVIGATION)
                             },
                             title = "Meal",
                             icon = R.drawable.ic_round_person_24
                         )
                         DashboardBtn(
                             onClick = {
-                                navController.navigate(route = "sleep")
+                                navController.navigate(route = SLEEP_NAVIGATION)
                             },
                             title = "Sleep",
                             icon = R.drawable.ic_round_person_24

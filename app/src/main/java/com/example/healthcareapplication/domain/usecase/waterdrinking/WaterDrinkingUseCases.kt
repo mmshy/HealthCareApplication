@@ -5,6 +5,7 @@ data class WaterDrinkingUseCases(
     val getWaterDrinkingById: GetWaterDrinkingById,
     val updateWaterDrinking: UpdateWaterDrinking,
     val getWaterDrinkings: GetWaterDrinkings,
+    val updateWaterDrinkingWithNewDetail: UpdateWaterDrinkingWithNewDetail,
 
     val addWaterDrinkingDetail: AddWaterDrinkingDetail,
     val getWaterDrinkingDetails: GetWaterDrinkingDetails,

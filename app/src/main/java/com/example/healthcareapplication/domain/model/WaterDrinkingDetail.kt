@@ -5,6 +5,6 @@ import com.google.firebase.Timestamp
 data class WaterDrinkingDetail (
     var id: String = "",
     var waterDrinkingId: String = "",
-    var quantities: Float = 0F,
+    var quantities: Int = 0,
     var time: Timestamp = Timestamp.now(),
 )

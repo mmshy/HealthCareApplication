@@ -36,7 +36,7 @@ interface StorageService {
     suspend fun addWaterDrinking(waterDrinking: WaterDrinking)
     suspend fun getWaterDrinkings(): List<WaterDrinking>
     suspend fun updateWaterDrinking(waterDrinking: WaterDrinking)
-
+    suspend fun updateWaterDrinkingWithNewDetail(waterDrinkingDetail: WaterDrinkingDetail)
 
     //WaterDrinkingDetail
     suspend fun getWaterDrinkingDetailById(id: String) : WaterDrinkingDetail?

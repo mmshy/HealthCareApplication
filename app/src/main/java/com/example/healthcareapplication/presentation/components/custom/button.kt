@@ -57,7 +57,7 @@ fun secondBtn(
     onClick: () -> Unit,
     modifier: Modifier,
     text: String,
-    icon: Icon?,
+    icon: Int?,
 ) {
     OutlinedButton(
         onClick = onClick,
@@ -72,6 +72,70 @@ fun secondBtn(
             color = MaterialTheme.colorScheme.primary
         )
     }
+
+}
+
+@Composable
+fun primaryBtnNoPadding(
+    onClick: () -> Unit,
+    modifier: Modifier,
+    text: String?,
+    icon: Int?,
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        shape = MaterialTheme.shapes.small,
+    ) {
+        if (text != null) {
+            Text(
+                text = text,
+                color = Color.White,
+                style = MaterialTheme.typography.titleMedium,
+            )
+        }
+
+        if (icon != null) {
+            Icon(
+                painter = painterResource(id = icon),
+                contentDescription = "icon",
+                tint = Color.White,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    }
+
+}
+
+@Composable
+fun secondBtnNoPadding(
+    onClick: () -> Unit,
+    modifier: Modifier,
+    text: String,
+    icon: Int?,
+) {
+    OutlinedButton(
+        onClick = onClick,
+        modifier = modifier,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+        shape = MaterialTheme.shapes.small,
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
+        if (icon != null) {
+            Icon(
+                painter = painterResource(id = icon),
+                contentDescription = "icon",
+                tint = Color.Black,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    }
+
+
 
 }
 
