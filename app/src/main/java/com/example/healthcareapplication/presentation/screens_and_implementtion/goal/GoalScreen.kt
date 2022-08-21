@@ -22,7 +22,6 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.healthcareapplication.R
-import com.example.healthcareapplication.presentation.components.GoalData
 import com.example.healthcareapplication.presentation.components.custom.primaryBtn
 import com.example.healthcareapplication.presentation.components.custom.secondBtn
 import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.add_goal.GoalCard

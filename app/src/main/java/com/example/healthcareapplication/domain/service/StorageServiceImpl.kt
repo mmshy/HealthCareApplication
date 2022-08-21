@@ -302,9 +302,6 @@ class StorageServiceImpl @Inject constructor(
         }
     }
 
-
-
-
     override suspend fun addWaterDrinking(waterDrinking: WaterDrinking) {
         try {
             db.collection(Constants.KEY_WATERDRINKING_COLLECTION)
@@ -339,6 +336,10 @@ class StorageServiceImpl @Inject constructor(
         }
     }
 
+    override suspend fun getWaterDrinkingDetailById(id: String): WaterDrinkingDetail? {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun updateWaterDrinking(waterDrinking: WaterDrinking) {
         try {
             db.collection(Constants.KEY_WATERDRINKING_COLLECTION)
@@ -351,27 +352,6 @@ class StorageServiceImpl @Inject constructor(
             Log.d("update water quantities: ", e.toString())
         }
     }
-
-    override suspend fun getWaterDrinkingDetailById(id: String): WaterDrinkingDetail? {
-        TODO("Not yet implemented")
-    }
-
-    // Goal
-
-    override suspend fun getGoals(goalStatus: GoalStatus): List<Goal> {
-
-        var list = mutableListOf<Goal>()
-
-        db.collection(Constants.KEY_GOAL_COLLECTION)
-            .whereEqualTo("status", goalStatus)
-            .get()
-            .addOnCompleteListener {
-                for (item in it.result.documents) {
-//                    Log.d("get goals: ", item.id)
-                    val goal = item.toObject<Goal>()
-                    Log.d("finish: ", goal?.finishDate?.toDate()?.date.toString())
-                    Log.d("now: ", Timestamp.now().toDate().date.toString())
-    //endregion
 
     override suspend fun addWaterDrinkingDetail(waterDrinkingDetail: WaterDrinkingDetail) {
         try {
@@ -388,6 +368,8 @@ class StorageServiceImpl @Inject constructor(
             Log.d("add water drinking detail: ", e.toString())
         }
     }
+
+
 
     override suspend fun getWaterDrinkingDetails(id: String): List<WaterDrinkingDetail> {
         var list = mutableListOf<WaterDrinkingDetail>()
@@ -420,6 +402,21 @@ class StorageServiceImpl @Inject constructor(
         }
     }
 
+    //endregion
+
+    // region Goal
+    override suspend fun getGoals(goalStatus: GoalStatus): List<Goal> {
+        var list = mutableListOf<Goal>()
+        db.collection(Constants.KEY_GOAL_COLLECTION)
+            .whereEqualTo("status", goalStatus)
+            .get()
+            .addOnCompleteListener {
+                for (item in it.result.documents) {
+//                    Log.d("get goals: ", item.id)
+                    val goal = item.toObject<Goal>()
+                    Log.d("finish: ", goal?.finishDate?.toDate()?.date.toString())
+                    Log.d("now: ", Timestamp.now().toDate().date.toString())
+
                     if (goal != null) {
 
                         if (goal.status == GoalStatus.DOING.toString() && goal?.finishDate?.toDate()?.date!! <= Timestamp.now().toDate().date) {
@@ -435,7 +432,6 @@ class StorageServiceImpl @Inject constructor(
                 }
             }
             .await()
-
         return list
     }
 
@@ -455,15 +451,19 @@ class StorageServiceImpl @Inject constructor(
         Log.d("add goal:", "OK")
     }
 
-    override suspend fun updateGoal (goal: Goal) {
+    override suspend fun updateGoal(goal: Goal) {
         db.collection(Constants.KEY_GOAL_COLLECTION)
             .document(goal.goalId)
-            .update(mapOf(
-                "status" to goal.status,
-                "result" to goal.result,
-                "completeDate" to goal.completeDate
-            ))
+            .update(
+                mapOf(
+                    "status" to goal.status,
+                    "result" to goal.result,
+                    "completeDate" to goal.completeDate
+                )
+            )
             .await()
         Log.d("update goal:", "OK")
     }
+
+    //endregion
 }
