@@ -7,6 +7,8 @@ import com.example.healthcareapplication.domain.model.Sleep
 import com.example.healthcareapplication.domain.model.SleepDetail
 import com.example.healthcareapplication.domain.model.*
 import com.example.healthcareapplication.domain.usecase.waterdrinking.AddWaterDrinkingDetail
+import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalStatus
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -52,6 +54,10 @@ class StorageServiceImpl @Inject constructor(
                             .document(sleep.id)
                             .update("id", sleep.id)
                             .await()
+
+                        db.collection(Constants.KEY_SLEEP_COLLECTION)
+                            .document(sleep.id)
+                            .collection("sleep_list")
                     }
                     Log.d("add sleep: ", sleep.id)
                 }
@@ -141,8 +147,6 @@ class StorageServiceImpl @Inject constructor(
 //                Log.d("a: ", "${a.documents}")
 
                 if (querySnapshot != null) {
-
-                    var string = StringBuilder()
 
                     for (item in querySnapshot.documents) {
                         val sleep = item.toObject<Sleep>()
@@ -352,6 +356,21 @@ class StorageServiceImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    // Goal
+
+    override suspend fun getGoals(goalStatus: GoalStatus): List<Goal> {
+
+        var list = mutableListOf<Goal>()
+
+        db.collection(Constants.KEY_GOAL_COLLECTION)
+            .whereEqualTo("status", goalStatus)
+            .get()
+            .addOnCompleteListener {
+                for (item in it.result.documents) {
+//                    Log.d("get goals: ", item.id)
+                    val goal = item.toObject<Goal>()
+                    Log.d("finish: ", goal?.finishDate?.toDate()?.date.toString())
+                    Log.d("now: ", Timestamp.now().toDate().date.toString())
     //endregion
 
     override suspend fun addWaterDrinkingDetail(waterDrinkingDetail: WaterDrinkingDetail) {
@@ -401,5 +420,50 @@ class StorageServiceImpl @Inject constructor(
         }
     }
 
+                    if (goal != null) {
 
+                        if (goal.status == GoalStatus.DOING.toString() && goal?.finishDate?.toDate()?.date!! <= Timestamp.now().toDate().date) {
+                            goal.status = GoalStatus.COMPLETE.toString()
+                            runBlocking {
+                                updateGoal(goal)
+                            }
+                            continue
+                        }
+
+                        list.add(goal)
+                    }
+                }
+            }
+            .await()
+
+        return list
+    }
+
+    override suspend fun addGoal(goal: Goal) {
+        db.collection(Constants.KEY_GOAL_COLLECTION)
+            .add(goal)
+            .addOnCompleteListener {
+                goal.goalId = it.result.id
+                runBlocking {
+                    db.collection(Constants.KEY_GOAL_COLLECTION)
+                        .document(goal.goalId)
+                        .update("goalId", goal.goalId)
+                        .await()
+                }
+            }
+            .await()
+        Log.d("add goal:", "OK")
+    }
+
+    override suspend fun updateGoal (goal: Goal) {
+        db.collection(Constants.KEY_GOAL_COLLECTION)
+            .document(goal.goalId)
+            .update(mapOf(
+                "status" to goal.status,
+                "result" to goal.result,
+                "completeDate" to goal.completeDate
+            ))
+            .await()
+        Log.d("update goal:", "OK")
+    }
 }

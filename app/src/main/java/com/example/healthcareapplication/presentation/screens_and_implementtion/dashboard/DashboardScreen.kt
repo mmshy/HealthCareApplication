@@ -32,6 +32,8 @@ import com.example.healthcareapplication.R
 import com.example.healthcareapplication.common.MEAL_NAVIGATION
 import com.example.healthcareapplication.common.SLEEP_NAVIGATION
 import com.example.healthcareapplication.common.WATER_NAVIGATION
+import com.example.healthcareapplication.common.MEAL_NAVIGATION
+import com.example.healthcareapplication.common.SLEEP_NAVIGATION
 import com.example.healthcareapplication.presentation.components.custom.DashboardBtn
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography

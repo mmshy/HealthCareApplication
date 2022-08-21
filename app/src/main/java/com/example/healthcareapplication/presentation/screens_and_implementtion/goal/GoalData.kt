@@ -1,5 +1,6 @@
-package com.example.healthcareapplication.presentation.components
+package com.example.healthcareapplication.presentation.screens_and_implementtion.goal
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -17,25 +18,33 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.healthcareapplication.R
+import com.example.healthcareapplication.domain.model.Goal
 import com.example.healthcareapplication.presentation.ui.theme.Gray
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 @Composable
 fun GoalData(
-    title: String?,
-    goal: Int,
-    time: Int,
-    timeLeft: Int
+    goal: Goal
 ) {
+
+    var millionSeconds  = goal.finishDate.toDate().time - goal.startDate.toDate().time
+    var timeGoal = TimeUnit.MILLISECONDS.toDays(millionSeconds) + 1
+    var millionSeconds1  = goal.finishDate.toDate().time - Calendar.getInstance().timeInMillis
+    var leftTime = TimeUnit.MILLISECONDS.toDays(millionSeconds1) + 1
+
     ConstraintLayout(
+        modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
+            .fillMaxWidth()
     ) {
         val (image, goalTitle, progress, progressDetail, timeleftx) = createRefs()
 
 
         Box(
             modifier = Modifier
-                .size(90.dp)
+                .size(64.dp)
                 .constrainAs(image) {
-                    start.linkTo(parent.start, margin = 10.dp)
+//                    start.linkTo(parent.start, margin = 10.dp)
                 }
                 .shadow(
                     elevation = 8.dp,
@@ -46,23 +55,21 @@ fun GoalData(
         ) {
             Box(
                 modifier = Modifier
-                    .size(90.dp)
+                    .size(64.dp)
                     .clip(CircleShape)
                     .background(Color.White)
             )
 
         }
 
-        if (title != null) {
-            Text(
-                modifier = Modifier.constrainAs(goalTitle) {
-                    start.linkTo(image.end, margin = 20.dp)
-                },
-                text = title,
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.primary
-            )
-        }
+        Text(
+            modifier = Modifier.constrainAs(goalTitle) {
+                start.linkTo(image.end, margin = 20.dp)
+            },
+            text = goal.type,
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary
+        )
 
         Spacer(
             modifier = Modifier
@@ -70,13 +77,11 @@ fun GoalData(
                 .background(Color.Cyan)
                 .height(10.dp)
                 .constrainAs(progress) {
-                    start.linkTo(image.end, margin = 20.dp)
+                    start.linkTo(image.end, margin = 16.dp)
                     top.linkTo(goalTitle.bottom, margin = 15.dp)
 
                 }
         )
-
-
 
         Text(
             modifier = Modifier
@@ -84,26 +89,19 @@ fun GoalData(
                     start.linkTo(image.end, margin = 20.dp)
                     top.linkTo(progress.bottom, margin = 10.dp)
                 },
-            text = "$goal/$time",
+            text = "${goal.content}/${timeGoal} days",
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary,
         )
-
-
-
 
         Text(
             modifier = Modifier
                 .constrainAs(timeleftx) {
-                    end.linkTo(parent.end, margin = 10.dp)
+                    end.linkTo(parent.end, margin = 0.dp)
                     top.linkTo(progress.bottom, margin = 10.dp)
                 },
-            text = "$timeLeft",
+            text = "$leftTime days left",
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary
         )
-
-
     }
 }
 

@@ -5,6 +5,10 @@ import com.example.healthcareapplication.domain.model.User
 import com.example.healthcareapplication.domain.repository.UserRepository
 import com.example.healthcareapplication.domain.repository.UserRepositoryImpl
 import com.example.healthcareapplication.domain.service.StorageServiceImpl
+import com.example.healthcareapplication.domain.usecase.goal.AddGoal
+import com.example.healthcareapplication.domain.usecase.goal.GetGoals
+import com.example.healthcareapplication.domain.usecase.goal.GoalUseCases
+import com.example.healthcareapplication.domain.usecase.goal.UpdateGoal
 import com.example.healthcareapplication.domain.usecase.sleep.*
 import com.example.healthcareapplication.domain.usecase.meal.AddMeal
 import com.example.healthcareapplication.domain.usecase.meal.GetMeal
@@ -89,6 +93,16 @@ object AppModule {
             getWaterDrinkingDetails = GetWaterDrinkingDetails(repository)
 
 
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideGoalUseCases(repository: StorageServiceImpl) : GoalUseCases {
+        return GoalUseCases(
+            addGoal = AddGoal(repository),
+            getGoals = GetGoals(repository),
+            updateGoal = UpdateGoal(repository)
         )
     }
 }

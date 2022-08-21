@@ -170,15 +170,17 @@ fun LoginScreen(
             Row(
                 modifier = Modifier.constrainAs(register) {
                     top.linkTo(parent.bottom, margin = (-60).dp)
-                }
+                    centerHorizontallyTo(parent)
+                },
+                verticalAlignment = Alignment.Bottom
             ) {
                 Text(
-                    text = "Dont you have an account?",
+                    text = "Don't you have an account?",
                     style = MaterialTheme.typography.labelMedium
                 )
                 Text(
                     modifier = Modifier.clickable { onRegisterClick() },
-                    text = "Create a HCA Account",
+                    text = "Sign Up",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary
                 )

@@ -4,14 +4,18 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.healthcareapplication.common.*
 import com.example.healthcareapplication.common.HOME_GRAPH
 import com.example.healthcareapplication.common.MEAL_NAVIGATION
 import com.example.healthcareapplication.common.SLEEP_NAVIGATION
 import com.example.healthcareapplication.common.WATER_NAVIGATION
 import com.example.healthcareapplication.presentation.components.screens.DashboardScreen
-import com.example.healthcareapplication.presentation.components.screens.GoalScreen
-import com.example.healthcareapplication.presentation.components.screens.MeScreen
+import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalScreen
+import com.example.healthcareapplication.presentation.screens_and_implementtion.MeScreen
 import com.example.healthcareapplication.presentation.components.screens.ReportScreen
+import com.example.healthcareapplication.presentation.profile.ProfileScreen
+import com.example.healthcareapplication.presentation.profile.healthdata.HealthDataScreen
+import com.example.healthcareapplication.presentation.screens_and_implementtion.profile.setting.SettingScreen
 import com.example.healthcareapplication.presentation.screens_and_implementtion.screen.MainScreens
 import com.example.healthcareapplication.presentation.screens_and_implementtion.sleep.SleepScreen
 
@@ -30,22 +34,34 @@ fun BottomNavGraph(
             )
         }
         composable(route = MainScreens.Goal.route) {
-            navController.popBackStack()
+//            navController.popBackStack()
             GoalScreen()
         }
         composable(route = MainScreens.Report.route) {
-            navController.popBackStack()
+//            navController.popBackStack()
             ReportScreen()
         }
         composable(route = MainScreens.Me.route) {
-            navController.popBackStack()
-            MeScreen()
+//            navController.popBackStack()
+            MeScreen(
+                navController = navController
+            )
         }
         composable(route = SLEEP_NAVIGATION) {
             SleepScreen()
         }
         composable(route = MEAL_NAVIGATION) {
             MealScreen()
+        }
+
+        composable(route = ME_PERSONAL_NAVIGATION) {
+            ProfileScreen()
+        }
+        composable(route = ME_HEALTH_DATA_NAVIGATION) {
+            HealthDataScreen()
+        }
+        composable(route = ME_SETTING_NAVIGATION) {
+            SettingScreen()
         }
         composable(route = WATER_NAVIGATION) {
             WaterDrinkingScreen()

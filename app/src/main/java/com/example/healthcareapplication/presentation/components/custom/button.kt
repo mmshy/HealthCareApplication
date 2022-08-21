@@ -187,7 +187,7 @@ fun MeButton(
         modifier = Modifier
             .width(150.dp)
             .height(150.dp)
-            .background(MaterialTheme.colorScheme.onSurface, RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colorScheme.tertiaryContainer, RoundedCornerShape(8.dp))
             .clickable {
                 onClick()
             },

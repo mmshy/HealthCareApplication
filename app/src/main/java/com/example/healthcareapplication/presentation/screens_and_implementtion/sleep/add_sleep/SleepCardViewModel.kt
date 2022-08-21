@@ -36,8 +36,6 @@ class SleepCardViewModel @Inject constructor (
         .setTitleText("Start")
         .build()
 
-//    var activity: AppCompatActivity? = null
-
     init {
         currentSleep = Constants.currentSleep
     }
@@ -45,7 +43,6 @@ class SleepCardViewModel @Inject constructor (
     fun onNoteChange(newValue: String) {
         uiState.value = uiState.value.copy(note = newValue)
     }
-
 
     //show time picker
     fun showTimePicker(activity: AppCompatActivity) {

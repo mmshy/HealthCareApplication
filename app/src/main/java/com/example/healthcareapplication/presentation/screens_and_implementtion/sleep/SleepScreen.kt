@@ -173,12 +173,6 @@ fun SleepScreen(
                                 onCheckOutItem = { viewModel.onEvent(SleepEvent.CheckOutItem(item)) }
                             )
                         }
-//                        items(10) {
-//
-//                        }
-//                        item() {
-//                            Box(modifier = Modifier.size(40.dp))
-//                        }
                     }
 
                 }
