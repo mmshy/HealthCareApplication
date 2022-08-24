@@ -15,6 +15,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.healthcareapplication.common.PreferenceManage
 import com.example.healthcareapplication.presentation.screens_and_implementtion.screen.MainScreens
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
@@ -23,7 +24,7 @@ import com.example.healthcareapplication.presentation.ui.theme.myTypography
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun  MainScreen(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
 ) {
     val manState = rememberScaffoldState()
 

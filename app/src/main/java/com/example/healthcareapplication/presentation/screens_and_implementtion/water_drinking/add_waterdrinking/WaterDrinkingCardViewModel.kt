@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthcareapplication.common.Constants
+import com.example.healthcareapplication.common.PreferenceHelper.customPreference
 import com.example.healthcareapplication.domain.model.SleepDetail
 import com.example.healthcareapplication.domain.model.WaterDrinking
 import com.example.healthcareapplication.domain.model.WaterDrinkingDetail
@@ -26,6 +27,7 @@ import javax.inject.Inject
 class WaterDrinkingCardViewModel @Inject constructor(
     private val useCases: WaterDrinkingUseCases
 ) : ViewModel() {
+
     private val uiState = mutableStateOf(WaterDrinkingCardUiState())
     val state: State<WaterDrinkingCardUiState> = uiState
 
@@ -43,16 +45,23 @@ class WaterDrinkingCardViewModel @Inject constructor(
     init {
         //currentWaterDrinking = Constants.currentWaterDrinking
 
-            if (Constants.currentWaterDrinking != null) {
-                uiState.value.amount =
-                   Constants.currentWaterDrinking!!.totalQuantity
-            }
+        if (Constants.currentWaterDrinking != null) {
+            uiState.value.amount =
+                Constants.currentWaterDrinking!!.totalQuantity
+        }
 
     }
 
 
     fun onWaterIntakeChange(newValue: Int) {
         uiState.value = uiState.value.copy(amount = newValue)
+        if (Constants.currentWaterDrinking == null) {
+            var water = WaterDrinking(
+                totalQuantity = uiState.value.amount
+            )
+            water.updateDate = SimpleDateFormat("dd/MM/yyyy").format(Timestamp.now().toDate())
+            Constants.currentWaterDrinking = water
+        }
         Constants.currentWaterDrinking!!.totalQuantity = newValue
     }
 
@@ -63,10 +72,10 @@ class WaterDrinkingCardViewModel @Inject constructor(
 
             // check if waterD of that day is exited??
             if (Constants.currentWaterDrinking != null) {
-                Constants.currentWaterDrinking!!.updateDate = SimpleDateFormat("dd/MM/yyyy").format(Timestamp.now().toDate())
+                Constants.currentWaterDrinking!!.updateDate =
+                    SimpleDateFormat("dd/MM/yyyy").format(Timestamp.now().toDate())
                 useCases.updateWaterDrinking(Constants.currentWaterDrinking!!)
-            }
-            else {
+            } else {
                 Log.d("state: ", "add new")
                 // if no, create a new sleep and sleep detail add into a sleepList of new sleep
                 // new water detail

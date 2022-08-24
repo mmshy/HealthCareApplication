@@ -8,6 +8,7 @@ import com.example.healthcareapplication.common.APPLICATION_GRAPH
 import com.example.healthcareapplication.common.AUTHENTICATION_GRAPH
 import com.example.healthcareapplication.common.HOME_GRAPH
 import com.example.healthcareapplication.presentation.components.MainScreen
+import com.example.healthcareapplication.presentation.components.screens.DashboardScreen
 
 @Composable
 fun MainNavGraph(
@@ -16,6 +17,22 @@ fun MainNavGraph(
     NavHost(
         navController = navController,
         startDestination = AUTHENTICATION_GRAPH,
+        route = APPLICATION_GRAPH
+    ) {
+        authNavGraph(navController = navController)
+        composable(route = HOME_GRAPH) {
+            MainScreen()
+        }
+    }
+}
+
+@Composable
+fun HomeNavGraph(
+    navController: NavHostController
+) {
+    NavHost(
+        navController = navController,
+        startDestination = HOME_GRAPH,
         route = APPLICATION_GRAPH
     ) {
         authNavGraph(navController = navController)
