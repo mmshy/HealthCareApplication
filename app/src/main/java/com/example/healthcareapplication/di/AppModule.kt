@@ -14,6 +14,8 @@ import com.example.healthcareapplication.domain.usecase.goal.AddGoal
 import com.example.healthcareapplication.domain.usecase.goal.GetGoals
 import com.example.healthcareapplication.domain.usecase.goal.GoalUseCases
 import com.example.healthcareapplication.domain.usecase.goal.UpdateGoal
+import com.example.healthcareapplication.domain.usecase.meal.*
+import com.example.healthcareapplication.domain.usecase.sleep.*
 import com.example.healthcareapplication.domain.usecase.meal.AddMeal
 import com.example.healthcareapplication.domain.usecase.meal.GetMeal
 import com.example.healthcareapplication.domain.usecase.meal.GetMeals
@@ -30,7 +32,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -80,7 +81,9 @@ object AppModule {
         return MealUseCases(
             getMeals = GetMeals(repository),
             addMeal = AddMeal(repository),
-            getMeal = GetMeal(repository)
+            getMeal = GetMeal(repository),
+            addMealDetail = AddMealDetail(repository),
+            getMealDetails = GetMealDetails(repository)
         )
     }
 

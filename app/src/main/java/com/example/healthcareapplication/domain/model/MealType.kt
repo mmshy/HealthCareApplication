@@ -1,9 +1,10 @@
 package com.example.healthcareapplication.domain.model
 
-class MealType(
-    var mealTypeID      : String = "",
-    var name            : String = "",
-    var description     : String = ""
-    ) {
-
+enum class MealType (val analyticsName: String) {
+    BREAKFAST("Breakfast"),
+    LUNCH("Lunch"),
+    DINNER("Dinner"),
+    BRUNCH("Brunch"),
+    TEA("Tea"),
+    SUPPER("Supper")
 }

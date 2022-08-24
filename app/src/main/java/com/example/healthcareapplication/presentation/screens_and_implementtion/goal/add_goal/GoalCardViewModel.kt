@@ -99,7 +99,5 @@ class GoalCardViewModel @Inject constructor(
         viewModelScope.launch {
             useCases.addGoal(goal)
         }
-
-        //close dialog
     }
 }

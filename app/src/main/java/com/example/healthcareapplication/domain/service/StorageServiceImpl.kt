@@ -10,6 +10,7 @@ import com.example.healthcareapplication.domain.usecase.waterdrinking.AddWaterDr
 import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalStatus
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -54,10 +55,6 @@ class StorageServiceImpl @Inject constructor(
                             .document(sleep.id)
                             .update("id", sleep.id)
                             .await()
-
-                        db.collection(Constants.KEY_SLEEP_COLLECTION)
-                            .document(sleep.id)
-                            .collection("sleep_list")
                     }
                     Log.d("add sleep: ", sleep.id)
                 }
@@ -132,7 +129,6 @@ class StorageServiceImpl @Inject constructor(
         }
     }
 
-
     override suspend fun getSleeps(): List<Sleep> {
 
         var list = mutableListOf<Sleep>()
@@ -203,11 +199,23 @@ class StorageServiceImpl @Inject constructor(
 
     //region Meal
 
-    override fun addMeal(meal: Meal) {
+    override suspend fun addMeal(meal: Meal) {
         try {
-            db.collection(Constants.KEY_MEAL_COLLECTION).add(meal)
+            db.collection(Constants.KEY_MEAL_COLLECTION)
+                .add(meal)
+                .addOnCompleteListener { value ->
+                    meal.id = value.result.id
+                    runBlocking {
+                        db.collection(Constants.KEY_MEAL_COLLECTION)
+                            .document(meal.id)
+                            .update("id", meal.id)
+                            .await()
+                    }
+                    Log.d("add meal: ", meal.id)
+                }
+                .await()
         } catch (e: Exception) {
-            Log.d(e.toString(), e.toString())
+            Log.d("add meal", e.toString())
         }
     }
 
@@ -245,12 +253,82 @@ class StorageServiceImpl @Inject constructor(
 
     //region Meal Detail
 
-    override fun addMealDetail(sleepDetail: MealDetail) {
-        TODO("Not yet implemented")
+    override suspend fun addMealDetail(mealDetail: MealDetail) {
+        try {
+            db.collection(Constants.KEY_MEAL_COLLECTION)
+                .document(mealDetail.mealId)
+                .collection(mealDetail.mealType.analyticsName)
+                .add(mealDetail)
+                .addOnCompleteListener { value ->
+                    mealDetail.id = value.result.id
+                    runBlocking {
+                        db.collection(Constants.KEY_MEAL_COLLECTION)
+                            .document(mealDetail.mealId)
+                            .collection(mealDetail.mealType.analyticsName)
+                            .document(mealDetail.id)
+                            .update("id", mealDetail.id)
+                            .await()
+                    }
+                    Log.d("add meal detail: ", mealDetail.id)
+                }
+                .await()
+        } catch (e: Exception) {
+            Log.d(e.toString(), e.toString())
+        }
     }
 
-    override suspend fun getMealDetails(): List<MealDetail> {
-        TODO("Not yet implemented")
+    override suspend fun getMealDetails(meal: Meal, type: MealType?): List<MealDetail> {
+
+        var list = mutableListOf<MealDetail>()
+
+        return withContext(Dispatchers.IO) {
+
+            //connect
+            try {
+
+                var querySnapshot: QuerySnapshot? = null
+
+                if (type != null) {
+                     querySnapshot = db
+                         .collection(Constants.KEY_MEAL_COLLECTION)
+                         .document(meal.id)
+                         .collection(type.analyticsName)
+                        .get().await()
+                }
+                else {
+                    for (i in MealType.values()) {
+                        querySnapshot?.plus(
+                            db
+                            .collection(Constants.KEY_MEAL_COLLECTION)
+                            .document(meal.id)
+                            .collection(i.analyticsName)
+                            .get().await()
+                        )
+                    }
+                }
+
+//                Log.d("a: ", "${a.documents}")
+
+                if (querySnapshot != null) {
+
+                    for (item in querySnapshot.documents) {
+                        val mealDetail = item.toObject<MealDetail>()
+                        Log.d("item: ", "$mealDetail")
+                        if (mealDetail != null) {
+                            list.add(mealDetail)
+                        }
+                        Log.d("list...: ", "$list")
+                    }
+                } else {
+                    Log.d("get list: ", "empty")
+                }
+
+            } catch (e: Exception) {
+                Log.d("get list: ", e.message.toString())
+            }
+
+            return@withContext list
+        }
     }
 //endregion
 

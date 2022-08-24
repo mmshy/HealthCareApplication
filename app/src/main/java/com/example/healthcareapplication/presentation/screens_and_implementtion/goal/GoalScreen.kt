@@ -47,7 +47,6 @@ fun GoalScreen(
     ) {
         // params
 
-//        if (uiState.showAddCard) {
         if (dialogState.value) {
             Dialog(
                 onDismissRequest = {

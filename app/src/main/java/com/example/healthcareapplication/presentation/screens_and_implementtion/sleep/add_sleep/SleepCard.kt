@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +28,7 @@ import java.text.SimpleDateFormat
 @Composable
 fun SleepCard(
     modifier: Modifier,
+    dialogState: MutableState<Boolean>,
     viewModel: SleepCardViewModel = hiltViewModel()
 ) {
 
@@ -94,8 +96,12 @@ fun SleepCard(
             )
 
             primaryBtn(
-                onClick = { viewModel.addSleep() },
-                modifier = Modifier.width(155.dp)
+                onClick = {
+                    viewModel.addSleep()
+                    dialogState.value = false
+                },
+                modifier = Modifier
+                    .width(155.dp)
                     .height(49.dp)
                     .align(Alignment.CenterHorizontally),
                 text = null,
