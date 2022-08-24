@@ -6,10 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -19,10 +19,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.healthcareapplication.R
+import com.example.healthcareapplication.domain.model.MealType
+import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.add_goal.GoalCard
+import com.example.healthcareapplication.presentation.screens_and_implementtion.meal.MealItem
 import com.example.healthcareapplication.presentation.screens_and_implementtion.meal.MealViewModel
+import com.example.healthcareapplication.presentation.screens_and_implementtion.meal.add_meal.MealCard
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
@@ -32,21 +38,45 @@ import com.example.healthcareapplication.presentation.ui.theme.myTypography
 fun MealScreen(
     viewModel: MealViewModel = hiltViewModel()
 ) {
+    // params
+    val uiState by viewModel.state
+    var test = uiState.greeting
+
+    val dialogState: MutableState<Boolean> = remember {
+        mutableStateOf(false)
+    }
 
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
     ) {
-        // params
-        val uiState by viewModel.uiState
 
-        var test = uiState.greeting
+        if (dialogState.value) {
+            Dialog(
+                onDismissRequest = {
+                    dialogState.value = false
+                },
+                properties = DialogProperties(
+                    dismissOnBackPress = true,
+                    dismissOnClickOutside = true
+                )
+            ) {
+                MealCard(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    dialogState = dialogState
+                )
+            }
+        } else {
+
+        }
+
         Scaffold(
             floatingActionButton = {
                 FloatingActionButton(
                     onClick = {
-                              viewModel.addMeal()
-                              },
+                        dialogState.value = true
+                    },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White,
                     shape = CircleShape,
@@ -70,7 +100,8 @@ fun MealScreen(
                         style = MaterialTheme.typography.headlineSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
-                            .fillMaxWidth().clickable { viewModel.getList() }
+                            .fillMaxWidth()
+                            .clickable { viewModel.getList() }
                             .constrainAs(title)
                             {}
                     )
@@ -126,58 +157,18 @@ fun MealScreen(
 
                     LazyColumn(
                         modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
                             .constrainAs(list) {
                                 top.linkTo(body.bottom, 29.dp)
-                            }
-                            .fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(1.dp)
+                            },
+                        verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        item {
-                            Row(
-                                modifier = Modifier
-                                    .height(65.dp)
-                                    .background(MaterialTheme.colorScheme.primary)
-                                    .fillMaxWidth()
-                                    .padding(20.dp, 0.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                Text(
-                                    text = "Breakfast",
-                                    color = Color.White,
-                                    style = MaterialTheme.typography.bodySmall
-                                )
-                                Text(
-                                    text = "200kcal",
-                                    color = Color.White,
-                                    style = MaterialTheme.typography.headlineSmall
-                                )
-                            }
-                        }
-                        items(3) {
-                            Row(
-                                modifier = Modifier
-                                    .height(65.dp)
-                                    .background(MaterialTheme.colorScheme.onBackground)
-                                    .fillMaxWidth()
-                                    .padding(20.dp, 0.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                Text(
-                                    text = "Bread",
-                                    style = MaterialTheme.typography.bodySmall,
-                                )
-                                Text(
-                                    text = "100gr",
-                                    style = MaterialTheme.typography.labelMedium,
-                                    color = Color.Black
-                                )
-                                Text(
-                                    text = "100kcal",
-                                    style = MaterialTheme.typography.titleLarge
-                                )
-                            }
+                        items(uiState.items) { item ->
+                            MealItem(
+                                mealDetails = item,
+                                modifier = Modifier.fillMaxWidth()
+                            )
                         }
                     }
                 }

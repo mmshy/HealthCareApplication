@@ -23,13 +23,13 @@ interface StorageService {
 //    Meal
 
     suspend fun getMealById(id: String) : Meal?
-    fun addMeal(meal: Meal)
+    suspend fun addMeal(meal: Meal)
     fun getMeals(): List<Meal>
 
     //MealDetail
     suspend fun getMealDetailById(id: String) : MealDetail?
-    fun addMealDetail(sleepDetail: MealDetail)
-    suspend fun getMealDetails(): List<MealDetail>
+    suspend fun addMealDetail(sleepDetail: MealDetail)
+    suspend fun getMealDetails(meal: Meal, type: MealType?): List<MealDetail>
 
     //WaterDrinking
 

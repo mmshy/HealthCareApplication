@@ -38,8 +38,6 @@ class WaterDrinkingCardViewModel @Inject constructor(
         .setTitleText("Start")
         .build()
 
-//    var activity: AppCompatActivity? = null
-
     init {
         //currentWaterDrinking = Constants.currentWaterDrinking
 

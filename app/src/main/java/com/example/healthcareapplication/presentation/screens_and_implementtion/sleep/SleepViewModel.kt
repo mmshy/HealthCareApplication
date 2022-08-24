@@ -34,7 +34,7 @@ class SleepViewModel @Inject constructor(
         GlobalScope.launch (Dispatchers.IO) {
 
             try {
-                Firebase.firestore.collection("sleeps")
+                Firebase.firestore.collection(Constants.KEY_SLEEP_COLLECTION)
                     .whereEqualTo(
                         "updateDate",
                         SimpleDateFormat("dd/MM/yyyy").format(
@@ -89,18 +89,6 @@ class SleepViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    fun showAddSleepCard() {
-        if (!state.value.showAddCard) {
-            uiState.value = state.value.copy(showAddCard = true)
-        }
-    }
-
-    fun unShowAddSleepCard() {
-//        if (state.value.showAddCard) {
-            uiState.value = state.value.copy(showAddCard = false)
-//        }
     }
 
     private fun getList() {
