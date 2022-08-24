@@ -38,7 +38,6 @@ import javax.inject.Singleton
 object AppModule {
 
 
-
     @Provides
     @Singleton
     fun provideUserDAO(): UserDAO {

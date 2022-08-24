@@ -3,7 +3,6 @@ package com.example.healthcareapplication.common
 import android.app.Application
 import android.content.Context
 import com.example.healthcareapplication.domain.model.Meal
-import com.example.healthcareapplication.domain.model.Meal
 import com.example.healthcareapplication.domain.model.Sleep
 import com.example.healthcareapplication.domain.model.WaterDrinking
 
