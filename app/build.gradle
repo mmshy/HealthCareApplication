@@ -83,23 +83,13 @@ dependencies {
 
     //Dagger - Hilt
 
-/*
-    implementation 'com.google.dagger:dagger:2.42'
-    kapt 'com.google.dagger:dagger-compiler:2.42'
-*/
 
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
     implementation 'com.google.dagger:hilt-android:2.42'
     //annotationProcessor 'com.google.dagger:hilt-compiler:2.42'
     kapt "com.google.dagger:hilt-android-compiler:2.42"
 
-/*    // For instrumentation tests
-    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.42'
-    kaptAndroidTest 'com.google.dagger:hilt-compiler:2.42'
 
-    // For local unit tests
-    testImplementation 'com.google.dagger:hilt-android-testing:2.42'
-    kaptTest 'com.google.dagger:hilt-compiler:2.42'*/
 
     //Firebase
     implementation 'com.google.firebase:firebase-analytics:21.1.0'
@@ -136,5 +126,9 @@ dependencies {
     // Room
     implementation "androidx.room:room-runtime:2.4.2"
     kapt "androidx.room:room-compiler:2.4.2"
+
+    // for Preferencemanager
+    implementation "androidx.preference:preference-ktx:1.2.0"
+    implementation 'com.google.code.gson:gson:2.8.9'
 
 }

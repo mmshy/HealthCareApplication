@@ -22,7 +22,7 @@ class UserDAO (
 
     }
 
-    suspend fun createAccount(newUser: User) {
+    suspend fun createAccount(newUser: User) :Boolean {
         Firebase.auth.createUserWithEmailAndPassword(newUser.email, newUser.password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -35,12 +35,14 @@ class UserDAO (
                         .set(User(userID = userId)).addOnCompleteListener {
                             Log.d("ok", "ok")
                         }
+
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
                     //updateUI(null)
                 }
             }
+        return false
     }
 
     suspend fun forgotPassword(email: String) {

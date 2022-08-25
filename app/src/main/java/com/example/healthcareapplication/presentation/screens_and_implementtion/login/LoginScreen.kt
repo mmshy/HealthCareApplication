@@ -32,18 +32,21 @@ fun LoginScreen(
     onRegisterClick: () -> Unit,
     onForgetPasswordClick: () -> Unit,
     navController: NavHostController,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: LoginViewModel = hiltViewModel(),
+
 ) {
 
-    viewModel.navController = navController
 
     val uiState by viewModel.uiState
 
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
+
     ) {
-        ConstraintLayout (
+        viewModel.navController = navController
+
+        ConstraintLayout(
             modifier = Modifier
                 .padding(16.dp, 0.dp)
                 .fillMaxSize()
@@ -117,12 +120,11 @@ fun LoginScreen(
                         }
                 )
                 primaryBtn(
-                    onClick = {viewModel.onLoginEvent()},
+                    onClick = { viewModel.onLoginEvent() },
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(0.dp, 20.dp, 0.dp, 0.dp)
-                        .height(49.dp)
-                    ,
+                        .height(49.dp),
                     text = "Go to App",
                     null
                 )

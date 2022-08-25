@@ -1,5 +1,7 @@
 package com.example.healthcareapplication.common
 
+import android.app.Application
+import android.content.Context
 import com.example.healthcareapplication.domain.model.Meal
 import com.example.healthcareapplication.domain.model.Sleep
 import com.example.healthcareapplication.domain.model.WaterDrinking
@@ -16,6 +18,9 @@ class Constants {
 
         const val KEY_WATERDRINKING_COLLECTION: String = "water_drinkings"
         const val KEY_WATERDRINKING_DETAIL_COLLECTION: String = "water_drinking_details"
+
+        const val KEY_APP_NAME: String = "heath_care_application"
+        const val KEY_CURRENT_USER: String = "current_user"
 
         const val KEY_GOAL_COLLECTION: String = "goals"
 
