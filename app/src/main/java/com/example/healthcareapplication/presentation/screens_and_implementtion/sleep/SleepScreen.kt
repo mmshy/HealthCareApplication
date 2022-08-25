@@ -25,6 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.healthcareapplication.presentation.components.BriefData
 import com.example.healthcareapplication.presentation.screens_and_implementtion.sleep.add_sleep.SleepCard
 import com.example.healthcareapplication.presentation.sleep.SleepItem
+import com.example.healthcareapplication.presentation.sleep.SleepItemTrick
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
@@ -88,8 +89,12 @@ fun SleepScreen(
                 }
             }
         ) {
-            Surface() {
-                ConstraintLayout {
+            Surface(
+                Modifier.wrapContentHeight(unbounded = false)
+            ) {
+                ConstraintLayout(
+                    Modifier.wrapContentHeight(unbounded = false)
+                ) {
                     val (title, greeting, body, list) = createRefs()
 
                     Text(
@@ -164,6 +169,7 @@ fun SleepScreen(
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .wrapContentHeight(unbounded = true)
                             .padding(bottom = 30.dp)
                             .constrainAs(list) {
                                 top.linkTo(body.bottom, 30.dp)
@@ -175,6 +181,9 @@ fun SleepScreen(
                                 sleep = item,
                                 onCheckOutItem = { viewModel.onEvent(SleepEvent.CheckOutItem(item)) }
                             )
+                        }
+                        items(5) {
+                            SleepItemTrick()
                         }
                     }
 

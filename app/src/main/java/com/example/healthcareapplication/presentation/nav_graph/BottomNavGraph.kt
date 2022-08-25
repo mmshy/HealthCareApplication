@@ -12,7 +12,7 @@ import com.example.healthcareapplication.common.WATER_NAVIGATION
 import com.example.healthcareapplication.presentation.components.screens.DashboardScreen
 import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalScreen
 import com.example.healthcareapplication.presentation.screens_and_implementtion.MeScreen
-import com.example.healthcareapplication.presentation.components.screens.ReportScreen
+import com.example.healthcareapplication.presentation.screens_and_implementtion.ReportScreen
 import com.example.healthcareapplication.presentation.profile.ProfileScreen
 import com.example.healthcareapplication.presentation.profile.healthdata.HealthDataScreen
 import com.example.healthcareapplication.presentation.screens_and_implementtion.profile.setting.SettingScreen

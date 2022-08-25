@@ -29,6 +29,7 @@ import com.example.healthcareapplication.presentation.screens_and_implementtion.
 import com.example.healthcareapplication.presentation.screens_and_implementtion.meal.MealItem
 import com.example.healthcareapplication.presentation.screens_and_implementtion.meal.MealViewModel
 import com.example.healthcareapplication.presentation.screens_and_implementtion.meal.add_meal.MealCard
+import com.example.healthcareapplication.presentation.sleep.SleepItemTrick
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
@@ -89,10 +90,12 @@ fun MealScreen(
                 }
             }
         ) {
-
-
-            Surface() {
-                ConstraintLayout {
+            Surface(
+                Modifier.wrapContentHeight(unbounded = false)
+            ) {
+                ConstraintLayout(
+                    Modifier.wrapContentHeight(unbounded = false)
+                ) {
                     val (title, greeting, body, list) = createRefs()
 
                     Text(
@@ -158,7 +161,6 @@ fun MealScreen(
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .wrapContentHeight()
                             .constrainAs(list) {
                                 top.linkTo(body.bottom, 29.dp)
                             },
@@ -167,8 +169,17 @@ fun MealScreen(
                         items(uiState.items) { item ->
                             MealItem(
                                 mealDetails = item,
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier
+                                    .height(IntrinsicSize.Min)
+                                    .fillParentMaxWidth()
+                                    .size(200.dp)
                             )
+                        }
+                        items(3) {
+                            SleepItemTrick()
+                        }
+                        item {
+                            Spacer(modifier = Modifier.height(16.dp))
                         }
                     }
                 }

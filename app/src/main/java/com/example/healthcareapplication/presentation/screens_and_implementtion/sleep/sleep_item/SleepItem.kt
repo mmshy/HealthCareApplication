@@ -25,12 +25,10 @@ fun SleepItem(
     sleep: SleepDetail,
     onCheckOutItem: (sleepDetail: SleepDetail) -> Unit
 ) {
-    Log.d("sleep id: ", sleep.sleepId)
-    Log.d("item id: ", sleep.id.toString())
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .height(86.dp)
             .background(Smoke)
             .padding(24.dp, 0.dp)
@@ -60,5 +58,30 @@ fun SleepItem(
             }
         }
 
+    }
+}
+
+@Composable
+fun SleepItemTrick(
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(86.dp)
+            .background(Smoke)
+            .padding(24.dp, 0.dp)
+    ) {
+        Text(
+            text = "hi",
+            style = MaterialTheme.typography.bodyMedium
+        )
+        Spacer(modifier = Modifier.width(24.dp))
+        Text(
+            text = "donn",
+            style = MaterialTheme.typography.bodySmall,
+            modifier = Modifier.weight(1f),
+            color = Color.Black
+        )
     }
 }

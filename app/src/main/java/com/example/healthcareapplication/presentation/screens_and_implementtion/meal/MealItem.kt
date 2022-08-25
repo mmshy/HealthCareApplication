@@ -49,10 +49,7 @@ fun MealItem(
 
             }
 
-            LazyColumn(
-                Modifier
-                    .fillMaxWidth().requiredHeightIn(100.dp, 400.dp)
-            ) {
+            LazyColumn() {
                 items(mealDetails) { mealDetail ->
                     Row(
                         modifier = Modifier
