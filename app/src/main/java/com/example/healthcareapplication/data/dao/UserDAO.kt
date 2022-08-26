@@ -8,8 +8,9 @@ import com.example.healthcareapplication.domain.model.User
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import javax.inject.Inject
 
-class UserDAO (
+class UserDAO @Inject constructor(
 
 ) {
     // firebase attributes initialising
@@ -32,7 +33,7 @@ class UserDAO (
                     Firebase.firestore
                         .collection(Constants.KEY_USER_COLLECTION)
                         .document(userId)
-                        .set(User(userID = userId)).addOnCompleteListener {
+                        .set(newUser).addOnCompleteListener {
                             Log.d("ok", "ok")
                         }
 

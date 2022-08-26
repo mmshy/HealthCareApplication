@@ -10,3 +10,6 @@ const val WATER_NAVIGATION = "water"
 const val ME_PERSONAL_NAVIGATION = "personal"
 const val ME_HEALTH_DATA_NAVIGATION = "health_data"
 const val ME_SETTING_NAVIGATION = "setting"
+const val LOGIN_NAVIGATTION = "login_graph"
+
+

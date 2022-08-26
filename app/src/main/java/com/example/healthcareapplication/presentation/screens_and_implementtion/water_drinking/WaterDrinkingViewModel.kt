@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.healthcareapplication.common.Constants
+import com.example.healthcareapplication.common.PreferenceManage
 import com.example.healthcareapplication.domain.model.WaterDrinking
 import com.example.healthcareapplication.domain.model.WaterDrinkingDetail
 import com.example.healthcareapplication.domain.usecase.waterdrinking.WaterDrinkingUseCases
@@ -21,7 +22,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WaterDrinkingViewModel @Inject constructor(
-    private val useCases: WaterDrinkingUseCases
+    private val useCases: WaterDrinkingUseCases,
+    private val prefs: PreferenceManage,
 ) : ViewModel() {
 
     private val uiState = mutableStateOf(WaterDrinkingUiState())
@@ -38,6 +40,9 @@ class WaterDrinkingViewModel @Inject constructor(
                         SimpleDateFormat("dd/MM/yyyy").format(
                             Timestamp.now().toDate()
                         )
+                    )
+                    .whereEqualTo("userID",
+                        prefs.getUser()!!.userID
                     )
                     .get()
                     .addOnCompleteListener { it ->

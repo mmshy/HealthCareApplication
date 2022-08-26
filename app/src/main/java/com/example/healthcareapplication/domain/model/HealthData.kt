@@ -7,7 +7,7 @@ import java.time.LocalDate.now
 open class HealthData (
     var id          : String = "",
     var updateDate  : String = "",
-    var userId      : String = "",
+    var userID      : String = "",
 ){
 
 }

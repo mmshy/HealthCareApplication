@@ -2,12 +2,15 @@ package com.example.healthcareapplication.domain.service
 
 import android.util.Log
 import com.example.healthcareapplication.common.Constants
+import com.example.healthcareapplication.common.PreferenceManage
+import com.example.healthcareapplication.data.dao.UserDAO
 import com.example.healthcareapplication.domain.model.Meal
 import com.example.healthcareapplication.domain.model.Sleep
 import com.example.healthcareapplication.domain.model.SleepDetail
 import com.example.healthcareapplication.domain.model.*
 import com.example.healthcareapplication.domain.usecase.waterdrinking.AddWaterDrinkingDetail
 import com.example.healthcareapplication.presentation.screens_and_implementtion.goal.GoalStatus
+import com.example.healthcareapplication.presentation.screens_and_implementtion.login.LoginViewModel
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.QuerySnapshot
@@ -19,7 +22,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.tasks.await
 
 class StorageServiceImpl @Inject constructor(
-    //
+    private val prefs: PreferenceManage,
 ) : StorageService {
 
     private val db = Firebase.firestore
@@ -195,7 +198,7 @@ class StorageServiceImpl @Inject constructor(
             return@withContext list
         }
     }
-//endregion
+    //endregion
 
     //region Meal
 
@@ -392,7 +395,7 @@ class StorageServiceImpl @Inject constructor(
                             .update("id", waterDrinking.id)
                             .await()
                     }
-                    Log.d("add sleep: ", waterDrinking.id)
+                    Log.d("add water: ", waterDrinking.id)
                 }
                 .await()
             Log.d("await add water: ", "run")
@@ -421,7 +424,8 @@ class StorageServiceImpl @Inject constructor(
     override suspend fun updateWaterDrinking(waterDrinking: WaterDrinking) {
         try {
             db.collection(Constants.KEY_WATERDRINKING_COLLECTION)
-                .document(waterDrinking.id).set(waterDrinking)
+                .document(waterDrinking.id)
+                .set(waterDrinking)
                 //.update("totalQuantity", waterDrinking.totalQuantity)
                 .await()
 
@@ -446,8 +450,6 @@ class StorageServiceImpl @Inject constructor(
             Log.d("add water drinking detail: ", e.toString())
         }
     }
-
-
 
     override suspend fun getWaterDrinkingDetails(id: String): List<WaterDrinkingDetail> {
         var list = mutableListOf<WaterDrinkingDetail>()

@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.healthcareapplication.R
@@ -21,13 +22,20 @@ import com.example.healthcareapplication.common.ME_HEALTH_DATA_NAVIGATION
 import com.example.healthcareapplication.common.ME_PERSONAL_NAVIGATION
 import com.example.healthcareapplication.common.ME_SETTING_NAVIGATION
 import com.example.healthcareapplication.presentation.components.custom.MeButton
+import com.example.healthcareapplication.presentation.screens_and_implementtion.profile.me.MeEvent
+import com.example.healthcareapplication.presentation.screens_and_implementtion.profile.me.MeViewModel
+import com.example.healthcareapplication.presentation.screens_and_implementtion.register.RegisterViewModel
 import com.example.healthcareapplication.presentation.ui.theme.LightColorScheme
 import com.example.healthcareapplication.presentation.ui.theme.myTypography
 
 @Composable
 fun MeScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: MeViewModel = hiltViewModel()
 ) {
+    viewModel.navController = navController
+    val uiState = viewModel.uiState.value
+
     MaterialTheme(
         typography = myTypography,
         colorScheme = LightColorScheme
@@ -59,7 +67,7 @@ fun MeScreen(
             )
 
             Text(
-                text = "name",
+                text = viewModel.uiState.value.name,
                 style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -107,7 +115,7 @@ fun MeScreen(
                     )
 
                     MeButton(
-                        onClick = { /*TODO*/ },
+                        onClick = {  viewModel.onEvent(MeEvent.onLogOut)},
                         title = "Logout",
                         icon = R.drawable.ic_round_logout_24
                     )

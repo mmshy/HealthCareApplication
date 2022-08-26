@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.example.healthcareapplication.common.PreferenceManage
+import com.example.healthcareapplication.data.dao.UserDAO
 import com.example.healthcareapplication.domain.model.InvalidUserException
 import com.example.healthcareapplication.domain.model.User
 import com.example.healthcareapplication.domain.usecase.user.UserAccessUseCases
@@ -21,7 +22,7 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val useCases: UserAccessUseCases,
     private val prefs: PreferenceManage,
-    @ApplicationContext private val mContext: Context,
+    @ApplicationContext private val mContext: Context
 ) : ViewModel() {
 
     var navController: NavHostController? = null
